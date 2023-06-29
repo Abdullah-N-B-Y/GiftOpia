@@ -55,10 +55,15 @@ namespace GiftStoreMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Orderid,Orderdate,Orderstatus,Recipientaddress,Arrivaldate,Finalprice")] GiftstoreOrder giftstoreOrder)
+        public async Task<IActionResult> Create([Bind("Orderid,Recipientaddress,Arrivaldate,Finalprice")] GiftstoreOrder giftstoreOrder)
         {
+            // Orderdate 
+          
+
             if (ModelState.IsValid)
             {
+                giftstoreOrder.Orderstatus = "Arrived";
+                giftstoreOrder.Orderdate = DateTime.UtcNow;
                 _context.Add(giftstoreOrder);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
