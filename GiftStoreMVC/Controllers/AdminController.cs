@@ -304,9 +304,27 @@ namespace GiftStoreMVC.Controllers
             ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();
             ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
 
-            ViewData["TotalProfits"] = _context.GiftstoreOrders.Where(obj=> obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
+            var profits = (double) _context.GiftstoreOrders.Where(obj=> obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
+            ViewData["TotalProfits"] = profits * 0.05;
             return View();
+        }
 
+        public IActionResult Reportes(decimal? Categoryid)
+        {
+            decimal? id = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id;
+            ViewData["RoleId"] = currentUser.Roleid;
+
+            ViewData["NumberOfUsers"] = _context.GiftstoreUsers.Count();
+            ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();
+            ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
+
+            var profits = (double)_context.GiftstoreOrders.Where(obj => obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
+            ViewData["TotalProfits"] = profits * 0.05;
+            return View();
         }
 
         public IActionResult UsersIndex()
