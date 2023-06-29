@@ -233,26 +233,34 @@
                                 <i class="fa-solid fa-user"></i>Users
                             </a>
                         </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Profits">
+                                <i class="fa-solid fa-money-bill-trend-up"></i>Profits
+                            </a>
+                        </li>
                     }
-                    <li>
-                        <a asp-controller="Admin" asp-action="Profits">
-                            <i class="fa-solid fa-money-bill-trend-up"></i>Profits
-                        </a>
-                    </li>
+                    @if (id == 2)
+                    {
+                        <li>
+                            <a asp-controller="Maker" asp-action="Profits">
+                                <i class="fa-solid fa-money-bill-trend-up"></i>Profits
+                            </a>
+                        </li>
+                    }
                     @if (id == 1)
                     {
                         <li class="has-sub">
-                            <a class="js-arrow" href="~/AdminAssets/#">
+                            <a asp-controller="Admin" asp-action="Reportes">
                                 <i class="fa-solid fa-file"></i>Reports
                             </a>
                         </li>
                         <li class="has-sub">
-                            <a class="js-arrow" href="~/AdminAssets/#">
+                            <a href="~/AdminAssets/#">
                                 <i class="fas fa-desktop"></i>Manage pages
                             </a>
                         </li>
                         <li class="has-sub">
-                            <a class="js-arrow" href="~/AdminAssets/#">
+                            <a href="~/AdminAssets/#">
                                 <i class="fa-solid fa-ban"></i>Ban/Unban users
                             </a>
                         </li>

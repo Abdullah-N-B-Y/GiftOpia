@@ -59,5 +59,21 @@ namespace GiftStoreMVC.Controllers
                 return View();
             }
         }
+
+
+        public IActionResult Categories()
+        {
+            try
+            {
+                var userId = HttpContext.Session.GetInt32("UserId");
+                var categories = _context.GiftstoreCategories.ToList();
+                //var model = Tuple.Create<IEnumerable<GiftstoreCategory>,>
+                return View(categories);
+            }
+            catch (Exception ex)
+            {
+                return View();
+            }
+        }
     }
 }

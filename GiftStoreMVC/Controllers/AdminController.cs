@@ -309,7 +309,7 @@ namespace GiftStoreMVC.Controllers
             return View();
         }
 
-        public IActionResult Reportes(decimal? Categoryid)
+        public IActionResult Reportes()
         {
             decimal? id = HttpContext.Session.GetInt32("UserId");
             var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
@@ -318,13 +318,24 @@ namespace GiftStoreMVC.Controllers
             ViewData["UserId"] = id;
             ViewData["RoleId"] = currentUser.Roleid;
 
-            ViewData["NumberOfUsers"] = _context.GiftstoreUsers.Count();
-            ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();
-            ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
+            var users = _context.GiftstoreUsers.ToList();
+            var requests = _context.GiftstoreSenderrequests.ToList();
+            var gifts = _context.GiftstoreGifts.ToList();
+            var orders = _context.GiftstoreOrders.ToList();
 
-            var profits = (double)_context.GiftstoreOrders.Where(obj => obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
-            ViewData["TotalProfits"] = profits * 0.05;
-            return View();
+            var report = from user in users
+                         join request in requests on user.Userid equals request.Senderid
+                         join gift in gifts on request.Giftid equals gift.Giftid
+                         join order in orders on gift.Orderid equals order.Orderid
+                         select new Reprotes
+                         {
+                             User = user,
+                             SenderRequest = request,
+                             Gift = gift,
+                             Order = order
+                         };
+
+            return View(report);
         }
 
         public IActionResult UsersIndex()
