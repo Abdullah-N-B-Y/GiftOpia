@@ -23,8 +23,7 @@
                                 <thead>
                                     <tr>
                                         <th>date</th>
-                                        <th>order ID</th>
-                                        <th>name</th>
+                             
                                         <th class="text-right">price</th>
                                         <th class="text-right">quantity</th>
                                         <th class="text-right">total</th>
@@ -34,12 +33,9 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>@item?.User?.Email---------</td>
-                                            <td>100398</td>
-                                            <td>iPhone X 64Gb Grey</td>
-                                            <td class="text-right">$999.00</td>
-                                            <td class="text-right">1</td>
-                                            <td class="text-right">$999.00</td>
+                                            <td class="text-right">@item.createDate</td>
+                                            <td class="text-right">@item.userName</td>
+                                            <td class="text-right">@item.totalPrice</td>
                                         </tr>
                                     }
 
