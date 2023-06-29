@@ -1,0 +1,61 @@
+﻿@model GiftStoreMVC.Models.GiftstoreGift
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>GiftstoreGift</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Giftname)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Giftname)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Giftprice)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Giftprice)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Imagepath)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Imagepath)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Giftavailability)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Giftavailability)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Giftdescription)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Giftdescription)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Category.Categoryid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Order.Orderid)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Giftid">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,203 @@
+﻿@model GiftstoreUser
+
+@{
+    Layout = null;
+    var categories = (IEnumerable<GiftstoreCategory>)ViewData["categories"];
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Colorlib Templates">
+    <meta name="author" content="Colorlib">
+    <meta name="keywords" content="Colorlib Templates">
+
+    <!-- Title Page-->
+    <title>Sign up</title>
+
+    <!-- Icons font CSS-->
+    <link href="~/LoginForm/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="~/LoginForm/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="~/LoginForm/https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="~/LoginForm/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/LoginForm/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/LoginForm/css/main.css" rel="stylesheet" media="all">
+
+    <link href="~/LoginForm/css/profileimage.css" rel="stylesheet" media="all">
+
+</head>
+
+<body>
+    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Sign up</h2>
+                    <form asp-controller="Auth" asp-action="SignUp" enctype="multipart/form-data">
+                        <div class="row" style="justify-content:center;margin-bottom:20px;">
+                            <div id="imageContainer">
+                                <img id="userImage" src="~/UsersImages/default-profile-image.png" alt="User Image">
+                                <input id="imageInput" asp-for="UserImage" accept="image/*" />
+                            </div>
+                        </div>
+                        <div class="row row-space">                            
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Name</label>
+                                    <input asp-for="Name" class="input--style-4" placeholder="" />
+                                    @*<span asp-validation-for="Name" class="text-danger" style="color:red;"></span>*@
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Username</label>
+                                    <input asp-for="Username" class="input--style-4" placeholder="" />
+                                    @*<span asp-validation-for="Username" class="text-danger" style="color:red;"></span>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                               @* <div class="input-group">
+                                    <label class="label">Birthday</label>
+                                    <div class="input-group-icon">
+                                        <input class="input--style-4 js-datepicker" type="text" name="birthday">
+                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                    </div>
+                                </div>*@
+                                <div class="input-group">
+                                    <label class="label">email</label>
+                                    <input asp-for="Email" class="input--style-4" placeholder="info@gmail.com" />
+                                    @*<span asp-validation-for="Email" class="text-danger" style="color:red;"></span>*@
+                                </div>
+                            </div>
+                            <div class="input-group">
+                                <label class="label">phone number</label>
+                                <input asp-for="Phonenumber" class="input--style-4" placeholder="+962 " />
+                                @*<span asp-validation-for="Email" class="text-danger" style="color:red;"></span>*@
+                            </div>
+                        </div>
+                        <label class="label">Register as</label>
+                        <div class="row" style="justify-content:center;margin-bottom:10px;">
+                            <div class="col">
+                                <div class="input-group">
+                                    <div class="p-t-10">
+                                        <label class="radio-container">
+                                            Maker
+                                            <input id="option2" type="radio" checked="checked" asp-for="RoleName" value="Maker">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">
+                                            Sender
+                                            <input id="option3" type="radio" asp-for="RoleName" value="Sender">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">
+                                            Driver
+                                            <input id="option4" type="radio" asp-for="RoleName" value="Driver">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" style="font-weight:bold;margin-bottom:30px;">
+                                <span id="user-type" >
+                                    If you registered as a "Maker" or "Driver", you have to wait for the Administrator to accept.
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Password</label>
+                                    <input type="password" asp-for="Password" class=" input--style-4" placeholder="" />
+                                    @*<span asp-validation-for="Password" class="text-danger" style="color:red;"></span>*@
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Confirm Password</label>
+                                    <input type="password" name="confirmPassword" required placeholder="" class=" input--style-4" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="input-group" id="category">
+                            <label class="label">Subject</label>
+                            <div class="rs-select2 js-select-simple select--no-search">
+                                <select name="userCategoryId">
+                                    <option disabled="disabled" selected="selected">Choose category</option>
+                                    @foreach (var item in categories)
+                                    {
+                                        <option value="@item.Categoryid">@item.Categoryname</option>
+                                    }
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                        </div>
+                        <div class="p-t-15">
+                            <button onclick="handleFormSubmission()" class="btn btn--radius-2 btn--blue" type="submit" id="" >Submit</button>
+                        </div>
+                        <div style="text-align:center;padding:20px;">
+                            <a asp-controller="Auth" asp-action="SignIn">already have an account? sign in</a>
+                        </div>
+                        <div style="text-align:center;padding:20px;">
+                            <a asp-controller="Home" asp-action="Index">Home</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="~/LoginForm/vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="~/LoginForm/vendor/select2/select2.min.js"></script>
+    <script src="~/LoginForm/vendor/datepicker/moment.min.js"></script>
+    <script src="~/LoginForm/vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="~/LoginForm/js/global.js"></script>
+
+    <script src="~/LoginForm/js/hidecategoryinput.js"></script>
+
+    <script src="~/LoginForm/js/profileimage.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Function to check the selected radio button option
+            function checkRadioOption() {
+                var role = $('input[name="RoleName"]:checked').val();
+                if (role === "Maker" || role === "Driver") {
+                    $('#user-type').show();
+                    $('#user-type').css('color', 'red');
+                } else {
+                    $('#user-type').hide(); // Reset color if not Maker or Driver
+                }
+            }
+
+            // Check the initial radio button option on page load
+            checkRadioOption();
+
+            // Listen for radio button change event
+            $('input[name="RoleName"]').change(function () {
+                checkRadioOption();
+            });
+        });
+
+    </script>
+
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+
+</html>
+<!-- end document-->

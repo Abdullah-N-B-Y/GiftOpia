@@ -1,0 +1,61 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreCategory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <p>
+                    <a asp-action="Create" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Add new</a>
+                </p>
+                <table class="table" style="color:#000;">
+                    <thead>
+                        <tr>
+                            <th>
+                                Category Name
+                                @*@Html.DisplayNameFor(model => model.Categoryname)*@
+                            </th>
+                            <th>
+                                Category Image
+                                @*@Html.DisplayNameFor(model => model.Imagepath)*@
+                            </th>
+                            <th>
+                                Description
+                                @*@Html.DisplayNameFor(model => model.Categorydescription)*@
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Categoryname)
+                                </td>
+                                <td>
+                                    @*@Html.DisplayFor(modelItem => item.Imagepath)*@
+                                    <a asp-action="Details" asp-route-id="@item.Categoryid">
+                                        <img src=@Url.Content("~/CategoriesImages/"+item.Imagepath) asp-append-version="true" alt="Image" style="width:85px;height:85px;border-radius:25px;" />
+                                    </a>
+                                </td>
+                                <td>
+                                    
+                                    @Html.DisplayFor(modelItem => item.Categorydescription)
+                                </td>
+                                <td>
+                                    <a asp-action="Edit" asp-route-id="@item.Categoryid" class="btn btn-primary">Edit</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Categoryid" class="btn btn-danger">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

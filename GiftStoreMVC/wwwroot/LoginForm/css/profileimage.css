@@ -1,0 +1,27 @@
+﻿#imageContainer {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 4px dotted #000;
+}
+
+#userImage {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#imageInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}

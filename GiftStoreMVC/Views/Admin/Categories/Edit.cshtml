@@ -1,0 +1,47 @@
+﻿@model GiftStoreMVC.Models.GiftstoreCategory
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>GiftstoreCategory</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Categoryid" />
+            <div class="form-group">
+                <label asp-for="Categoryname" class="control-label"></label>
+                <input asp-for="Categoryname" class="form-control" />
+                <span asp-validation-for="Categoryname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Imagepath" class="control-label"></label>
+                <input asp-for="Imagepath" class="form-control" />
+                <span asp-validation-for="Imagepath" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Categorydescription" class="control-label"></label>
+                <input asp-for="Categorydescription" class="form-control" />
+                <span asp-validation-for="Categorydescription" class="text-danger"></span>
+            </div>
+            @*<div class="form-group">
+                <label asp-for="Userid" class="control-label"></label>
+                <select asp-for="Userid" class="form-control" asp-items="ViewBag.Userid"></select>
+                <span asp-validation-for="Userid" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

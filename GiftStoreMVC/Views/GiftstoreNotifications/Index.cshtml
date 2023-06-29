@@ -1,0 +1,54 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreNotification>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table" style="color:#fff;">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Notificationcontent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notificationdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Isread)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notificationcontent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notificationdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Isread)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.User.Email)
+            </td>*@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Notificationlid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Notificationlid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Notificationlid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

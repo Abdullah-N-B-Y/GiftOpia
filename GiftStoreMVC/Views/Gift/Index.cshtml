@@ -1,0 +1,72 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreGift>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Giftname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Giftprice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Imagepath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Giftavailability)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Giftdescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giftname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giftprice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Imagepath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giftavailability)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giftdescription)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Categoryid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order.Orderid)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Giftid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Giftid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Giftid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

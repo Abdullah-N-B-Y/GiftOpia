@@ -1,0 +1,74 @@
+﻿@model IEnumerable<UsersNotifications>
+
+@{
+    ViewData["Title"] = "Notification";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="row m-t-30">
+                    <div class="col-md-12">
+                        <!-- DATA TABLE-->
+                        <form asp-action="Notification">
+                            <div class="table-responsive m-b-40">
+                                <table class="table table-borderless table-data3">
+                                    <thead>
+                                        <tr>
+                                            <th>User Id</th>
+                                            <th>Username</th>
+                                            <th>Date</th>
+                                            <th>Email</th>
+                                            <th>Phone number</th>
+                                            <th>Role id</th>
+                                            <th>Content</th>
+                                            <th>Approve</th>
+                                            <th>Reason</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.GiftstoreUser.Userid</td>
+                                                <td>@item.GiftstoreUser.Username</td>
+                                                <td>@item.GiftstoreNotification.Notificationdate</td>
+                                                <td class="process">@item.GiftstoreNotification.Email</td>
+                                                <td>@item.GiftstoreUser.Phonenumber</td>
+                                                <td>@item.GiftstoreUser.Roleid</td>
+                                                <td>@item.GiftstoreNotification.Notificationcontent</td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <input type="hidden" name="Userid" value="@item.GiftstoreUser.Userid" />
+                                                        <input type="hidden" name="Notificationlid" value="@item.GiftstoreNotification.Notificationlid" />
+                                                        <button type="submit" name="action" value="Accept" class="item" style="background-color:limegreen;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Accept">
+                                                            <i class="fa-solid fa-check" style="color:#fff;"></i>
+                                                        </button>
+                                                        <button type="submit" name="action" value="Reject" class="item" style="background-color:red;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Reject">
+                                                            <i class="fa-solid fa-xmark" style="color:#fff;"></i>
+                                                        </button>
+                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove">
+                                                            <i class="zmdi zmdi-delete"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <input type="text" name="reason" placeholder="Reason..." />
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!-- END DATA TABLE-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreGift>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+}
+
+    <div id="portfolio">
+        <div class="container-fluid p-0">
+            <div class="row g-0">
+                @foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-sm-6">
+                        <a class="portfolio-box" href="#0" title="Category Name">
+                            <img class="img-fluid" src="@Url.Content("~/GiftsImages/"+item.Imagepath)" alt="..." />
+                            <div class="portfolio-box-caption p-3">
+                                <div class="project-category text-white-50">Gift Name</div>
+                                <div class="project-name">@item.Giftname</div>
+                            </div>
+                        </a>
+                    </div>
+                    <input type="hidden" name="@item.Giftname" />
+                    <input type="hidden" name="@item.Giftprice" />
+                    <input type="hidden" name="@item.Giftavailability" />
+                    <input type="hidden" name="@item.Giftdescription" />
+                    <input type="hidden" name="@item.Categoryid" />
+                }
+            </div>
+        </div>
+    </div>
+
+
