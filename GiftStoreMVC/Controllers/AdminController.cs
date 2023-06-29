@@ -301,7 +301,7 @@ namespace GiftStoreMVC.Controllers
             ViewData["RoleId"] = currentUser.Roleid;
 
             ViewData["NumberOfUsers"] = _context.GiftstoreUsers.Count();
-            ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();
+            ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();       //asd
             ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
 
             ViewData["TotalProfits"] = _context.GiftstoreOrders.Where(obj=> obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
