@@ -292,6 +292,26 @@ namespace GiftStoreMVC.Controllers
             return View(model);
         }
 
+
+        public IActionResult Profits(decimal? Categoryid)
+        {
+            decimal? id = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id;
+            ViewData["RoleId"] = currentUser.Roleid;
+
+            ViewData["NumberOfUsers"] = _context.GiftstoreUsers.Count();
+            ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();  //Anas Majdoub new work
+            ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
+
+            ViewData["TotalProfits"] = (double)_context.GiftstoreOrders.Where(obj => obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
+            return View();
+        }
+
+
+
         private bool GiftstoreGiftExists(decimal id)
         {
             return (_context.GiftstoreGifts?.Any(e => e.Giftid == id)).GetValueOrDefault();
