@@ -26,12 +26,12 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="filters">
-                    <ul>
+                   <ul>
                         <li class="active" data-filter="*">All Products</li>
                         <li data-filter=".des">Featured</li>
                         <li data-filter=".dev">Flash Deals</li>
                         <li data-filter=".gra">Last Minute</li>
-                    </ul>
+                    </ul> 
                 </div>
             </div>
             <div class="col-md-12">
@@ -41,19 +41,21 @@
                         {
                             <div class="col-lg-4 col-md-4 all des">
                                 <div class="product-item">
-                                    <a href="#"><img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" alt=""></a>
+                                    <a href="@Url.Action("GetGiftByCategoryID", "Gift", new { CategoryID = @item.Categoryid })">
+                                        <img src="@Url.Content("~/CategoriesImages/" + item.Imagepath)">
+                                    </a>                                    
                                     <div class="down-content">
-                                        <a href="#"><h4>@item.Categoryname</h4></a>
+                                        <a asp-controller="Gift" asp-action="GetGiftByCategoryID" asp-route-id="@item.Categoryid"><h4>@item.Categoryname</h4></a>
                                         @*<h6>$18.25</h6>*@
                                         <p>@item.Categorydescription</p>
-                                        <ul class="stars">
+@*                                        <ul class="stars">
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
                                             <li><i class="fa fa-star"></i></li>
                                         </ul>
-                                        <span>Reviews (12)</span>
+                                        <span>Reviews (12)</span>*@
                                     </div>
                                 </div>
                             </div>
