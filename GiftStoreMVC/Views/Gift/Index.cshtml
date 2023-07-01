@@ -3,96 +3,10 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
-<div class="page-wrapper">
-    <div class="page-container">
-        <div class="main-content">
-            <div class="section__content section__content--p30">
-                <div class="main">
-                    <ul class="cards">
-                        @foreach (var item in Model)
-                        {
-                            <li class="cards_item">
-                                <div class="card">
-                                    <div class="card_image">
-                                        <a asp-action="" asp-rout-id="@ViewData["CategoryId"]">
-                                            <img src="@Url.Content("~/GiftsImages/"+item.Imagepath)" alt="@item.Giftname" />
-                                        </a>
-                                        <span class="card_price"><span>$</span>@item.Giftprice</span>
-                                    </div>
-                                    <div class="card_content">
-                                        <h2 class="card_title">@item.Giftname</h2>
-                                        <div class="card_text">
-                                            <p>
-                                                @item.Giftdescription
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <button class="btn" id="AddGiftButton" onclick="OpenDialog(@item.Giftid)">Add Gift</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div id="myDialog" class="modal fade">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Add Gift</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div id="giftImageContainer">
-                    <!-- Gift image will be inserted here dynamically -->
-                </div>
-                <span class="card_price" id="giftPrice"></span>
-                <p id="giftDescription"></p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save</button>
-            </div>
-        </div>
-    </div>
-</div>
+<h1>Index</h1>
 
-
-
- 
-
-<script type="text/JavaScript">
-
-    function OpenDialog(GiftID) {
-            $.ajax({
-                url: "/Gift/GetGiftDialogByID",
-                type: "GET",
-                data: { GiftID: GiftID },
-                success: function (response) {
-                $("#giftImageContainer").html("<img src=/GiftsImages/" + response.imagepath + " alt='" + response.giftname + " ' />");
-                $("#giftPrice").html("<span>$</span>" + response.giftprice);
-                $("#giftDescription").text(response.giftdescription);
-                }
-            });
-            $("#myDialog").modal("show");
-    }
-
-
-
- 
-</script>
-
-
-@*<h1>Index</h1>*@
-
-@*<p>
+<p>
     <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
@@ -155,4 +69,3 @@
 }
     </tbody>
 </table>
-*@

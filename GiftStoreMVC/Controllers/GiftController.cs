@@ -33,42 +33,6 @@ namespace GiftStoreMVC.Controllers
             var modelContext = _context.GiftstoreGifts.Include(g => g.Category).Include(g => g.Order);
             return View(await modelContext.ToListAsync());
         }
-        
-        
-        // GET: GetGiftByCategoryID
-        public async Task<IActionResult> GetGiftByCategoryID(decimal CategoryID)
-        {
-            var modelContext = _context.GiftstoreGifts.Where(x=>x.Categoryid== CategoryID);
-            return View("Index",await modelContext.ToListAsync());
-        }
-
-        public async Task<JsonResult> GetGiftDialogByID(int GiftID)
-        {
-            var result = await _context.GiftstoreGifts.Where(x=>x.Giftid== GiftID).SingleAsync();
-
-            return Json(result);
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         // GET: Gift/Details/5
         public async Task<IActionResult> Details(decimal? id)
@@ -225,15 +189,6 @@ namespace GiftStoreMVC.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-
-
-
-
-
-
-
-
 
         private bool GiftstoreGiftExists(decimal id)
         {
