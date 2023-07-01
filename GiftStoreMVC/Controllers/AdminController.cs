@@ -28,7 +28,7 @@ namespace GiftStoreMVC.Controllers
             ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();
             ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
 
-
+            // AHmad
             return View(currentUser);
         }
 

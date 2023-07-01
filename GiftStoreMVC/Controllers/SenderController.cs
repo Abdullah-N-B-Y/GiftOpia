@@ -11,6 +11,7 @@ namespace GiftStoreMVC.Controllers
         private readonly ModelContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
         GiftstoreNotification notification;
+
         public SenderController(ModelContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
@@ -62,7 +63,6 @@ namespace GiftStoreMVC.Controllers
                 return View();
             }
         }
-
 
         public IActionResult Categories()
         {
@@ -232,5 +232,6 @@ namespace GiftStoreMVC.Controllers
 
             return RedirectToAction("Index");
         }
+
     }
 }
