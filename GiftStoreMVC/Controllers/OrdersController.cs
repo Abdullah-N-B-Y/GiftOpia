@@ -7,161 +7,149 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GiftStoreMVC.Models;
 
-namespace GiftStoreMVC.Controllers
+namespace GiftStoreMVC.Controllers;
+
+public class OrdersController : Controller
 {
-    public class OrdersController : Controller
+    private readonly ModelContext _context;
+
+    public OrdersController(ModelContext context) => _context = context;
+
+    // GET: Orders
+    public async Task<IActionResult> Index() =>
+        _context.GiftstoreOrders != null ? 
+            View(await _context.GiftstoreOrders.ToListAsync()) :
+            Problem("Entity set 'ModelContext.GiftstoreOrders'  is null.");
+
+    // GET: Orders/Details/5
+    public async Task<IActionResult> Details(decimal? id)
     {
-        private readonly ModelContext _context;
-
-        public OrdersController(ModelContext context)
+        if (id == null || _context.GiftstoreOrders == null)
         {
-            _context = context;
+            return NotFound();
         }
 
-        // GET: Orders
-        public async Task<IActionResult> Index()
+        GiftstoreOrder? giftstoreOrder = await _context.GiftstoreOrders
+            .FirstOrDefaultAsync(m => m.Orderid == id);
+        if (giftstoreOrder == null)
         {
-              return _context.GiftstoreOrders != null ? 
-                          View(await _context.GiftstoreOrders.ToListAsync()) :
-                          Problem("Entity set 'ModelContext.GiftstoreOrders'  is null.");
+            return NotFound();
         }
 
-        // GET: Orders/Details/5
-        public async Task<IActionResult> Details(decimal? id)
-        {
-            if (id == null || _context.GiftstoreOrders == null)
-            {
-                return NotFound();
-            }
+        return View(giftstoreOrder);
+    }
 
-            var giftstoreOrder = await _context.GiftstoreOrders
-                .FirstOrDefaultAsync(m => m.Orderid == id);
-            if (giftstoreOrder == null)
-            {
-                return NotFound();
-            }
+    // GET: Orders/Create
+    public IActionResult Create() => View();
 
-            return View(giftstoreOrder);
-        }
-
-        // GET: Orders/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Orders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Orderid,Recipientaddress,Arrivaldate,Finalprice")] GiftstoreOrder giftstoreOrder)
-        {
-            // Orderdate 
+    // POST: Orders/Create
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Create([Bind("Orderid,Recipientaddress,Arrivaldate,Finalprice")] GiftstoreOrder giftstoreOrder)
+    {
+        // Orderdate 
           
 
-            if (ModelState.IsValid)
-            {
-                giftstoreOrder.Orderstatus = "Arrived";
-                giftstoreOrder.Orderdate = DateTime.UtcNow;
-                _context.Add(giftstoreOrder);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(giftstoreOrder);
-        }
-
-        // GET: Orders/Edit/5
-        public async Task<IActionResult> Edit(decimal? id)
+        if (ModelState.IsValid)
         {
-            if (id == null || _context.GiftstoreOrders == null)
-            {
-                return NotFound();
-            }
-
-            var giftstoreOrder = await _context.GiftstoreOrders.FindAsync(id);
-            if (giftstoreOrder == null)
-            {
-                return NotFound();
-            }
-            return View(giftstoreOrder);
-        }
-
-        // POST: Orders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(decimal id, [Bind("Orderid,Orderdate,Orderstatus,Recipientaddress,Arrivaldate,Finalprice")] GiftstoreOrder giftstoreOrder)
-        {
-            if (id != giftstoreOrder.Orderid)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(giftstoreOrder);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!GiftstoreOrderExists(giftstoreOrder.Orderid))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(giftstoreOrder);
-        }
-
-        // GET: Orders/Delete/5
-        public async Task<IActionResult> Delete(decimal? id)
-        {
-            if (id == null || _context.GiftstoreOrders == null)
-            {
-                return NotFound();
-            }
-
-            var giftstoreOrder = await _context.GiftstoreOrders
-                .FirstOrDefaultAsync(m => m.Orderid == id);
-            if (giftstoreOrder == null)
-            {
-                return NotFound();
-            }
-
-            return View(giftstoreOrder);
-        }
-
-        // POST: Orders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(decimal id)
-        {
-            if (_context.GiftstoreOrders == null)
-            {
-                return Problem("Entity set 'ModelContext.GiftstoreOrders'  is null.");
-            }
-            var giftstoreOrder = await _context.GiftstoreOrders.FindAsync(id);
-            if (giftstoreOrder != null)
-            {
-                _context.GiftstoreOrders.Remove(giftstoreOrder);
-            }
-            
+            giftstoreOrder.Orderstatus = "Arrived";
+            giftstoreOrder.Orderdate = DateTime.UtcNow;
+            _context.Add(giftstoreOrder);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
-        private bool GiftstoreOrderExists(decimal id)
-        {
-          return (_context.GiftstoreOrders?.Any(e => e.Orderid == id)).GetValueOrDefault();
-        }
+        return View(giftstoreOrder);
     }
+
+    // GET: Orders/Edit/5
+    public async Task<IActionResult> Edit(decimal? id)
+    {
+        if (id == null || _context.GiftstoreOrders == null)
+        {
+            return NotFound();
+        }
+
+        GiftstoreOrder? giftstoreOrder = await _context.GiftstoreOrders.FindAsync(id);
+        if (giftstoreOrder == null)
+        {
+            return NotFound();
+        }
+        return View(giftstoreOrder);
+    }
+
+    // POST: Orders/Edit/5
+    // To protect from overposting attacks, enable the specific properties you want to bind to.
+    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Edit(decimal id, [Bind("Orderid,Orderdate,Orderstatus,Recipientaddress,Arrivaldate,Finalprice")] GiftstoreOrder giftstoreOrder)
+    {
+        if (id != giftstoreOrder.Orderid)
+        {
+            return NotFound();
+        }
+
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                _context.Update(giftstoreOrder);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!GiftstoreOrderExists(giftstoreOrder.Orderid))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
+        return View(giftstoreOrder);
+    }
+
+    // GET: Orders/Delete/5
+    public async Task<IActionResult> Delete(decimal? id)
+    {
+        if (id == null || _context.GiftstoreOrders == null)
+        {
+            return NotFound();
+        }
+
+        GiftstoreOrder? giftstoreOrder = await _context.GiftstoreOrders
+            .FirstOrDefaultAsync(m => m.Orderid == id);
+        if (giftstoreOrder == null)
+        {
+            return NotFound();
+        }
+
+        return View(giftstoreOrder);
+    }
+
+    // POST: Orders/Delete/5
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> DeleteConfirmed(decimal id)
+    {
+        if (_context.GiftstoreOrders == null)
+        {
+            return Problem("Entity set 'ModelContext.GiftstoreOrders'  is null.");
+        }
+        GiftstoreOrder? giftstoreOrder = await _context.GiftstoreOrders.FindAsync(id);
+        if (giftstoreOrder != null)
+        {
+            _context.GiftstoreOrders.Remove(giftstoreOrder);
+        }
+            
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+    }
+
+    private bool GiftstoreOrderExists(decimal id) => (_context.GiftstoreOrders?.Any(e => e.Orderid == id)).GetValueOrDefault();
 }

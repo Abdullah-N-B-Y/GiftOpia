@@ -1,8 +1,7 @@
-﻿namespace GiftStoreMVC.Models
+﻿namespace GiftStoreMVC.Models;
+
+public class UsersNotifications
 {
-    public class UsersNotifications
-    {
-        public GiftstoreUser? GiftstoreUser { get; set; }
-        public GiftstoreNotification? GiftstoreNotification { get; set; }
-    }
+    public GiftstoreUser? GiftstoreUser { get; set; }
+    public GiftstoreNotification? GiftstoreNotification { get; set; }
 }
