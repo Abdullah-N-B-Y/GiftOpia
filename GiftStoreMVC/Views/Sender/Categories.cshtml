@@ -1,10 +1,19 @@
-﻿@model IEnumerable<GiftstoreCategory>
+﻿@model CategoryGift
 
 
 @{
     ViewData["Title"] = "Categories";
     Layout = "~/Views/Shared/_SenderLayout.cshtml";
+    var b = true;
+    dynamic l = Model.Category;
+    if (Model.Category == null)
+    {
+        l = Model.Gift;
+        b = false;
+    }
+
 }
+
 
 <!-- Page Content -->
 <div class="page-heading products-heading header-text">
@@ -23,38 +32,66 @@
 
 <div class="products">
     <div class="container">
+        <form asp-action="Categories">
+            <div class="row" >
+                <div class="input-group" style="justify-content:center;text-align:center;">
+                    <input type="text" class="input" id="GiftName" name="GiftName" placeholder="#Watches,Glasses...etc" autocomplete="off">
+                    <input class="button--submit" value="Search" type="submit">
+                </div>
+            </div>
+        </form>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-12">
                 <div class="filters">
-                    <ul>
+                    @*<ul>
                         <li class="active" data-filter="*">All Products</li>
                         <li data-filter=".des">Featured</li>
                         <li data-filter=".dev">Flash Deals</li>
                         <li data-filter=".gra">Last Minute</li>
-                    </ul>
+                    </ul>*@
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="filters-content">
                     <div class="row grid">
-                        @foreach(var item in Model)
+                        @foreach(var item in l)
                         {
                             <div class="col-lg-4 col-md-4 all des">
                                 <div class="product-item">
-                                    <a href="#"><img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" alt=""></a>
-                                    <div class="down-content">
-                                        <a href="#"><h4>@item.Categoryname</h4></a>
-                                        @*<h6>$18.25</h6>*@
-                                        <p>@item.Categorydescription</p>
-                                        <ul class="stars">
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                            <li><i class="fa fa-star"></i></li>
-                                        </ul>
-                                        <span>Reviews (12)</span>
-                                    </div>
+                                    @if(b)
+                                    {
+                                        <a asp-action="GetGiftsByCategoryId" asp-route-Categoryid="@item.Categoryid"><img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" alt=""></a>
+                                        <div class="down-content">
+                                            <a href="#"><h4>@item.Categoryname</h4></a>
+                                            <h6>$18.25</h6>
+                                            <p>@item.Categorydescription</p>
+                                            <ul class="stars">
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                            <span>Reviews (12)</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <a href="#"><img src="@Url.Content("~/GiftsImages/"+item.Imagepath)" alt=""></a>
+                                        <div class="down-content">
+                                            <a href="#"><h4>@item.Giftname</h4></a>
+                                            <h6>@item.Giftprice</h6>
+                                            <p>@item.Giftdescription</p>
+                                            <ul class="stars">
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                                <li><i class="fa fa-star"></i></li>
+                                            </ul>
+                                            <span>Reviews (12)</span>
+                                        </div>
+                                    }
                                 </div>
                             </div>
                         }

@@ -1,0 +1,41 @@
+﻿@model GiftstoreGift
+
+@{
+    ViewData["Title"] = "GiftDetails";
+    Layout = "~/Views/Shared/_SenderLayout.cshtml";
+}
+
+<!-- Page Content -->
+<div class="page-heading products-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-content">
+                    <h4>new arrivals</h4>
+                    <h2>sixteen products</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12 col-md-4 card">
+            <form asp-action="GiftDetails">
+                <span class="card__title">Gift details</span>
+                <div class="card__form">
+
+                <input value="@Model.Giftname" type="text" disabled>
+                <input type="hidden" name="GiftName" value="@Model.Giftname" />
+                
+                <input value="@Model.Giftprice" type="text" disabled />
+                <input value="@Model.Imagepath" type="text" disabled />
+                <input value="@Model.Giftavailability" type="text" disabled />
+                <input value="@Model.Giftdescription" type="text" disabled />
+                <input name="recipientName" placeholder="recipient name" type="text" required />
+                <input name="recipientAddress" placeholder="recipient address" type="text" required />
+
+                <button class="sign-up"> Sign up</button>
+            </div>
+            </form>
+    </div>
+</div>

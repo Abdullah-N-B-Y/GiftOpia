@@ -45,157 +45,9 @@ namespace GiftStoreMVC.Controllers
 
             return View("~/Views/Admin/Categories/Category.cshtml", modelContext);
         }
+       
 
-
-        public async Task<IActionResult> Details(decimal? id)
-        {
-            //if (id == null || _context.GiftstoreCategories == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //var giftstoreCategory = await _context.GiftstoreCategories
-            //    .Include(g => g.User)
-            //    .FirstOrDefaultAsync(m => m.Categoryid == id);
-            //if (giftstoreCategory == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(giftstoreCategory);
-            return View("~/Views/Admin/Categories/Details.cshtml");
-        }
-
-
-        public IActionResult Create()
-        {
-            //ViewData["Userid"] = new SelectList(_context.GiftstoreUsers, "Userid", "Email");
-            return View("~/Views/Admin/Categories/Create.cshtml");
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Categoryid,Categoryname,Categorydescription,CategoryImage")] GiftstoreCategory giftstoreCategory)
-        {
-            if (ModelState.IsValid)
-            {
-                if (giftstoreCategory.CategoryImage != null)
-                {
-                    string wwwRootPath = _webHostEnvironment.WebRootPath;
-                    string fileName = Guid.NewGuid().ToString() + giftstoreCategory.CategoryImage.FileName;
-                    string path = Path.Combine(wwwRootPath, "CategoriesImages", fileName);
-                    using (var fileStream = new FileStream(path, FileMode.Create))
-                    {
-                        await giftstoreCategory.CategoryImage.CopyToAsync(fileStream);
-                    }
-                    giftstoreCategory.Imagepath = fileName;
-                }
-
-                _context.Add(giftstoreCategory);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["Userid"] = new SelectList(_context.GiftstoreUsers, "Userid", "Email");
-            return View("~/Views/Admin/Categories/Create.cshtml", giftstoreCategory);
-        }
-
-
-        public async Task<IActionResult> Edit(decimal? id)
-        {
-            if (id == null || _context.GiftstoreCategories == null)
-            {
-                return NotFound();
-            }
-
-            var giftstoreCategory = await _context.GiftstoreCategories.FindAsync(id);
-            if (giftstoreCategory == null)
-            {
-                return NotFound();
-            }
-            ViewData["Userid"] = new SelectList(_context.GiftstoreUsers, "Userid", "Email");
-            return View("~/Views/Admin/Categories/Edit.cshtml", giftstoreCategory);
-        }
-
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(decimal id, [Bind("Categoryid,Categoryname,Imagepath,Categorydescription,Userid")] GiftstoreCategory giftstoreCategory)
-        {
-            if (id != giftstoreCategory.Categoryid)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(giftstoreCategory);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!GiftstoreCategoryExists(giftstoreCategory.Categoryid))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["Userid"] = new SelectList(_context.GiftstoreUsers, "Userid", "Email");
-            return View("~/Views/Admin/Categories/Edit.cshtml", giftstoreCategory);
-        }
-
-
-        public async Task<IActionResult> Delete(decimal? id)
-        {
-            if (id == null || _context.GiftstoreCategories == null)
-            {
-                return NotFound();
-            }
-
-            var giftstoreCategory = await _context.GiftstoreCategories.FirstOrDefaultAsync(m => m.Categoryid == id);
-            if (giftstoreCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View("~/Views/Admin/Categories/Delete.cshtml", giftstoreCategory);
-        }
-
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(decimal id)
-        {
-            if (_context.GiftstoreCategories == null)
-            {
-                return Problem("Entity set 'ModelContext.GiftstoreCategories'  is null.");
-            }
-            var giftstoreCategory = await _context.GiftstoreCategories.FindAsync(id);
-            if (giftstoreCategory != null)
-            {
-                _context.GiftstoreCategories.Remove(giftstoreCategory);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction("~/Views/Admin/Categories/Delete.cshtml", nameof(Index));
-        }
-
-        public async void D1(decimal id)
-        {
-            var giftstoreNotification = await _context.GiftstoreNotifications.FindAsync(id);
-            if (giftstoreNotification != null)
-            {
-                _context.GiftstoreNotifications.Remove(giftstoreNotification);
-            }
-            await _context.SaveChangesAsync();
-        }
+        
 
         private bool GiftstoreCategoryExists(decimal id)
         {
@@ -257,6 +109,16 @@ namespace GiftStoreMVC.Controllers
             return View(model);
         }
 
+
+        public async void D1(decimal id)
+        {
+            var giftstoreNotification = await _context.GiftstoreNotifications.FindAsync(id);
+            if (giftstoreNotification != null)
+            {
+                _context.GiftstoreNotifications.Remove(giftstoreNotification);
+            }
+            await _context.SaveChangesAsync();
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Notification(decimal? Userid, decimal Notificationlid, string? action)
@@ -307,6 +169,7 @@ namespace GiftStoreMVC.Controllers
             var profits = (double) _context.GiftstoreOrders.Where(obj=> obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
             ViewData["TotalProfits"] = profits * 0.05;
             return View();
+
         }
 
 

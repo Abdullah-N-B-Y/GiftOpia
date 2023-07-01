@@ -185,7 +185,7 @@
                     @if (id == 1)
                     {
                         <li>
-                            <a asp-controller="Admin" asp-action="Category">
+                            <a asp-controller="Categories" asp-action="Index">
                                 <i class="fas fa-table"></i>Add categories
                             </a>
                         </li>
@@ -225,11 +225,16 @@
                                 <i class="fa-solid fa-bell"></i>Notification
                             </a>
                         </li>
+                        <li>
+                            <a asp-controller="Maker" asp-action="SenderRequest">
+                                <i class="fa-solid fa-bell"></i>Sender Request
+                            </a>
+                        </li>
                     }
                     @if (id == 1)
                     {
                         <li>
-                            <a asp-controller="Admin" asp-action="UsersIndex">
+                            <a asp-controller="Users" asp-action="Index">
                                 <i class="fa-solid fa-user"></i>Users
                             </a>
                         </li>

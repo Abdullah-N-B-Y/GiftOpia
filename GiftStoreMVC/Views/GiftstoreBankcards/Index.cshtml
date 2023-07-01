@@ -1,0 +1,61 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreBankcard>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_SenderLayout.cshtml";
+}
+
+<h1>Index</h1>
+<div class="products">
+    <div class="container">
+        <div class="container p-0">
+            <div class="card px-4">
+                <p>
+                    <a asp-action="Create">Create New</a>
+                </p>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Cardholdername)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Expirationdate)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Cvv)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Totalamount)
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                @foreach (var item in Model) {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cardholdername)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Expirationdate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Cvv)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Totalamount)
+                            </td>
+                            <td>
+                                <a asp-action="Edit" asp-route-id="@item.Cardnumber">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Cardnumber">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Cardnumber">Delete</a>
+                            </td>
+                        </tr>
+                }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -25,11 +25,20 @@
     <link rel="stylesheet" href="~/HomeAssets/assets/css/templatemo-sixteen.css">
     <link rel="stylesheet" href="~/HomeAssets/assets/css/owl.css">
 
+
+    <link rel="stylesheet" href="~/SenderAssets/searchinput.css">
+
+    <link rel="stylesheet" href="~/SenderAssets/dialogbox.css">
+    <link rel="stylesheet" href="~/SenderAssets/payment.css">
+
+    <!--Sender choose gift form like sign in form-->
+
+    <link rel="stylesheet" href="~/SenderAssets/choosegift.css">
+
 </head>
 
 <body>
 
-    <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
             <div></div>
@@ -37,7 +46,6 @@
             <div></div>
         </div>
     </div>
-    <!-- ***** Preloader End ***** -->
     <!-- Header -->
     <header class="">
         <nav class="navbar navbar-expand-lg">
@@ -66,9 +74,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Feedback</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="" href="contact.html"><img style="width:50px;height:50px;border-radius:50%;" src="@Url.Content("~/UsersImages/"+Model.Imagepath)" /></a>
-                        </li>
+                        @*<li class="nav-item">
+                            <a class="" href="contact.html"><img style="width:50px;height:50px;border-radius:50%;" src="@Url.Content("~/UsersImages/"+Model.Item2.Imagepath)" /></a>
+                        </li>*@
                     </ul>
                 </div>
             </div>
@@ -121,6 +129,8 @@
             }
         }
     </script>
+
+    <!--Sender choose gift form like sign in form-->
 
 
 </body>

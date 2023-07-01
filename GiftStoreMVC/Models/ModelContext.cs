@@ -392,6 +392,15 @@ public partial class ModelContext : DbContext
             entity.Property(e => e.Giftid)
                 .HasColumnType("NUMBER")
                 .HasColumnName("GIFTID");
+            entity.Property(e => e.Giftname)
+                .HasMaxLength(255)
+                .HasColumnName("GIFTNAME");
+            entity.Property(e => e.Giftprice)
+                .HasColumnType("FLOAT")
+                .HasColumnName("GIFTPRICE");
+            entity.Property(e => e.Makerid)
+                .HasColumnType("NUMBER")
+                .HasColumnName("MAKERID");
             entity.Property(e => e.Recipientaddress)
                 .HasMaxLength(255)
                 .HasColumnName("RECIPIENTADDRESS");
@@ -408,12 +417,19 @@ public partial class ModelContext : DbContext
             entity.Property(e => e.Senderid)
                 .HasColumnType("NUMBER")
                 .HasColumnName("SENDERID");
+            entity.Property(e => e.Sendername)
+                .HasMaxLength(255)
+                .HasColumnName("SENDERNAME");
 
             entity.HasOne(d => d.Gift).WithMany(p => p.GiftstoreSenderrequests)
                 .HasForeignKey(d => d.Giftid)
                 .HasConstraintName("SYS_C00379830");
 
-            entity.HasOne(d => d.Sender).WithMany(p => p.GiftstoreSenderrequests)
+            entity.HasOne(d => d.Maker).WithMany(p => p.GiftstoreSenderrequestMakers)
+                .HasForeignKey(d => d.Makerid)
+                .HasConstraintName("FK_MAKER_ID");
+
+            entity.HasOne(d => d.Sender).WithMany(p => p.GiftstoreSenderrequestSenders)
                 .HasForeignKey(d => d.Senderid)
                 .HasConstraintName("SYS_C00379829");
         });

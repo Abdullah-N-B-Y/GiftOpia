@@ -1,0 +1,58 @@
+﻿@model GiftStoreMVC.Models.GiftstoreBankcard
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_SenderLayout.cshtml";
+}
+
+                <h1>Create</h1>
+<div class="products">
+    <div class="container">
+        <div class="container p-0">
+            <div class="card px-4">
+                <h4>GiftstoreBankcard</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Create">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Cardnumber" class="control-label"></label>
+                                <input asp-for="Cardnumber" class="form-control" />
+                                <span asp-validation-for="Cardnumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Cardholdername" class="control-label"></label>
+                                <input asp-for="Cardholdername" class="form-control" />
+                                <span asp-validation-for="Cardholdername" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Expirationdate" class="control-label"></label>
+                                <input type="text" asp-for="Expirationdate" class="form-control" />
+                                <span asp-validation-for="Expirationdate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Cvv" class="control-label"></label>
+                                <input asp-for="Cvv" class="form-control" />
+                                <span asp-validation-for="Cvv" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Totalamount" class="control-label"></label>
+                                <input asp-for="Totalamount" class="form-control" />
+                                <span asp-validation-for="Totalamount" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

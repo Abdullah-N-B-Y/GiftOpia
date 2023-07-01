@@ -1,0 +1,49 @@
+﻿@model GiftStoreMVC.Models.GiftstoreCategory
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <h1>Create</h1>
+
+                <h4>GiftstoreCategory</h4>
+                <hr />
+                <div class="row">
+                    <div class="col-md-4">
+                        <form asp-action="Create" enctype="multipart/form-data">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="Categoryname" class="control-label"></label>
+                                <input asp-for="Categoryname" class="form-control" />
+                                <span asp-validation-for="Categoryname" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CategoryImage" class="control-label"></label>
+                                <input asp-for="CategoryImage" class="form-control" />
+                                <span asp-validation-for="CategoryImage" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Categorydescription" class="control-label"></label>
+                                <input asp-for="Categorydescription" class="form-control" />
+                                <span asp-validation-for="Categorydescription" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Create" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div>
+                    <a asp-action="Index">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

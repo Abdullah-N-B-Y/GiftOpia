@@ -21,6 +21,13 @@ namespace GiftStoreMVC.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
+            decimal? id = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id;
+            ViewData["RoleId"] = currentUser.Roleid;
+
             var modelContext = _context.GiftstoreUsers.Include(g => g.Category).Include(g => g.Role);
             return View(await modelContext.ToListAsync());
         }
@@ -28,6 +35,12 @@ namespace GiftStoreMVC.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(decimal? id)
         {
+            decimal? id2 = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id2;
+            ViewData["RoleId"] = currentUser.Roleid;
             if (id == null || _context.GiftstoreUsers == null)
             {
                 return NotFound();
@@ -48,6 +61,12 @@ namespace GiftStoreMVC.Controllers
         // GET: Users/Create
         public IActionResult Create()
         {
+            decimal? id2 = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id2;
+            ViewData["RoleId"] = currentUser.Roleid;
             ViewData["Categoryid"] = new SelectList(_context.GiftstoreCategories, "Categoryid", "Categoryid");
             ViewData["Roleid"] = new SelectList(_context.GiftstoreRoles, "Roleid", "Roleid");
             return View();
@@ -60,6 +79,12 @@ namespace GiftStoreMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Userid,Username,Password,Email,Name,Approvalstatus,Phonenumber,Imagepath,Categoryid,Roleid,Profits")] GiftstoreUser giftstoreUser)
         {
+            decimal? id = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id;
+            ViewData["RoleId"] = currentUser.Roleid;
             if (ModelState.IsValid)
             {
                 _context.Add(giftstoreUser);
@@ -74,6 +99,12 @@ namespace GiftStoreMVC.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(decimal? id)
         {
+            decimal? id2 = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id2;
+            ViewData["RoleId"] = currentUser.Roleid;
             if (id == null || _context.GiftstoreUsers == null)
             {
                 return NotFound();
@@ -96,6 +127,12 @@ namespace GiftStoreMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(decimal id, [Bind("Userid,Username,Password,Email,Name,Approvalstatus,Phonenumber,Imagepath,Categoryid,Roleid,Profits")] GiftstoreUser giftstoreUser)
         {
+            decimal? id2 = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id2;
+            ViewData["RoleId"] = currentUser.Roleid;
             if (id != giftstoreUser.Userid)
             {
                 return NotFound();
@@ -129,6 +166,12 @@ namespace GiftStoreMVC.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(decimal? id)
         {
+            decimal? id2 = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id2;
+            ViewData["RoleId"] = currentUser.Roleid;
             if (id == null || _context.GiftstoreUsers == null)
             {
                 return NotFound();
@@ -151,6 +194,12 @@ namespace GiftStoreMVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(decimal id)
         {
+            decimal? id2 = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id2;
+            ViewData["RoleId"] = currentUser.Roleid;
             if (_context.GiftstoreUsers == null)
             {
                 return Problem("Entity set 'ModelContext.GiftstoreUsers'  is null.");

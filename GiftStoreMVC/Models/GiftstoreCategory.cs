@@ -16,7 +16,6 @@ public partial class GiftstoreCategory
 
     [NotMapped]
     public virtual IFormFile? CategoryImage { get; set; }
-
     public virtual ICollection<GiftstoreGift> GiftstoreGifts { get; set; } = new List<GiftstoreGift>();
 
     public virtual ICollection<GiftstoreUser> GiftstoreUsers { get; set; } = new List<GiftstoreUser>();

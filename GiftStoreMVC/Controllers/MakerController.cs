@@ -293,6 +293,85 @@ namespace GiftStoreMVC.Controllers
         }
 
 
+        public IActionResult SenderRequest(decimal? Categoryid)
+        {
+            decimal? id = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id;
+            ViewData["RoleId"] = currentUser.Roleid;
+            ViewData["RoleName"] = HttpContext.Session.GetString("RoleName"); ;
+
+            //var users = _context.GiftstoreUsers.Where(obj => obj.Roleid == 2).ToList();
+            //var notifications = _context.GiftstoreNotifications.ToList();
+
+            //var model = from user in users
+            //            join notification in notifications
+            //            on user.Email equals notification.Email
+            //            select new UsersNotifications
+            //            {
+            //                GiftstoreUser = user,
+            //                GiftstoreNotification = notification
+            //            };
+            var request = _context.GiftstoreSenderrequests.Where(obj=> obj.Makerid == id).ToList();
+            return View(request);
+        }
+
+
+        public async void D1(decimal id)
+        {
+            var requests = await _context.GiftstoreSenderrequests.FindAsync(id);
+            if (requests != null)
+            {
+                _context.GiftstoreSenderrequests.Remove(requests);
+            }
+            await _context.SaveChangesAsync();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult SenderRequest(decimal? Senderid, decimal Requestid, string? action)
+        {
+            decimal? id = HttpContext.Session.GetInt32("UserId");
+            var currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
+            ViewData["Username"] = currentUser.Username;
+            ViewData["Password"] = currentUser.Password;
+            ViewData["UserId"] = id;
+            ViewData["RoleId"] = currentUser.Roleid;
+            ViewData["RoleName"] = HttpContext.Session.GetString("RoleName"); ;
+
+            var request = _context.GiftstoreSenderrequests.Where(obj => obj.Requestid == Requestid).SingleOrDefault();
+            var gift = request.Gift;
+            request.Requeststatus = action;
+            if (action.Equals("Accepted"))
+            {
+                GiftstoreOrder order = new()
+                {
+                    Orderdate = DateTime.Now,
+                    Orderstatus = "Pending",
+                    Recipientaddress = request.Recipientaddress,
+                    Finalprice = request.Giftprice
+                };
+                _context.Update(order);
+                _context.SaveChangesAsync();
+
+                //Email for sender that maker accept his gift
+            }
+            else
+            {
+                //Email for sender that maker reject his gift
+            }
+
+            D1(Requestid);
+
+            var makerRequest = _context.GiftstoreSenderrequests.Where(obj => obj.Makerid == id).ToList();
+            return View(makerRequest);
+        }
+
+
+
+
+
         public IActionResult Profits(decimal? Categoryid)
         {
             decimal? id = HttpContext.Session.GetInt32("UserId");
@@ -309,6 +388,12 @@ namespace GiftStoreMVC.Controllers
             ViewData["TotalProfits"] = (double)_context.GiftstoreOrders.Where(obj => obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
             return View();
         }
+
+
+
+
+
+
 
 
 

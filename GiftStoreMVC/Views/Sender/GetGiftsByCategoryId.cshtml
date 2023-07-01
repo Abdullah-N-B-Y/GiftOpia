@@ -1,0 +1,136 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreGift>
+
+
+@{
+    ViewData["Title"] = "Categories";
+    Layout = "~/Views/Shared/_SenderLayout.cshtml";
+}
+
+<style>
+    .container-1 {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .form {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        max-width: 400px;
+        width: 90%;
+    }
+
+        .form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+        }
+
+    .button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 16px;
+    }
+</style>
+
+<!-- Page Content -->
+<div class="page-heading products-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-content">
+                    <h4>new arrivals</h4>
+                    <h2>sixteen products</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="products">
+    <div class="container">
+        <form asp-action="Categories">
+            <div class="row">
+                <div class="input-group" style="justify-content:center;text-align:center;">
+                    <input type="text" class="input" id="GiftName" name="GiftName" placeholder="#Watches,Glasses...etc" autocomplete="off">
+                    <input class="button--submit" value="Search" type="submit">
+                </div>
+            </div>
+        </form>
+            <div class="row">
+                <div class="col-12">
+                    <div class="filters">
+                        @*<ul>
+                        <li class="active" data-filter="*">All Products</li>
+                        <li data-filter=".des">Featured</li>
+                        <li data-filter=".dev">Flash Deals</li>
+                        <li data-filter=".gra">Last Minute</li>
+                        </ul>*@
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="filters-content">
+                        <div class="row grid">
+                            @foreach (var item in Model)
+                            {
+                            <form asp-action="GetGiftsByCategoryId">
+                                    <input type="hidden" name="GiftName" value="@item.Giftname"/>
+                                    <div class="col-lg-4 col-md-4 all des">
+                                        <div class="product-item">
+                                            <div class="">
+                                        <button type="submit" style="border:none;cursor:pointer;"><img src="@Url.Content("~/GiftsImages/"+item.Imagepath)" alt=""></button>
+                                            </div>
+                                            <div class="down-content">
+                                                <h4>@item.Giftname</h4>
+                                                <h6>@item.Giftprice</h6>
+                                                <p>@item.Giftdescription</p>
+                                                <ul class="stars">
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                    <li><i class="fa fa-star"></i></li>
+                                                </ul>
+                                                <span>Reviews (12)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+

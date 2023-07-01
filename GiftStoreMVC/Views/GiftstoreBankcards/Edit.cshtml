@@ -1,0 +1,47 @@
+﻿@model GiftStoreMVC.Models.GiftstoreBankcard
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>GiftstoreBankcard</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Cardnumber" />
+            <div class="form-group">
+                <label asp-for="Cardholdername" class="control-label"></label>
+                <input asp-for="Cardholdername" class="form-control" />
+                <span asp-validation-for="Cardholdername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Expirationdate" class="control-label"></label>
+                <input asp-for="Expirationdate" class="form-control" />
+                <span asp-validation-for="Expirationdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cvv" class="control-label"></label>
+                <input asp-for="Cvv" class="form-control" />
+                <span asp-validation-for="Cvv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Totalamount" class="control-label"></label>
+                <input asp-for="Totalamount" class="form-control" />
+                <span asp-validation-for="Totalamount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

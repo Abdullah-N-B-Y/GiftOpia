@@ -1,0 +1,57 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreCategory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+            <h1>Index</h1>
+
+            <p>
+                <a asp-action="Create">Create New</a>
+            </p>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Categoryname)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Imagepath)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Categorydescription)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+            @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Categoryname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Imagepath)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Categorydescription)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Categoryid">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Categoryid">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Categoryid">Delete</a>
+                        </td>
+                    </tr>
+            }
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+

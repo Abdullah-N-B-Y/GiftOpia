@@ -48,7 +48,9 @@ public partial class GiftstoreUser
 
     public virtual ICollection<GiftstorePaymentrecored> GiftstorePaymentrecoreds { get; set; } = new List<GiftstorePaymentrecored>();
 
-    public virtual ICollection<GiftstoreSenderrequest> GiftstoreSenderrequests { get; set; } = new List<GiftstoreSenderrequest>();
+    public virtual ICollection<GiftstoreSenderrequest> GiftstoreSenderrequestMakers { get; set; } = new List<GiftstoreSenderrequest>();
+
+    public virtual ICollection<GiftstoreSenderrequest> GiftstoreSenderrequestSenders { get; set; } = new List<GiftstoreSenderrequest>();
 
     public virtual ICollection<GiftstoreTestimonial> GiftstoreTestimonials { get; set; } = new List<GiftstoreTestimonial>();
 

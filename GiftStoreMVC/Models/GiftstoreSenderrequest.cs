@@ -19,7 +19,17 @@ public partial class GiftstoreSenderrequest
 
     public decimal? Giftid { get; set; }
 
+    public decimal? Makerid { get; set; }
+
+    public string? Sendername { get; set; }
+
+    public string? Giftname { get; set; }
+
+    public decimal? Giftprice { get; set; }
+
     public virtual GiftstoreGift? Gift { get; set; }
+
+    public virtual GiftstoreUser? Maker { get; set; }
 
     public virtual GiftstoreUser? Sender { get; set; }
 }
