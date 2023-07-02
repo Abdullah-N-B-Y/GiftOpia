@@ -125,6 +125,14 @@ public class SenderController : Controller
 
     public IActionResult Payment(decimal? giftId, string? address)
     {
+        
+        // ViewData["PaymentObject"] = new
+        // {
+        //     giftId=giftId,
+        //     address=address,
+        //     requestID=15
+        // };
+        //
         ViewData["giftId"] = giftId;
         ViewData["address"] = address;
         return View();
@@ -132,44 +140,49 @@ public class SenderController : Controller
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Payment([Bind("Cardholdername,Cardnumber,Expirationdate,Cvv")] GiftstoreBankcard bankcard)
-    {
+    {   
+        decimal giftId = (decimal) ViewData["giftId"];
+        string? address = (string) ViewData["address"];
+        
+        
         GiftstoreBankcard? card = _context.GiftstoreBankcards.Where(obj=> obj.Cardholdername.Equals(bankcard.Cardholdername) &&
                                                                           obj.Cardnumber.Equals(bankcard.Cardnumber) &&
                                                                           obj.Expirationdate.Equals(bankcard.Expirationdate) &&
                                                                           obj.Cvv.Equals(bankcard.Cvv) 
         ).SingleOrDefault();
-        if (card != null) 
+        if (card is not null) 
         {
+            
             int? userId = HttpContext.Session.GetInt32("UserId");
             GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
-            decimal giftId = (decimal) ViewData["giftId"];
-            string? address = (string) ViewData["address"];
             GiftstoreGift? gift = _context.GiftstoreGifts.Where(obj => obj.Giftid == giftId).SingleOrDefault();
 
             if (card.Totalamount >= gift.Giftprice)
-            {
-                GiftstoreSenderrequest senderrequest = new()
-                {
-                    Recipientname = bankcard.Cardholdername,
+            { 
+                
+                // add to order
+              GiftstoreOrder order = new()
+              {
+                    Orderdate = DateTime.UtcNow,
+                    Orderstatus = "Pending",
                     Recipientaddress = address,
-                    Requeststatus = "Pending",
-                    Requestdate = DateTime.Now,
-                    Senderid = userId,
-                    Giftid = giftId
-                };
-
-                _context.Add(senderrequest);
-                _context.SaveChangesAsync();
-
-                GiftstoreNotification notification = new()
-                {
-                    Notificationcontent = "Accept my gift request",
-                    Notificationdate = DateTime.Now,
-                    Email = user.Email,
-                    Isread = false,
-                    Userid = userId
-                };
-                _context.Add(notification);
+                    Finalprice = gift.Giftprice
+              };
+              _context.Add(order);
+     
+              //remove request
+              
+                // GiftstoreNotification notification = new()
+                // {
+                //     Notificationcontent = "Accept my gift request",
+                //     Notificationdate = DateTime.Now,
+                //     Email = user.Email,
+                //     Isread = false,
+                //     Userid = userId
+                // };
+                // _context.Add(notification);
+                 
+                
                 _context.SaveChangesAsync();
             }
         }

@@ -15,7 +15,9 @@ public class Program
             builder.Configuration.GetConnectionString("GiftStoreMVCConnection")
         ));
         builder.Services.AddSession(options => options.IOTimeout = TimeSpan.FromMinutes(60));
-
+        builder.Services.AddScoped<IEmail,Email>();
+        
+        
         WebApplication app = builder.Build();
 
         app.UseSession();//to can use session
