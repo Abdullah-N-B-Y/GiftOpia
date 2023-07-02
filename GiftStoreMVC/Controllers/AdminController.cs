@@ -9,11 +9,15 @@ public class AdminController : Controller
 {
     private readonly ModelContext _context;
     private readonly IWebHostEnvironment _webHostEnvironment;
+
+    private readonly IEmail _email;
+
     //GiftstoreNotification notification;
-    public AdminController(ModelContext context, IWebHostEnvironment webHostEnvironment)
+    public AdminController(ModelContext context, IWebHostEnvironment webHostEnvironment,IEmail email)
     {
         _context = context;
         _webHostEnvironment = webHostEnvironment;
+        _email = email;
     }
     public IActionResult Index()
     {
@@ -105,13 +109,16 @@ public class AdminController : Controller
 
     public async void D1(decimal id)
     {
-        GiftstoreNotification? giftstoreNotification = await _context.GiftstoreNotifications.FindAsync(id);
-        if (giftstoreNotification != null)
+        GiftstoreNotification? giftStoreNotification = await _context.GiftstoreNotifications.FindAsync(id);
+        if (giftStoreNotification != null)
         {
-            _context.GiftstoreNotifications.Remove(giftstoreNotification);
+            _context.GiftstoreNotifications.Remove(giftStoreNotification);
         }
         await _context.SaveChangesAsync();
     }
+    
+    
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Notification(decimal? Userid, decimal Notificationlid, string? action)
@@ -126,18 +133,12 @@ public class AdminController : Controller
 
         GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == Userid).SingleOrDefault();
         user.Approvalstatus = action;
-        if (action.Equals("Accepted"))
-        {
-            //Email from admin to maker say that you are accepted
-        }
-        else
-        {
-            //Email from admin to maker say that you are rejected
-        }
         _context.Update(user);
         _context.SaveChangesAsync();
-
-        D1(Notificationlid);
+        
+        _email.SendEmailToUser(user.Email,user.Username,action);
+        
+        //D1(Notificationlid);
 
         var users = _context.GiftstoreUsers.ToList();
         var notifications = _context.GiftstoreNotifications.ToList();

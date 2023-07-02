@@ -155,7 +155,7 @@ public class MakerController : Controller
 
         GiftstoreSenderrequest? request = _context.GiftstoreSenderrequests.Where(obj => obj.Requestid == Requestid).SingleOrDefault();
 
-        var userGift = _context.GiftstoreGifts.Where(obj=> obj.Giftname.Equals(request.Giftname)).SingleOrDefault();
+        GiftstoreGift? userGift = _context.GiftstoreGifts.Where(obj=> obj.Giftname.Equals(request.Giftname)).SingleOrDefault();
 
         if (action.Equals("Accepted"))
         {
@@ -164,10 +164,7 @@ public class MakerController : Controller
             _context.SaveChangesAsync();
             
             GiftstoreUser sender = _context.GiftstoreUsers.Where(x => x.Userid == Senderid).SingleOrDefault();
-            _email.SendEmail(sender.Email,sender.Username, userGift.Giftid,request.Recipientaddress);
-         
-
-            //Email for sender that maker accept his gift
+            _email.SendPaymentEmailToSender(sender.Email,sender.Username, userGift.Giftid,request.Recipientaddress);
         }
         else
         {
