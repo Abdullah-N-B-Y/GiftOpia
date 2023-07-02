@@ -4,7 +4,6 @@
     Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
 
-
 <div class="page-wrapper">
     <div class="page-container">
         <div class="main-content">
@@ -50,21 +49,6 @@
                                 <label asp-for="Imagepath" class="control-label"></label>
                                 <input asp-for="Imagepath" class="form-control" />
                                 <span asp-validation-for="Imagepath" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Categoryid" class="control-label"></label>
-                                <select asp-for="Categoryid" class="form-control" asp-items="ViewBag.Categoryid"></select>
-                                <span asp-validation-for="Categoryid" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Roleid" class="control-label"></label>
-                                <select asp-for="Roleid" class="form-control" asp-items="ViewBag.Roleid"></select>
-                                <span asp-validation-for="Roleid" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Profits" class="control-label"></label>
-                                <input asp-for="Profits" class="form-control" />
-                                <span asp-validation-for="Profits" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <input type="submit" value="Save" class="btn btn-primary" />

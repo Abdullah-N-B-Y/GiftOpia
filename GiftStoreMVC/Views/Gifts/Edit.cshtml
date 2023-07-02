@@ -1,0 +1,72 @@
+﻿@model GiftStoreMVC.Models.GiftstoreGift
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+<h1>Edit</h1>
+
+<h4>GiftstoreGift</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Giftid" />
+            <div class="form-group">
+                <label asp-for="Giftname" class="control-label"></label>
+                <input asp-for="Giftname" class="form-control" />
+                <span asp-validation-for="Giftname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Giftprice" class="control-label"></label>
+                <input asp-for="Giftprice" class="form-control" />
+                <span asp-validation-for="Giftprice" class="text-danger"></span>
+            </div>
+                            <div class="form-group">
+                                <label asp-for="GiftImage" class="control-label"></label>
+                                <input asp-for="GiftImage" class="form-control" />
+                                <span asp-validation-for="GiftImage" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <div class="rs-select2 js-select-simple select--no-search">
+                                    <select name="Giftavailability">
+                                        <option disabled="disabled" selected="selected">Availability</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                    <div class="select-dropdown"></div>
+                                </div>
+                                <span asp-validation-for="Giftavailability" class="text-danger"></span>
+                            </div>
+            <div class="form-group">
+                <label asp-for="Giftdescription" class="control-label"></label>
+                <input asp-for="Giftdescription" class="form-control" />
+                <span asp-validation-for="Giftdescription" class="text-danger"></span>
+            </div>
+                            <div class="form-group">
+                                <input type="hidden" asp-for="Categoryid" class="form-control" value="@ViewData["Categoryid"]" />
+                            </div>
+                            <div class="form-group">
+                                <input type="hidden" asp-for="Userid" class="form-control" value="@ViewData["Userid"]" />
+                            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+

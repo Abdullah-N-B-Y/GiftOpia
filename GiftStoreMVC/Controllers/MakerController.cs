@@ -30,8 +30,23 @@ public class MakerController : Controller
         return View(currentUser);
     }
 
+    public IActionResult MyGifts()
+    {
+        decimal? id = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
+        ViewData["Username"] = currentUser?.Username;
+        ViewData["Password"] = currentUser?.Password;
+        ViewData["UserId"] = id;
+        ViewData["RoleId"] = currentUser?.Roleid;
+        ViewData["CategoryId"] = currentUser?.Categoryid;
+        
+        var category = _context.GiftstoreCategories.Where(obj => obj.Categoryid == currentUser.Categoryid).ToList();
 
-    public IActionResult Category()
+
+        return View(category);
+    }
+
+    public IActionResult SpecificCategoryGifts(decimal? categoryId)
     {
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
@@ -41,19 +56,9 @@ public class MakerController : Controller
         ViewData["RoleId"] = currentUser?.Roleid;
         ViewData["CategoryId"] = currentUser?.Categoryid;
 
-        //var users = _context.GiftstoreUsers.ToList();
-        GiftstoreCategory? category = _context.GiftstoreCategories.Where(obj=> obj.Categoryid == currentUser.Categoryid).SingleOrDefault();
+        var gifts = _context.GiftstoreGifts.Where(obj => obj.Categoryid == categoryId).ToList();
 
-
-        //var userCategories = from u in users
-        //                     join c in categories on u.Categoryid equals c.Categoryid
-        //                     select new UserCategory
-        //                     {
-        //                         GiftstoreUser = u,
-        //                         GiftstoreCategory = c
-        //                     };
-
-        return View(category);
+        return View(gifts);
     }
 
     public IActionResult Gifts(decimal? categoryId)
@@ -70,208 +75,11 @@ public class MakerController : Controller
         GiftstoreUser? user = _context.GiftstoreUsers
             .SingleOrDefault(obj => obj.Userid == id && obj.Categoryid == currentUser.Categoryid);
 
-        var gifts = _context.GiftstoreGifts
-            .Where(obj => obj.Userid == user.Userid)
-            .ToList();
-        // Process the retrieved gifts for the specific user
+        var gifts = _context.GiftstoreGifts.Where(obj => obj.Userid == id).ToList();
             
         return View(gifts);
     }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create(GiftstoreGift gift, int? giftAvailability)
-    {
-        decimal? id = HttpContext.Session.GetInt32("UserId");
-        GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-        ViewData["Username"] = currentUser?.Username;
-        ViewData["Password"] = currentUser?.Password;
-        ViewData["UserId"] = id;
-        ViewData["RoleId"] = currentUser?.Roleid;
-        ViewData["CategoryId"] = currentUser?.Categoryid;
-        if (ModelState.IsValid)
-        {
-            if (gift.GiftImage != null)
-            {
-                string wwwRootPath = _webHostEnvironment.WebRootPath;
-                string fileName = Guid.NewGuid().ToString() + gift.GiftImage.FileName;
-                string path = Path.Combine(wwwRootPath, "GiftsImages", fileName);
-                using (var fileStream = new FileStream(path, FileMode.Create))
-                {
-                    await gift.GiftImage.CopyToAsync(fileStream);
-                }
-                gift.Imagepath = fileName;
-            }
-
-            gift.Giftavailability = giftAvailability;
-            gift.Categoryid = (decimal)ViewData["CategoryId"];
-            gift.Userid = id;
-
-            _context.Add(gift);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-        ViewData["Userid"] = new SelectList(_context.GiftstoreUsers, "Userid", "Email");
-        return View(gift);
-    }
-
-
-    public async Task<IActionResult> Details(decimal? id)
-    {
-        decimal? id2 = HttpContext.Session.GetInt32("UserId");
-        GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-        ViewData["Username"] = currentUser?.Username;
-        ViewData["Password"] = currentUser?.Password;
-        ViewData["UserId"] = id2;
-        ViewData["RoleId"] = currentUser?.Roleid;
-
-        if (id == null || _context.GiftstoreGifts == null)
-        {
-            return NotFound();
-        }
-
-        GiftstoreGift? giftstoreGift = await _context.GiftstoreGifts
-            .Include(g => g.Category)
-            .Include(g => g.Order)
-            .FirstOrDefaultAsync(m => m.Giftid == id);
-        if (giftstoreGift == null)
-        {
-            return NotFound();
-        }
-
-        return View(giftstoreGift);
-    }
-
-    public IActionResult Create()
-    {
-        decimal? id = HttpContext.Session.GetInt32("UserId");
-        GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-        ViewData["Username"] = currentUser?.Username;
-        ViewData["Password"] = currentUser?.Password;
-        ViewData["UserId"] = id;
-        ViewData["RoleId"] = currentUser?.Roleid;
-        ViewData["CategoryId"] = currentUser?.Categoryid;
-
-        return View();
-    }
-
-    public async Task<IActionResult> Edit(decimal? id)
-    {
-        decimal? id2 = HttpContext.Session.GetInt32("UserId");
-        GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-        ViewData["Username"] = currentUser?.Username;
-        ViewData["Password"] = currentUser?.Password;
-        ViewData["UserId"] = id2;
-        ViewData["RoleId"] = currentUser?.Roleid;
-
-        if (id == null || _context.GiftstoreGifts == null)
-        {
-            return NotFound();
-        }
-
-        GiftstoreGift? giftstoreGift = await _context.GiftstoreGifts.FindAsync(id);
-        if (giftstoreGift == null)
-        {
-            return NotFound();
-        }
-        ViewData["Categoryid"] = new SelectList(_context.GiftstoreCategories, "Categoryid", "Categoryid", giftstoreGift.Categoryid);
-        ViewData["Orderid"] = new SelectList(_context.GiftstoreOrders, "Orderid", "Orderid", giftstoreGift.Orderid);
-        return View(giftstoreGift);
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(decimal id, [Bind("Giftid,Giftname,Giftprice,Imagepath,Giftavailability,Giftdescription,Categoryid,Orderid")] GiftstoreGift giftstoreGift)
-    {
-        decimal? id2 = HttpContext.Session.GetInt32("UserId");
-        GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-        ViewData["Username"] = currentUser?.Username;
-        ViewData["Password"] = currentUser?.Password;
-        ViewData["UserId"] = id2;
-        ViewData["RoleId"] = currentUser?.Roleid;
-
-        if (id != giftstoreGift.Giftid)
-        {
-            return NotFound();
-        }
-
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                _context.Update(giftstoreGift);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GiftstoreGiftExists(giftstoreGift.Giftid))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        ViewData["Categoryid"] = new SelectList(_context.GiftstoreCategories, "Categoryid", "Categoryid", giftstoreGift.Categoryid);
-        ViewData["Orderid"] = new SelectList(_context.GiftstoreOrders, "Orderid", "Orderid", giftstoreGift.Orderid);
-        return View(giftstoreGift);
-    }
-
-    public async Task<IActionResult> Delete(decimal? id)
-    {
-        decimal? id2 = HttpContext.Session.GetInt32("UserId");
-        GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-        ViewData["Username"] = currentUser?.Username;
-        ViewData["Password"] = currentUser?.Password;
-        ViewData["UserId"] = id2;
-        ViewData["RoleId"] = currentUser?.Roleid;
-
-        if (id == null || _context.GiftstoreGifts == null)
-        {
-            return NotFound();
-        }
-
-        GiftstoreGift? giftstoreGift = await _context.GiftstoreGifts
-            .Include(g => g.Category)
-            .Include(g => g.Order)
-            .FirstOrDefaultAsync(m => m.Giftid == id);
-        if (giftstoreGift == null)
-        {
-            return NotFound();
-        }
-
-        return View(giftstoreGift);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(decimal id)
-    {
-        decimal? id2 = HttpContext.Session.GetInt32("UserId");
-        GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-        ViewData["Username"] = currentUser?.Username;
-        ViewData["Password"] = currentUser?.Password;
-        ViewData["UserId"] = id2;
-        ViewData["RoleId"] = currentUser?.Roleid;
-
-        if (_context.GiftstoreGifts == null)
-        {
-            return Problem("Entity set 'ModelContext.GiftstoreGifts'  is null.");
-        }
-        GiftstoreGift? giftstoreGift = await _context.GiftstoreGifts.FindAsync(id);
-        if (giftstoreGift != null)
-        {
-            _context.GiftstoreGifts.Remove(giftstoreGift);
-        }
-
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-
-
+ 
     public IActionResult Notification(decimal? Categoryid)
     {
         decimal? id = HttpContext.Session.GetInt32("UserId");
@@ -296,7 +104,6 @@ public class MakerController : Controller
         return View(model);
     }
 
-
     public IActionResult SenderRequest()
     {
         decimal? id = HttpContext.Session.GetInt32("UserId");
@@ -319,12 +126,10 @@ public class MakerController : Controller
         //                GiftstoreNotification = notification
         //            };
         
-        var request = 
-            _context.GiftstoreSenderrequests.Where(obj=> obj.Makerid == id && obj.Requeststatus.Equals("Pending")).ToList();
+        var request = _context.GiftstoreSenderrequests.Where(obj=> obj.Makerid == id && obj.Requeststatus.Equals("Pending")).ToList();
         
         return View(request);
     }
-
 
     public async void D1(decimal id)
     {
@@ -349,7 +154,9 @@ public class MakerController : Controller
         ViewData["RoleName"] = HttpContext.Session.GetString("RoleName"); ;
 
         GiftstoreSenderrequest? request = _context.GiftstoreSenderrequests.Where(obj => obj.Requestid == Requestid).SingleOrDefault();
-        GiftstoreGift? gift = request.Gift;
+
+        var userGift = _context.GiftstoreGifts.Where(obj=> obj.Giftname.Equals(request.Giftname)).SingleOrDefault();
+
         if (action.Equals("Accepted"))
         {
             request.Requeststatus = "WaitToPay";
@@ -357,7 +164,7 @@ public class MakerController : Controller
             _context.SaveChangesAsync();
             
             GiftstoreUser sender = _context.GiftstoreUsers.Where(x => x.Userid == Senderid).SingleOrDefault();
-            _email.SendEmail(sender.Email,sender.Username,request.Giftid,request.Recipientaddress);
+            _email.SendEmail(sender.Email,sender.Username, userGift.Giftid,request.Recipientaddress);
          
 
             //Email for sender that maker accept his gift
@@ -372,8 +179,6 @@ public class MakerController : Controller
         var makerRequest = _context.GiftstoreSenderrequests.Where(obj => obj.Makerid == id && obj.Requeststatus.Equals("Pending")).ToList();
         return View(makerRequest);
     }
-
-
 
 
 
@@ -393,12 +198,6 @@ public class MakerController : Controller
         ViewData["TotalProfits"] = (double)_context.GiftstoreOrders.Where(obj => obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
         return View();
     }
-
-
-
-
-
-
 
 
 

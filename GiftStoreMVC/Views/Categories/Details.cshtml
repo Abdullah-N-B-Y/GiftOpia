@@ -16,19 +16,22 @@
                     <hr />
                     <dl class="row">
                         <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Categoryname)
+                            Category name
+                            @*@Html.DisplayNameFor(model => model.Categoryname)*@
                         </dt>
                         <dd class = "col-sm-10">
                             @Html.DisplayFor(model => model.Categoryname)
                         </dd>
                         <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Imagepath)
+                            Category image
+                            @*@Html.DisplayNameFor(model => model.Imagepath)*@
                         </dt>
                         <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Imagepath)
+                            <img src="@Url.Content("~/CategoriesImages/"+Model.Imagepath)" style="width:200px;height:150px;border-radius:10px;"></img>
                         </dd>
                         <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Categorydescription)
+                            Category description
+                            @*@Html.DisplayNameFor(model => model.Categorydescription)*@
                         </dt>
                         <dd class = "col-sm-10">
                             @Html.DisplayFor(model => model.Categorydescription)
@@ -36,8 +39,8 @@
                     </dl>
                 </div>
                 <div>
-                    <a asp-action="Edit" asp-route-id="@Model.Categoryid">Edit</a> |
-                    <a asp-action="Index">Back to List</a>
+                    <a asp-action="Edit" asp-route-id="@Model.Categoryid" class="btn btn-primary" >Edit</a>
+                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
                 </div>
             </div>
         </div>

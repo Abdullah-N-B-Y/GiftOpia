@@ -17,15 +17,12 @@ public class Email : IEmail
         email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailSettings")["EmailUsername"].ToString()));
         email.To.Add(MailboxAddress.Parse(userEmailTo));
         
-        email.Subject = "Sign in";
+        email.Subject = "Gift request from GiftOpia";
 
         string paymentUrlLink =$"<a href='{_configuration.GetSection("EmailSettings")["PaymentURl"]}?giftId={giftId}&address={address}'>Pay</a>";
         email.Body = new TextPart(TextFormat.Html)
         {
-            Text = "Hi" + " " + userNameTo+ 
-                   "Your Gift Accepted  " +
-                   "Please pay Using this link:"+
-                    paymentUrlLink
+            Text = $"Hi {userNameTo}, has been accepted with {giftId} ID,\nPlease pay using this link: {paymentUrlLink}"
         };
 
 

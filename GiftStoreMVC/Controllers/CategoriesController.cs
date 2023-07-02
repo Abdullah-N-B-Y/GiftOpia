@@ -134,7 +134,7 @@ public class CategoriesController : Controller
     // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(decimal id, [Bind("Categoryid,Categoryname,Imagepath,Categorydescription")] GiftstoreCategory giftstoreCategory)
+    public async Task<IActionResult> Edit(decimal id, [Bind("Categoryid,Categoryname,CategoryImage,Categorydescription")] GiftstoreCategory giftstoreCategory)
     {
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
@@ -149,6 +149,17 @@ public class CategoriesController : Controller
 
         if (ModelState.IsValid)
         {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if (giftstoreCategory.CategoryImage != null)
+            {
+                string fileName = Guid.NewGuid().ToString() + giftstoreCategory.CategoryImage.FileName;
+                string path = Path.Combine(wwwRootPath, "CategoriesImages", fileName);
+                using (var fileStream = new FileStream(path, FileMode.Create))
+                {
+                    await giftstoreCategory.CategoryImage.CopyToAsync(fileStream);
+                }
+                giftstoreCategory.Imagepath = fileName;
+            }
             try
             {
                 _context.Update(giftstoreCategory);

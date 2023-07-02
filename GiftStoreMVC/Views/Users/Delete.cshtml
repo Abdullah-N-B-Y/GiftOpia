@@ -14,72 +14,66 @@
                     <h4>GiftstoreUser</h4>
                     <hr />
                     <dl class="row">
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Username)
-                        </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Username)
-                        </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Password)
-                        </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Password)
-                        </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Email)
-                        </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Email)
-                        </dd>
-                        <dt class = "col-sm-2">
+                        <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Name)
                         </dt>
-                        <dd class = "col-sm-10">
+                        <dd class="col-sm-10">
                             @Html.DisplayFor(model => model.Name)
                         </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Approvalstatus)
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Username)
                         </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Approvalstatus)
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Username)
                         </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Phonenumber)
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Password)
                         </dt>
-                        <dd class = "col-sm-10">
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Password)
+                        </dd>
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Email)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Email)
+                        </dd>
+                        <dt class="col-sm-2">
+                            Phone number
+                        </dt>
+                        <dd class="col-sm-10">
                             @Html.DisplayFor(model => model.Phonenumber)
                         </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Imagepath)
+                        <dt class="col-sm-2">
+                            Image
                         </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Imagepath)
+                        <dd class="col-sm-10">
+                            <img src="@Url.Content("~/UsersImages/"+Model.Imagepath)" style="width:200px;height:150px;border-radius:10px;"></img>
                         </dd>
-                        <dt class = "col-sm-2">
+                        <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Profits)
                         </dt>
-                        <dd class = "col-sm-10">
+                        <dd class="col-sm-10">
                             @Html.DisplayFor(model => model.Profits)
                         </dd>
-                        <dt class = "col-sm-2">
+                        <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Category)
                         </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Category.Categoryid)
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Category.Categoryname)
                         </dd>
-                        <dt class = "col-sm-2">
+                        <dt class="col-sm-2">
                             @Html.DisplayNameFor(model => model.Role)
                         </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Role.Roleid)
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Role.Rolename)
                         </dd>
                     </dl>
     
                     <form asp-action="Delete">
                         <input type="hidden" asp-for="Userid" />
-                        <input type="submit" value="Delete" class="btn btn-danger" /> |
-                        <a asp-action="Index">Back to List</a>
+                        <input type="submit" value="Delete" class="btn btn-danger" style="width:200px;text-align:center;" />
+                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
                     </form>
                 </div>
             </div>

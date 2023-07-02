@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
 
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
 <h1>Details</h1>
 
 <div>
@@ -24,38 +28,42 @@
             @Html.DisplayFor(model => model.Giftprice)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Imagepath)
+            Image
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Imagepath)
+            <img src="@Url.Content("~/GiftsImages/"+Model.Imagepath)" style="width:120px;height:80px;border-radius:15px;"/>
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Giftavailability)
+            Availability
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Giftavailability)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Giftdescription)
+            Description
         </dt>
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Giftdescription)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
+            Category Name
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Category.Categoryid)
+            @Html.DisplayFor(model => model.Category.Categoryname)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Order)
+            Username
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Order.Orderid)
+            @Html.DisplayFor(model => model.User.Username)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Giftid">Edit</a> |
+    <a asp-action="Edit" asp-route-id="@Model.Giftid">Edit</a> |
     <a asp-action="Index">Back to List</a>
+</div>
+</div>
+</div>
+</div>
 </div>

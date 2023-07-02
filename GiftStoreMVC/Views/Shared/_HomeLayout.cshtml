@@ -9,17 +9,9 @@
     <meta name="author" content="">
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-    <title>Sixteen Clothing HTML Template</title>
+    <title>GiftOpia</title>
 
-    <!-- Bootstrap core CSS -->
     <link href="~/HomeAssets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<!--
-
-TemplateMo 546 Sixteen Clothing
-
-https://templatemo.com/tm-546-sixteen-clothing
-
--->
 
     <!-- Additional CSS Files -->
     <link rel="stylesheet" href="~/HomeAssets/assets/css/fontawesome.css">
@@ -30,7 +22,6 @@ https://templatemo.com/tm-546-sixteen-clothing
 
   <body>
 
-    <!-- ***** Preloader Start ***** -->
     <div id="preloader">
         <div class="jumper">
             <div></div>
@@ -38,31 +29,33 @@ https://templatemo.com/tm-546-sixteen-clothing
             <div></div>
         </div>
     </div>  
-    <!-- ***** Preloader End ***** -->
 
-    <!-- Header -->
     <header class="">
       <nav class="navbar navbar-expand-lg">
         <div class="container">
-          <a class="navbar-brand" href="index.html"><h2>Sixteen <em>Clothing</em></h2></a>
+                <a class="navbar-brand" href="#"><h2>Gift<em>Opia</em></h2></a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
               <li class="nav-item active">
-                <a class="nav-link" href="index.html">Home
+                <a class="nav-link" asp-controller="Home" asp-action="Index">
+                  Home
                   <span class="sr-only">(current)</span>
                 </a>
               </li> 
               <li class="nav-item">
-                <a class="nav-link" href="products.html">Our Products</a>
+                <a class="nav-link" asp-controller="Auth" asp-action="SignIn">Our Products</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about.html">About Us</a>
+                <a class="nav-link" asp-action="About">About Us</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="contact.html">Contact Us</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" asp-controller="Auth" asp-action="SignIn">Sign in</a>
               </li>
             </ul>
           </div>
@@ -82,9 +75,9 @@ https://templatemo.com/tm-546-sixteen-clothing
                 <div class="col-md-12">
                     <div class="inner-content">
                         <p>
-                            Copyright &copy; 2020 Sixteen Clothing Co., Ltd.
+                            Copyright &copy; 2023 GiftOpia
 
-                            - Design: <a rel="nofollow noopener" href="https://templatemo.com" target="_blank">TemplateMo</a>
+                            - Design: <a rel="nofollow noopener" href="#" target="_blank">Abdullah</a>
                         </p>
                     </div>
                 </div>
@@ -105,18 +98,15 @@ https://templatemo.com/tm-546-sixteen-clothing
     <script src="~/HomeAssets/assets/js/isotope.js"></script>
     <script src="~/HomeAssets/assets/js/accordions.js"></script>
 
-
     <script language="text/Javascript">
-        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
-        function clearField(t) {                   //declaring the array outside of the
-            if (!cleared[t.id]) {                      // function makes it static and global
-                cleared[t.id] = 1;  // you could use true and false, but that's more typing
-                t.value = '';         // with more chance of typos
+        cleared[0] = cleared[1] = cleared[2] = 0;
+        function clearField(t) {
+            if (!cleared[t.id]) {
+                cleared[t.id] = 1;
+                t.value = '';
                 t.style.color = '#fff';
             }
         }
     </script>
- 
 </body>
-
 </html>

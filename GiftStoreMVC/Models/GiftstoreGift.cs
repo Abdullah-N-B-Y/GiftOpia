@@ -20,17 +20,12 @@ public partial class GiftstoreGift
 
     public decimal? Categoryid { get; set; }
 
-    public decimal? Orderid { get; set; }
-
     public decimal? Userid { get; set; }
 
     [NotMapped]
     public virtual IFormFile? GiftImage { get; set; }
+
     public virtual GiftstoreCategory? Category { get; set; }
-
-    public virtual ICollection<GiftstoreSenderrequest> GiftstoreSenderrequests { get; set; } = new List<GiftstoreSenderrequest>();
-
-    public virtual GiftstoreOrder? Order { get; set; }
 
     public virtual GiftstoreUser? User { get; set; }
 }

@@ -10,21 +10,23 @@
         <div class="main-content">
             <div class="section__content section__content--p30">
             <h1>Index</h1>
-
             <p>
-                <a asp-action="Create">Create New</a>
+                <a asp-action="Create" class="btn btn-primary">Create New</a>
             </p>
             <table class="table">
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayNameFor(model => model.Categoryname)
+                            Category name
+                            @*@Html.DisplayNameFor(model => model.Categoryname)*@
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Imagepath)
+                            Image
+                            @*@Html.DisplayNameFor(model => model.Imagepath)*@
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Categorydescription)
+                                Category description
+                            @*@Html.DisplayNameFor(model => model.Categorydescription)*@
                         </th>
                         <th></th>
                     </tr>
@@ -36,15 +38,16 @@
                             @Html.DisplayFor(modelItem => item.Categoryname)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Imagepath)
+                            <img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" style="width:120px;height:70px;border-radius:10px;"></img>
+                            @*@Html.DisplayFor(modelItem => item.Imagepath)*@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Categorydescription)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.Categoryid">Edit</a> |
-                            <a asp-action="Details" asp-route-id="@item.Categoryid">Details</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Categoryid">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.Categoryid" class="btn btn-primary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.Categoryid" class="btn btn-primary">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.Categoryid" class="btn btn-danger">Delete</a>
                         </td>
                     </tr>
             }

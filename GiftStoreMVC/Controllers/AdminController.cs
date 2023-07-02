@@ -197,17 +197,14 @@ public class AdminController : Controller
         IEnumerable<Reprotes>? report = 
         from user in users
         join request in requests on user.Userid equals request.Senderid
-        join gift in gifts on request.Giftid equals gift.Giftid
-        join order in orders on gift.Orderid equals order.Orderid
-        where order.Orderstatus.Equals("Arrived") && order.Arrivaldate >= period
+        join order in orders on request.Requestid equals order.Requestid
+        //where order.Orderstatus.Equals("Arrived") && order.Arrivaldate >= period
         select new Reprotes
         {
             userName=user.Name,
             totalPrice = user.Profits,
             createDate = order.Arrivaldate,
         };
-
-    
 
         return View(report.ToList());
     }

@@ -16,30 +16,33 @@
                     <h4>GiftstoreCategory</h4>
                     <hr />
                     <dl class="row">
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Categoryname)
+                        <dt class="col-sm-2">
+                            Category name
+                            @*@Html.DisplayNameFor(model => model.Categoryname)*@
                         </dt>
-                        <dd class = "col-sm-10">
+                        <dd class="col-sm-10">
                             @Html.DisplayFor(model => model.Categoryname)
                         </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Imagepath)
+                        <dt class="col-sm-2">
+                            Category image
+                            @*@Html.DisplayNameFor(model => model.Imagepath)*@
                         </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Imagepath)
+                        <dd class="col-sm-10">
+                            <img src="@Url.Content("~/CategoriesImages/"+Model.Imagepath)" style="width:200px;height:150px;border-radius:10px;"></img>
                         </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Categorydescription)
+                        <dt class="col-sm-2">
+                            Category description
+                            @*@Html.DisplayNameFor(model => model.Categorydescription)*@
                         </dt>
-                        <dd class = "col-sm-10">
+                        <dd class="col-sm-10">
                             @Html.DisplayFor(model => model.Categorydescription)
                         </dd>
                     </dl>
     
                     <form asp-action="Delete">
                         <input type="hidden" asp-for="Categoryid" />
-                        <input type="submit" value="Delete" class="btn btn-danger" /> |
-                        <a asp-action="Index">Back to List</a>
+                        <input type="submit" value="Delete" class="btn btn-danger" style="width:200px;text-align:center;"/>
+                        <a asp-action="Index" class="btn btn-primary">Back to List</a>
                     </form>
                 </div>
             </div>
