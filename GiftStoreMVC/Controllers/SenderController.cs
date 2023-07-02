@@ -179,14 +179,6 @@ public class SenderController : Controller
 
     public IActionResult Payment(decimal? giftId, string? address)
     {
-
-        // ViewData["PaymentObject"] = new
-        // {
-        //     giftId=giftId,
-        //     address=address,
-        //     requestID=15
-        // };
-        //
         HttpContext.Session.SetInt32("giftId", (int)giftId);
         HttpContext.Session.SetString("address", address);
         return View();
