@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace GiftStoreMVC.Controllers;
 
@@ -9,10 +10,13 @@ public class MakerController : Controller
 {
     private readonly ModelContext _context;
     private readonly IWebHostEnvironment _webHostEnvironment;
-    public MakerController(ModelContext context, IWebHostEnvironment webHostEnvironment)
+    private readonly IEmail _email;
+
+    public MakerController(ModelContext context, IWebHostEnvironment webHostEnvironment,IEmail email)
     {
         _context = context;
         _webHostEnvironment = webHostEnvironment;
+        _email = email;
     }
 
     public IActionResult Index()
@@ -293,7 +297,7 @@ public class MakerController : Controller
     }
 
 
-    public IActionResult SenderRequest(decimal? Categoryid)
+    public IActionResult SenderRequest()
     {
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
@@ -314,7 +318,10 @@ public class MakerController : Controller
         //                GiftstoreUser = user,
         //                GiftstoreNotification = notification
         //            };
-        var request = _context.GiftstoreSenderrequests.Where(obj=> obj.Makerid == id).ToList();
+        
+        var request = 
+            _context.GiftstoreSenderrequests.Where(obj=> obj.Makerid == id && obj.Requeststatus.Equals("Pending")).ToList();
+        
         return View(request);
     }
 
@@ -333,6 +340,7 @@ public class MakerController : Controller
     public IActionResult SenderRequest(decimal? Senderid, decimal Requestid, string? action)
     {
         decimal? id = HttpContext.Session.GetInt32("UserId");
+        
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
         ViewData["Password"] = currentUser.Password;
@@ -342,18 +350,15 @@ public class MakerController : Controller
 
         GiftstoreSenderrequest? request = _context.GiftstoreSenderrequests.Where(obj => obj.Requestid == Requestid).SingleOrDefault();
         GiftstoreGift? gift = request.Gift;
-        request.Requeststatus = action;
         if (action.Equals("Accepted"))
         {
-            GiftstoreOrder order = new()
-            {
-                Orderdate = DateTime.Now,
-                Orderstatus = "Pending",
-                Recipientaddress = request.Recipientaddress,
-                Finalprice = request.Giftprice
-            };
-            _context.Update(order);
+            request.Requeststatus = "WaitToPay";
+            _context.Update(request);
             _context.SaveChangesAsync();
+            
+            GiftstoreUser sender = _context.GiftstoreUsers.Where(x => x.Userid == Senderid).SingleOrDefault();
+            _email.SendEmail(sender.Email,sender.Username,request.Giftid,request.Recipientaddress);
+         
 
             //Email for sender that maker accept his gift
         }
@@ -364,7 +369,7 @@ public class MakerController : Controller
 
         D1(Requestid);
 
-        var makerRequest = _context.GiftstoreSenderrequests.Where(obj => obj.Makerid == id).ToList();
+        var makerRequest = _context.GiftstoreSenderrequests.Where(obj => obj.Makerid == id && obj.Requeststatus.Equals("Pending")).ToList();
         return View(makerRequest);
     }
 
@@ -382,7 +387,7 @@ public class MakerController : Controller
         ViewData["RoleId"] = currentUser.Roleid;
 
         ViewData["NumberOfUsers"] = _context.GiftstoreUsers.Count();
-        ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();  //Anas Majdoub new work
+        ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count(); 
         ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
 
         ViewData["TotalProfits"] = (double)_context.GiftstoreOrders.Where(obj => obj.Orderstatus.Equals("Arrived")).ToList().Sum(obj => obj.Finalprice);
