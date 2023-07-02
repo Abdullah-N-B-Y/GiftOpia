@@ -217,19 +217,6 @@ public class SenderController : Controller
                 card.Totalamount -= gift.Giftprice;
                 _context.Add(order);
 
-                //remove request
-
-                // GiftstoreNotification notification = new()
-                // {
-                //     Notificationcontent = "Accept my gift request",
-                //     Notificationdate = DateTime.Now,
-                //     Email = user.Email,
-                //     Isread = false,
-                //     Userid = userId
-                // };
-                // _context.Add(notification);
-
-
                 _context.SaveChangesAsync();
             }
         }
