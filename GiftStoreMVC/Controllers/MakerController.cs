@@ -345,15 +345,15 @@ public class MakerController : Controller
         request.Requeststatus = action;
         if (action.Equals("Accepted"))
         {
-            GiftstoreOrder order = new()
-            {
-                Orderdate = DateTime.Now,
-                Orderstatus = "Pending",
-                Recipientaddress = request.Recipientaddress,
-                Finalprice = request.Giftprice
-            };
-            _context.Update(order);
-            _context.SaveChangesAsync();
+            //GiftstoreOrder order = new()
+            //{
+            //    Orderdate = DateTime.Now,
+            //    Orderstatus = "Pending",
+            //    Recipientaddress = request.Recipientaddress,
+            //    Finalprice = request.Giftprice
+            //};
+            //_context.Update(order);
+            //_context.SaveChangesAsync();
 
             //Email for sender that maker accept his gift
         }

@@ -10,7 +10,6 @@ public class SenderController : Controller
 {
     private readonly ModelContext _context;
     private readonly IWebHostEnvironment _webHostEnvironment;
-    private GiftstoreNotification notification;
 
     public SenderController(ModelContext context, IWebHostEnvironment webHostEnvironment)
     {
@@ -193,7 +192,7 @@ public class SenderController : Controller
         GiftstoreUser? makerUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == gift.Userid).FirstOrDefault();
         GiftstoreUser? senderUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == userId).FirstOrDefault();
         var categories = _context.GiftstoreCategories.ToList();
-            
+        
         GiftstoreSenderrequest senderrequest = new()
         {
             Recipientname = recipientName,

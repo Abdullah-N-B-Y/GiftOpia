@@ -103,7 +103,6 @@ public class AdminController : Controller
         return View(model);
     }
 
-
     public async void D1(decimal id)
     {
         GiftstoreNotification? giftstoreNotification = await _context.GiftstoreNotifications.FindAsync(id);
@@ -127,6 +126,14 @@ public class AdminController : Controller
 
         GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == Userid).SingleOrDefault();
         user.Approvalstatus = action;
+        if (action.Equals("Accepted"))
+        {
+            //Email from admin to maker say that you are accepted
+        }
+        else
+        {
+            //Email from admin to maker say that you are rejected
+        }
         _context.Update(user);
         _context.SaveChangesAsync();
 
@@ -165,7 +172,6 @@ public class AdminController : Controller
         return View();
 
     }
-
 
 
     public IActionResult Reportes(decimal? Categoryid, DateTime period)
