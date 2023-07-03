@@ -39,7 +39,7 @@ public class UsersController : Controller
         ViewData["ImagePath"] = currentUser.Imagepath;
 
 
-        var modelContext = _context.GiftstoreUsers.Where(obj=> obj.Approvalstatus.Equals("Accepted"));
+        IQueryable<GiftstoreUser> modelContext = _context.GiftstoreUsers.Where(obj=> obj.Approvalstatus.Equals("Accepted"));
         return View(await modelContext.ToListAsync());
     }
 
