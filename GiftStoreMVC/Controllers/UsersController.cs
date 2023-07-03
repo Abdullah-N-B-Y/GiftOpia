@@ -219,5 +219,16 @@ public class UsersController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+	public IActionResult Profile()
+	{
+		return View();
+	}
+
+	public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Index", "Home");
+    }
+
     private bool GiftstoreUserExists(decimal id) => (_context.GiftstoreUsers?.Any(e => e.Userid == id)).GetValueOrDefault();
 }

@@ -96,14 +96,15 @@ public class AdminController : Controller
         var users = _context.GiftstoreUsers.Where(obj => obj.Roleid == 2).ToList();
         var notifications = _context.GiftstoreNotifications.ToList();
 
-        IEnumerable<UsersNotifications>? model = from user in users
-            join notification in notifications
-                on user.Email equals notification.Email
-            select new UsersNotifications
-            {
-                GiftstoreUser = user,
-                GiftstoreNotification = notification
-            };
+        IEnumerable<UsersNotifications>? model = from u in users
+                                                 join notification in notifications
+                                                 on u.Email equals notification.Email
+                                                 where u.Approvalstatus.Equals("Pending")
+                                                 select new UsersNotifications
+                                                 {
+                                                     GiftstoreUser = u,
+                                                     GiftstoreNotification = notification
+                                                 };
         return View(model);
     }
 
@@ -116,7 +117,6 @@ public class AdminController : Controller
         }
         await _context.SaveChangesAsync();
     }
-    
     
     
     [HttpPost]
@@ -144,13 +144,14 @@ public class AdminController : Controller
         var notifications = _context.GiftstoreNotifications.ToList();
 
         IEnumerable<UsersNotifications>? model = from u in users
-            join notification in notifications
-                on u.Email equals notification.Email
-            select new UsersNotifications
-            {
-                GiftstoreUser = u,
-                GiftstoreNotification = notification
-            };
+                                                 join notification in notifications
+                                                 on u.Email equals notification.Email
+                                                 where u.Approvalstatus.Equals("Pending")
+                                                 select new UsersNotifications
+                                                 {
+                                                     GiftstoreUser = u,
+                                                     GiftstoreNotification = notification
+                                                 };
         return View(model);
     }
 
