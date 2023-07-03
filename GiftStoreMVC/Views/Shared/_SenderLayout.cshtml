@@ -28,6 +28,40 @@
     <!--Sender choose gift form like sign in form-->
     <link rel="stylesheet" href="~/SenderAssets/choosegift.css">
 
+    <!-- Fontfaces CSS-->
+    <link href="~/AdminAssets/css/font-face.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/font-awesome-5/css/fontawesome-all.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+
+    <!-- Bootstrap CSS-->
+    <link href="~/AdminAssets/vendor/bootstrap-4.1/bootstrap.min.css" rel="stylesheet" media="all">
+
+    <!-- Vendor CSS-->
+    <link href="~/AdminAssets/vendor/animsition/animsition.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/bootstrap-progressbar/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/wow/animate.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/css-hamburgers/hamburgers.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/slick/slick.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/AdminAssets/vendor/perfect-scrollbar/perfect-scrollbar.css" rel="stylesheet" media="all">
+
+    <!-- Main CSS-->
+    <link href="~/AdminAssets/css/theme.css" rel="stylesheet" media="all">
+
+
+    <link href="~/GiftAssets/card.css" rel="stylesheet" media="all">
+
+    <!-- Icons font CSS-->
+    <link href="~/LoginForm/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+    <link href="~/LoginForm/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
+    <!-- Font special for pages-->
+    <link href="~/LoginForm/https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
+    <!-- Vendor CSS-->
+    <link href="~/LoginForm/vendor/select2/select2.min.css" rel="stylesheet" media="all">
+    <link href="~/LoginForm/vendor/datepicker/daterangepicker.css" rel="stylesheet" media="all">
+
 </head>
 
 <body>
@@ -67,9 +101,55 @@
                         <li class="nav-item">
                             <a class="nav-link" href="contact.html">Feedback</a>
                         </li>
-                        @*<li class="nav-item">
-                            <a class="" href="contact.html"><img style="width:50px;height:50px;border-radius:50%;" src="@Url.Content("~/UsersImages/"+Model.Item2.Imagepath)" /></a>
-                        </li>*@
+                        <li class="nav-item dropdown">
+                            <div class="account-wrap">
+                                <div class="account-item clearfix js-item-menu">
+                                    <div class="image">
+                                        <img src="@Url.Content($"~/UsersImages/{Model.Imagepath}")" style="height:45px;border-radius:50%;"/>
+                                    </div>
+                                    <div class="content">
+                                        <a class="js-acc-btn" href="~/AdminAssets/#"></a>
+                                    </div>
+                                    <div class="account-dropdown js-dropdown">
+                                        <div class="info clearfix">
+                                            <div class="image">
+                                                <a href="~/AdminAssets/#">
+                                                    <img src="@Url.Content($"~/UsersImages/{Model.Imagepath}")" style="height:60px;" />
+                                                </a>
+                                            </div>
+                                            <div class="content">
+                                                <h5 class="name">
+                                                    <a href="~/AdminAssets/#">@Model.Name</a>
+                                                </h5>
+                                                <span class="email">@Model.Email</span>
+                                            </div>
+                                        </div>
+                                        <div class="account-dropdown__body">
+                                            <div class="account-dropdown__item">
+                                                <a href="~/AdminAssets/#">
+                                                    <i class="zmdi zmdi-account"></i>Account
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
+                                                <a href="~/AdminAssets/#">
+                                                    <i class="zmdi zmdi-settings"></i>Setting
+                                                </a>
+                                            </div>
+                                            <div class="account-dropdown__item">
+                                                <a href="~/AdminAssets/#">
+                                                    <i class="zmdi zmdi-money-box"></i>Billing
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="account-dropdown__footer">
+                                            <a asp-controller="Users" asp-action="Logout">
+                                                <i class="zmdi zmdi-power"></i>Logout
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -121,6 +201,44 @@
             }
         }
     </script>
+
+    <script src="~/AdminAssets/vendor/jquery-3.2.1.min.js"></script>
+    <!-- Bootstrap JS-->
+    <script src="~/AdminAssets/vendor/bootstrap-4.1/popper.min.js"></script>
+    <script src="~/AdminAssets/vendor/bootstrap-4.1/bootstrap.min.js"></script>
+    <!-- Vendor JS       -->
+    <script src="~/AdminAssets/vendor/slick/slick.min.js">
+    </script>
+    <script src="~/AdminAssets/vendor/wow/wow.min.js"></script>
+    <script src="~/AdminAssets/vendor/animsition/animsition.min.js"></script>
+    <script src="~/AdminAssets/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
+    </script>
+    <script src="~/AdminAssets/vendor/counter-up/jquery.waypoints.min.js"></script>
+    <script src="~/AdminAssets/vendor/counter-up/jquery.counterup.min.js">
+    </script>
+    <script src="~/AdminAssets/vendor/circle-progress/circle-progress.min.js"></script>
+    <script src="~/AdminAssets/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="~/AdminAssets/vendor/chartjs/Chart.bundle.min.js"></script>
+    <script src="~/AdminAssets/vendor/select2/select2.min.js">
+    </script>
+
+    <!-- Main JS-->
+    <script src="~/AdminAssets/js/main.js"></script>
+
+
+    <!-- Jquery JS-->
+    <script src="~/LoginForm/vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="~/LoginForm/vendor/select2/select2.min.js"></script>
+    <script src="~/LoginForm/vendor/datepicker/moment.min.js"></script>
+    <script src="~/LoginForm/vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="~/LoginForm/js/global.js"></script>
+
+    <script src="~/LoginForm/js/hidecategoryinput.js"></script>
+
+    <script src="~/LoginForm/js/profileimage.js"></script>
 </body>
 
 </html>
