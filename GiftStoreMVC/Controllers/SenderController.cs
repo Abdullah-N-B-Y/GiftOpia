@@ -259,15 +259,15 @@ public class SenderController : Controller
         HttpContext.Session.SetInt32("giftId", (int)giftId);
         HttpContext.Session.SetString("address", address);
         HttpContext.Session.SetInt32("senderId",(int)userId);
-        int? userId2 = HttpContext.Session.GetInt32("UserId");
-        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId2).SingleOrDefault();
-        ViewData["Username"] = user.Username;
-        ViewData["Name"] = user.Name;
-        ViewData["Password"] = user.Password;
-        ViewData["Email"] = user.Email;
-        ViewData["UserId"] = userId;
-        ViewData["RoleId"] = user.Roleid;
-        ViewData["ImagePath"] = user.Imagepath;
+        // int? userId2 = HttpContext.Session.GetInt32("UserId");
+        // GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId2).SingleOrDefault();
+        // ViewData["Username"] = user.Username;
+        // ViewData["Name"] = user.Name;
+        // ViewData["Password"] = user.Password;
+        // ViewData["Email"] = user.Email;
+        // ViewData["UserId"] = userId;
+        // ViewData["RoleId"] = user.Roleid;
+        // ViewData["ImagePath"] = user.Imagepath;
         return View();
     }
     [HttpPost]
