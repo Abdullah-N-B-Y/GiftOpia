@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace GiftStoreMVC.Controllers;
 
@@ -35,7 +36,29 @@ public class AdminController : Controller
         ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();
         ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
 
-        return View(currentUser);
+
+
+
+        List<DataPoint> dataPoints = new List<DataPoint>();
+        dataPoints.Add(new DataPoint("Maker",_context.GiftstoreUsers.Count(x=>x.Roleid==2)));
+        dataPoints.Add(new DataPoint("Sender",  _context.GiftstoreUsers.Count(x => x.Roleid == 3)));
+        dataPoints.Add(new DataPoint("Vegetables", 5));
+        dataPoints.Add(new DataPoint("Dairy", 3));
+        dataPoints.Add(new DataPoint("Grains", 7));
+        dataPoints.Add(new DataPoint("Others", 17));
+
+        ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+
+
+        var user = _context.GiftstoreUsers.ToList().Take(5);
+        var Testimonials = _context.GiftstoreTestimonials.ToList().Take(5);
+        var modle = Tuple.Create<IEnumerable<GiftstoreUser>, IEnumerable<GiftstoreTestimonial>>(user, Testimonials);
+
+
+
+
+
+        return View(modle);
     }
 
 
