@@ -131,7 +131,7 @@ public class MakerController : Controller
         return View(request);
     }
 
-    public async void D1(decimal id)
+    public async void DeleteRequest(decimal id)
     {
         GiftstoreSenderrequest? requests = await _context.GiftstoreSenderrequests.FindAsync(id);
         if (requests != null)
@@ -171,7 +171,7 @@ public class MakerController : Controller
             //Email for sender that maker reject his gift
         }
 
-        D1(Requestid);
+        DeleteRequest(Requestid);
 
         var makerRequest = _context.GiftstoreSenderrequests.Where(obj => obj.Makerid == id && obj.Requeststatus.Equals("Pending")).ToList();
         return View(makerRequest);
