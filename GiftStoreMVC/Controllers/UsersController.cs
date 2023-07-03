@@ -39,7 +39,7 @@ public class UsersController : Controller
         ViewData["ImagePath"] = currentUser.Imagepath;
 
 
-        IIncludableQueryable<GiftstoreUser, GiftstoreRole>? modelContext = _context.GiftstoreUsers.Include(g => g.Category).Include(g => g.Role);
+        var modelContext = _context.GiftstoreUsers.Where(obj=> obj.Approvalstatus.Equals("Accepted"));
         return View(await modelContext.ToListAsync());
     }
 

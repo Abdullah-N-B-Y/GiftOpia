@@ -306,7 +306,7 @@ public class SenderController : Controller
                 GiftstoreOrder order = new()
                 {
                     Orderdate = DateTime.UtcNow,
-                    Orderstatus = "Pending",
+                    Orderstatus = "Shippig",
                     Recipientaddress = address,
                     Finalprice = gift.Giftprice
                 };

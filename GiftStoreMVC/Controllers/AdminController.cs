@@ -107,7 +107,7 @@ public class AdminController : Controller
 
         ViewData["RoleName"] = HttpContext.Session.GetString("RoleName"); ;
 
-        var users = _context.GiftstoreUsers.Where(obj => obj.Roleid == 2).ToList();
+        var users = _context.GiftstoreUsers.Where(obj => obj.Roleid == 2 || obj.Roleid == 4).ToList();
         var notifications = _context.GiftstoreNotifications.ToList();
 
         IEnumerable<UsersNotifications>? model = from u in users
