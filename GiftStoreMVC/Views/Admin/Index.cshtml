@@ -217,6 +217,7 @@
                                             <th>Email</th>
                                             <th>User image</th>
                                             
+                                            
                                         </thead>
                                         <tbody>
                                         @foreach (var item in Model.Item1)
@@ -225,7 +226,7 @@
                                                 <td>  @Html.DisplayFor(modelItem => item.Name)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Username)</td>
                                                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                                                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                                               
                                                 <td>
                                                     <img src="@Url.Content($"~/UsersImages/{item.Imagepath}")" style="width:70px;height:70px;border-radius:15px;"></img>
                                                 </td>
