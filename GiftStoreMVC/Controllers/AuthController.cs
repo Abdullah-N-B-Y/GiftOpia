@@ -10,6 +10,7 @@ public class AuthController : Controller
     private readonly ModelContext _context;
     private readonly IWebHostEnvironment _webHostEnvironment;
     private GiftstoreNotification _notification;
+    private bool pendingUserFortempData = false;
     public AuthController(ModelContext context, IWebHostEnvironment webHostEnvironment)
     {
         _context = context;
@@ -43,11 +44,14 @@ public class AuthController : Controller
                 }
             }
             else if (currentUser.Approvalstatus.Equals("Pending"))
-            { 
-                    
+            {
+                TempData["SignIn"] = "You have to wait for admins to accept your registration";
+                pendingUserFortempData = true;
             }
         }
-        TempData["SignIn"] = "UserName or Password Invalid ";
+        if(!pendingUserFortempData)
+            TempData["SignIn"] = "UserName or Password Invalid ";
+        
         return View();
     }
 
