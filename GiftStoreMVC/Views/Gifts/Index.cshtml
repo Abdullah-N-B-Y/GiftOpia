@@ -1,9 +1,14 @@
 ﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreGift>
+
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_HomeLayout.cshtml";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
 
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
 <h1>Index</h1>
 
 <p>
@@ -31,7 +36,7 @@
                 @Html.DisplayNameFor(model => model.Category)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order)
+                @Html.DisplayNameFor(model => model.User)
             </th>
             <th></th>
         </tr>
@@ -58,7 +63,7 @@
                 @Html.DisplayFor(modelItem => item.Category.Categoryid)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Order.Orderid)
+                @Html.DisplayFor(modelItem => item.User.Userid)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Giftid">Edit</a> |
@@ -69,3 +74,7 @@
 }
     </tbody>
 </table>
+</div>
+</div>
+</div>
+</div>

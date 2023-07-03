@@ -1,6 +1,5 @@
 ﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreGift>
 
-
 @{
     ViewData["Title"] = "Categories";
     Layout = "~/Views/Shared/_SenderLayout.cshtml";
@@ -62,14 +61,13 @@
     }
 </style>
 
-<!-- Page Content -->
 <div class="page-heading products-heading header-text">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="text-content">
-                    <h4>new arrivals</h4>
-                    <h2>sixteen products</h2>
+                    <h4>New categories</h4>
+                    <h2>GIFTOPIA Categories <em style="color:#f33f3f">&</em> Gifts</h2>
                 </div>
             </div>
         </div>
@@ -83,7 +81,7 @@
             <div class="row">
                 <div class="input-group" style="justify-content:center;text-align:center;">
                     <input type="text" class="input" id="GiftName" name="GiftName" placeholder="#Watches,Glasses...etc" autocomplete="off">
-                    <input class="button--submit" value="Search" type="submit">
+                    <input style="background-color:#f33f3f" class="button--submit" value="Search" type="submit">
                 </div>
             </div>
         </form>
@@ -112,7 +110,7 @@
                                             </div>
                                             <div class="down-content">
                                                 <h4>@item.Giftname</h4>
-                                                <h6>@item.Giftprice</h6>
+                                            <h6><strong style="color:#f33f3f">$</strong>@item.Giftprice</h6>
                                                 <p>@item.Giftdescription</p>
                                                 <ul class="stars">
                                                     <li><i class="fa fa-star"></i></li>

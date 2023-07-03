@@ -3,16 +3,34 @@
 @{
     Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
+<style>
+    .btn-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
 
-
+    .disabled-link {
+        pointer-events: none; /* This prevents mouse events */
+        cursor: not-allowed; /* Optional: Show "not-allowed" cursor to indicate disabled state */
+        opacity: 0.5; /* You can adjust the opacity to give a disabled appearance */
+        /* Add any other styles you want for a disabled link */
+    }
+</style>
 <div class="page-wrapper">
     <div class="page-container">
         <div class="main-content">
             <div class="section__content section__content--p30">
-                <a asp-action="Create">Create New</a>
+                <a asp-action="Create" class="btn btn-primary disabled-link" style="width: 40px;">
+                    <div class="btn-container">Add user</div>
+                </a>
                 <table class="table">
                     <thead>
                         <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Username)
                             </th>
@@ -23,16 +41,10 @@
                                 @Html.DisplayNameFor(model => model.Email)
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Name)
+                                Phone number
                             </th>
                             <th>
-                                @Html.DisplayNameFor(model => model.Approvalstatus)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Phonenumber)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Imagepath)
+                                User image
                             </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.Profits)
@@ -51,6 +63,9 @@
                         {
                             <tr>
                                 <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
                                     @Html.DisplayFor(modelItem => item.Username)
                                 </td>
                                 <td>
@@ -60,30 +75,30 @@
                                     @Html.DisplayFor(modelItem => item.Email)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Approvalstatus)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Phonenumber)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Imagepath)
+                                    <img src="@Url.Content($"~/UsersImages/{item.Imagepath}")" style="width:70px;height:70px;border-radius:15px;"></img>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Profits)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Category.Categoryid)
+                                    @Html.DisplayFor(modelItem => item.Category.Categoryname)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Role.Roleid)
+                                    @Html.DisplayFor(modelItem => item.Role.Rolename)
                                 </td>
                                 <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Userid">Edit</a> |
-                                    <a asp-action="Details" asp-route-id="@item.Userid">Details</a> |
-                                    <a asp-action="Delete" asp-route-id="@item.Userid">Delete</a>
+                                    <a asp-action="Edit" asp-route-id="@item.Userid" class="btn btn-primary disabled-link" style="width: 40px;">
+                                        <div class="btn-container">Edit</div>
+                                    </a>
+                                    <a asp-action="Details" asp-route-id="@item.Userid" class="btn btn-primary" style="width: 40px;">
+                                        <div class="btn-container">Details</div>
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@item.Userid" class="btn btn-danger" style="width: 40px;">
+                                        <div class="btn-container">Delete</div>
+                                    </a>
                                 </td>
                             </tr>
                         }

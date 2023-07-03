@@ -9,11 +9,15 @@ public class AdminController : Controller
 {
     private readonly ModelContext _context;
     private readonly IWebHostEnvironment _webHostEnvironment;
+
+    private readonly IEmail _email;
+
     //GiftstoreNotification notification;
-    public AdminController(ModelContext context, IWebHostEnvironment webHostEnvironment)
+    public AdminController(ModelContext context, IWebHostEnvironment webHostEnvironment,IEmail email)
     {
         _context = context;
         _webHostEnvironment = webHostEnvironment;
+        _email = email;
     }
     public IActionResult Index()
     {
@@ -103,16 +107,18 @@ public class AdminController : Controller
         return View(model);
     }
 
-
     public async void D1(decimal id)
     {
-        GiftstoreNotification? giftstoreNotification = await _context.GiftstoreNotifications.FindAsync(id);
-        if (giftstoreNotification != null)
+        GiftstoreNotification? giftStoreNotification = await _context.GiftstoreNotifications.FindAsync(id);
+        if (giftStoreNotification != null)
         {
-            _context.GiftstoreNotifications.Remove(giftstoreNotification);
+            _context.GiftstoreNotifications.Remove(giftStoreNotification);
         }
         await _context.SaveChangesAsync();
     }
+    
+    
+    
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Notification(decimal? Userid, decimal Notificationlid, string? action)
@@ -129,8 +135,10 @@ public class AdminController : Controller
         user.Approvalstatus = action;
         _context.Update(user);
         _context.SaveChangesAsync();
-
-        D1(Notificationlid);
+        
+        _email.SendEmailToUser(user.Email,user.Username,action);
+        
+        //D1(Notificationlid);
 
         var users = _context.GiftstoreUsers.ToList();
         var notifications = _context.GiftstoreNotifications.ToList();
@@ -167,7 +175,6 @@ public class AdminController : Controller
     }
 
 
-
     public IActionResult Reportes(decimal? Categoryid, DateTime period)
     {
         decimal? id = HttpContext.Session.GetInt32("UserId");
@@ -191,17 +198,14 @@ public class AdminController : Controller
         IEnumerable<Reprotes>? report = 
         from user in users
         join request in requests on user.Userid equals request.Senderid
-        join gift in gifts on request.Giftid equals gift.Giftid
-        join order in orders on gift.Orderid equals order.Orderid
-        where order.Orderstatus.Equals("Arrived") && order.Arrivaldate >= period
+        join order in orders on request.Requestid equals order.Requestid
+        //where order.Orderstatus.Equals("Arrived") && order.Arrivaldate >= period
         select new Reprotes
         {
             userName=user.Name,
             totalPrice = user.Profits,
             createDate = order.Arrivaldate,
         };
-
-    
 
         return View(report.ToList());
     }

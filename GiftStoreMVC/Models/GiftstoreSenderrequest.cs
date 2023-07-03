@@ -17,8 +17,6 @@ public partial class GiftstoreSenderrequest
 
     public decimal? Senderid { get; set; }
 
-    public decimal? Giftid { get; set; }
-
     public decimal? Makerid { get; set; }
 
     public string? Sendername { get; set; }
@@ -27,7 +25,7 @@ public partial class GiftstoreSenderrequest
 
     public decimal? Giftprice { get; set; }
 
-    public virtual GiftstoreGift? Gift { get; set; }
+    public virtual ICollection<GiftstoreOrder> GiftstoreOrders { get; set; } = new List<GiftstoreOrder>();
 
     public virtual GiftstoreUser? Maker { get; set; }
 

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreGift>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "My gift";
     Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
 
@@ -10,18 +10,13 @@
         <div class="main-content">
             <div class="section__content section__content--p30">
                 <div class="main">
-                    <p>
-                        <a asp-controller="Gifts" asp-action="Create" class="btn btn-primary" style="width:60px;border-radius:20px;font-weight:bold">Add</a>
-                    </p>
                     <ul class="cards">
                         @foreach (var item in Model)
                         {
                             <li class="cards_item">
                                 <div class="card">
                                     <div class="card_image">
-                                        <a asp-action="CategoryGifts" asp-rout-id="@ViewData["CategoryId"]">
-                                            <img src="@Url.Content("~/GiftsImages/"+item.Imagepath)" style="width:370px;height:200px;" />
-                                        </a>
+                                        <img src="@Url.Content("~/GiftsImages/"+item.Imagepath)" style="width:370px;height:200px;" />
                                         <span class="card_price"><span>$</span>@item.Giftprice</span>
                                     </div>
                                     <div class="card_content">
@@ -35,10 +30,6 @@
                                                 @item.Giftdescription
                                             </p>
                                         </div>
-                                        <hr />
-                                        <a asp-controller="Gifts" asp-action="Edit" asp-route-id="@item.Giftid">Edit</a> |
-                                        <a asp-controller="Gifts" asp-action="Details" asp-route-id="@item.Giftid">Details</a> |
-                                        <a asp-controller="Gifts" asp-action="Delete" asp-route-id="@item.Giftid">Delete</a>
                                     </div>
                                 </div>
                             </li>

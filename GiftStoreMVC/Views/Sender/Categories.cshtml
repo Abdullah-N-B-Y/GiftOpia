@@ -1,6 +1,5 @@
 ﻿@model CategoryGift
 
-
 @{
     ViewData["Title"] = "Categories";
     Layout = "~/Views/Shared/_SenderLayout.cshtml";
@@ -11,18 +10,16 @@
         l = Model.Gift;
         b = false;
     }
-
+    int count = 1;
 }
 
-
-<!-- Page Content -->
 <div class="page-heading products-heading header-text">
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <div class="text-content">
-                    <h4>new arrivals</h4>
-                    <h2>sixteen products</h2>
+                    <h4>New categories</h4>
+                    <h2>GIFTOPIA Categories <em style="color:#f33f3f">&</em> Gifts</h2>
                 </div>
             </div>
         </div>
@@ -36,7 +33,7 @@
             <div class="row" >
                 <div class="input-group" style="justify-content:center;text-align:center;">
                     <input type="text" class="input" id="GiftName" name="GiftName" placeholder="#Watches,Glasses...etc" autocomplete="off">
-                    <input class="button--submit" value="Search" type="submit">
+                    <input style="background-color:#f33f3f" class="button--submit" value="Search" type="submit">
                 </div>
             </div>
         </form>
@@ -60,10 +57,12 @@
                                 <div class="product-item">
                                     @if(b)
                                     {
-                                        <a asp-action="GetGiftsByCategoryId" asp-route-Categoryid="@item.Categoryid"><img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" alt=""></a>
+                                        <a asp-action="GetGiftsByCategoryId" asp-route-Categoryid="@item.Categoryid">
+                                            <img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" style="max-width:350px;height:200px;">
+                                        </a>
                                         <div class="down-content">
                                             <a href="#"><h4>@item.Categoryname</h4></a>
-                                            <h6>$18.25</h6>
+                                            <h6>NO.@(count++)</h6>
                                             <p>@item.Categorydescription</p>
                                             <ul class="stars">
                                                 <li><i class="fa fa-star"></i></li>
@@ -80,7 +79,7 @@
                                         <a href="#"><img src="@Url.Content("~/GiftsImages/"+item.Imagepath)" alt=""></a>
                                         <div class="down-content">
                                             <a href="#"><h4>@item.Giftname</h4></a>
-                                            <h6>@item.Giftprice</h6>
+                                            <h6>$@item.Giftprice</h6>
                                             <p>@item.Giftdescription</p>
                                             <ul class="stars">
                                                 <li><i class="fa fa-star"></i></li>

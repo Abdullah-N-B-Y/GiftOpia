@@ -17,5 +17,7 @@ public partial class GiftstoreOrder
 
     public decimal? Finalprice { get; set; }
 
-    public virtual ICollection<GiftstoreGift> GiftstoreGifts { get; set; } = new List<GiftstoreGift>();
+    public decimal? Requestid { get; set; }
+
+    public virtual GiftstoreSenderrequest? Request { get; set; }
 }

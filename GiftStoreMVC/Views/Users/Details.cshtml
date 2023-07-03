@@ -12,6 +12,12 @@
                     <h4>GiftstoreUser</h4>
                     <hr />
                     <dl class="row">
+                        <dt class="col-sm-2">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </dt>
+                        <dd class="col-sm-10">
+                            @Html.DisplayFor(model => model.Name)
+                        </dd>
                         <dt class = "col-sm-2">
                             @Html.DisplayNameFor(model => model.Username)
                         </dt>
@@ -31,28 +37,16 @@
                             @Html.DisplayFor(model => model.Email)
                         </dd>
                         <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Name)
-                        </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Name)
-                        </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Approvalstatus)
-                        </dt>
-                        <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Approvalstatus)
-                        </dd>
-                        <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Phonenumber)
+                            Phone number
                         </dt>
                         <dd class = "col-sm-10">
                             @Html.DisplayFor(model => model.Phonenumber)
                         </dd>
                         <dt class = "col-sm-2">
-                            @Html.DisplayNameFor(model => model.Imagepath)
+                            Image
                         </dt>
                         <dd class = "col-sm-10">
-                            @Html.DisplayFor(model => model.Imagepath)
+                            <img src="@Url.Content("~/UsersImages/"+Model.Imagepath)" style="width:200px;height:150px;border-radius:10px;"></img>
                         </dd>
                         <dt class = "col-sm-2">
                             @Html.DisplayNameFor(model => model.Profits)
@@ -75,8 +69,8 @@
                     </dl>
                 </div>
                 <div>
-                    <a asp-action="Edit" asp-route-id="@Model?.Userid">Edit</a> |
-                    <a asp-action="Index">Back to List</a>
+                    <a asp-action="Edit" asp-route-id="@Model?.Userid" class="btn btn-primary">Edit</a>
+                    <a asp-action="Index" class="btn btn-primary">Back to List</a>
                 </div>
             </div>
         </div>

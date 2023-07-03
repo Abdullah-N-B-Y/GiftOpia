@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MimeKit.Text;
 using MimeKit;
 using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Http;
 
 namespace GiftStoreMVC.Controllers;
 
@@ -10,16 +11,17 @@ public class SenderController : Controller
 {
     private readonly ModelContext _context;
     private readonly IWebHostEnvironment _webHostEnvironment;
-    private GiftstoreNotification notification;
+    private readonly IEmail _email;
 
-    public SenderController(ModelContext context, IWebHostEnvironment webHostEnvironment)
+    public SenderController(ModelContext context, IWebHostEnvironment webHostEnvironment,IEmail email)
     {
         _context = context;
         _webHostEnvironment = webHostEnvironment;
+        _email = email;
     }
 
     public IActionResult Index()
-    {//decimal? Giftid, string? Giftname, decimal? Giftprice, int? Giftavailability, string? Giftdescription, decimal? Categoryid
+    {
         try
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
@@ -33,7 +35,6 @@ public class SenderController : Controller
             {
                 return View();
             }
-
         }
         catch (Exception ex)
         {
@@ -87,7 +88,6 @@ public class SenderController : Controller
         }
     }
 
-
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Categories(string? GiftName)//Search
@@ -124,60 +124,6 @@ public class SenderController : Controller
 
     }
 
-    public IActionResult Payment(decimal? giftId, string? address)
-    {
-        ViewData["giftId"] = giftId;
-        ViewData["address"] = address;
-        return View();
-    }
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Payment([Bind("Cardholdername,Cardnumber,Expirationdate,Cvv")] GiftstoreBankcard bankcard)
-    {
-        GiftstoreBankcard? card = _context.GiftstoreBankcards.Where(obj=> obj.Cardholdername.Equals(bankcard.Cardholdername) &&
-                                                                          obj.Cardnumber.Equals(bankcard.Cardnumber) &&
-                                                                          obj.Expirationdate.Equals(bankcard.Expirationdate) &&
-                                                                          obj.Cvv.Equals(bankcard.Cvv) 
-        ).SingleOrDefault();
-        if (card != null) 
-        {
-            int? userId = HttpContext.Session.GetInt32("UserId");
-            GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
-            decimal giftId = (decimal) ViewData["giftId"];
-            string? address = (string) ViewData["address"];
-            GiftstoreGift? gift = _context.GiftstoreGifts.Where(obj => obj.Giftid == giftId).SingleOrDefault();
-
-            if (card.Totalamount >= gift.Giftprice)
-            {
-                GiftstoreSenderrequest senderrequest = new()
-                {
-                    Recipientname = bankcard.Cardholdername,
-                    Recipientaddress = address,
-                    Requeststatus = "Pending",
-                    Requestdate = DateTime.Now,
-                    Senderid = userId,
-                    Giftid = giftId
-                };
-
-                _context.Add(senderrequest);
-                _context.SaveChangesAsync();
-
-                GiftstoreNotification notification = new()
-                {
-                    Notificationcontent = "Accept my gift request",
-                    Notificationdate = DateTime.Now,
-                    Email = user.Email,
-                    Isread = false,
-                    Userid = userId
-                };
-                _context.Add(notification);
-                _context.SaveChangesAsync();
-            }
-        }
-        return View();
-    }
-
-
     public IActionResult GiftDetails(decimal? giftId)
     {
         GiftstoreGift? gift = _context.GiftstoreGifts.Where(obj => obj.Giftid == giftId).SingleOrDefault();
@@ -193,7 +139,7 @@ public class SenderController : Controller
         GiftstoreUser? makerUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == gift.Userid).FirstOrDefault();
         GiftstoreUser? senderUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == userId).FirstOrDefault();
         var categories = _context.GiftstoreCategories.ToList();
-            
+        
         GiftstoreSenderrequest senderrequest = new()
         {
             Recipientname = recipientName,
@@ -201,7 +147,6 @@ public class SenderController : Controller
             Requeststatus = "Pending",
             Requestdate = DateTime.Now,
             Senderid = userId,
-            Giftid = gift.Giftid,
             Makerid = makerUser.Userid,
             Sendername = senderUser.Name,
             Giftname = gift.Giftname,
@@ -233,4 +178,55 @@ public class SenderController : Controller
         return RedirectToAction("Index");
     }
 
+
+    public IActionResult Payment(decimal? giftId, string? address ,decimal userId)
+    {
+        HttpContext.Session.SetInt32("giftId", (int)giftId);
+        HttpContext.Session.SetString("address", address);
+        HttpContext.Session.SetInt32("senderId",(int)userId);
+        return View();
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Payment([Bind("Cardholdername,Cardnumber,Expirationdate,Cvv")] GiftstoreBankcard bankcard)
+    {
+        decimal giftId = (decimal)HttpContext.Session.GetInt32("giftId");
+        string? address = HttpContext.Session.GetString("address");
+
+
+        GiftstoreBankcard? card = _context.GiftstoreBankcards.Where(obj => obj.Cardholdername.Equals(bankcard.Cardholdername) &&
+                                                                          obj.Cardnumber.Equals(bankcard.Cardnumber) &&
+                                                                          obj.Expirationdate.Equals(bankcard.Expirationdate) &&
+                                                                          obj.Cvv.Equals(bankcard.Cvv)
+        ).SingleOrDefault();
+        if (card is not null)
+        {
+
+            decimal? senderId = (decimal) HttpContext.Session.GetInt32("senderId");
+            GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == senderId).SingleOrDefault();
+            GiftstoreGift? gift = _context.GiftstoreGifts.Where(obj => obj.Giftid == giftId).SingleOrDefault();
+
+            if (card.Totalamount >= gift.Giftprice)
+            {
+
+                // add to order
+                GiftstoreOrder order = new()
+                {
+                    Orderdate = DateTime.UtcNow,
+                    Orderstatus = "Pending",
+                    Recipientaddress = address,
+                    Finalprice = gift.Giftprice
+                };
+                card.Totalamount -= gift.Giftprice;
+                _context.Add(order);
+                _context.SaveChangesAsync();
+                
+                
+                //sendPaymentBill
+                _email.SendPaymentBill(user,gift);
+
+            }
+        }
+        return View();
+    }
 }
