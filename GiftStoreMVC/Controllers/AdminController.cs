@@ -122,7 +122,7 @@ public class AdminController : Controller
         return View(model);
     }
 
-    public async void D1(decimal id)
+    public async void DeleteNotification(decimal id)
     {
         GiftstoreNotification? giftStoreNotification = await _context.GiftstoreNotifications.FindAsync(id);
         if (giftStoreNotification != null)
@@ -156,7 +156,7 @@ public class AdminController : Controller
         
         _email.SendEmailToUser(user.Email,user.Username,action);
         
-        //D1(Notificationlid);
+        DeleteNotification(Notificationlid);
 
         var users = _context.GiftstoreUsers.ToList();
         var notifications = _context.GiftstoreNotifications.ToList();
