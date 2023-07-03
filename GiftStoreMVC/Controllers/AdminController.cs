@@ -156,7 +156,7 @@ public class AdminController : Controller
         
         _email.SendEmailToUser(user.Email,user.Username,action);
         
-        //D1(Notificationlid);
+        D1(Notificationlid);
 
         var users = _context.GiftstoreUsers.ToList();
         var notifications = _context.GiftstoreNotifications.ToList();
