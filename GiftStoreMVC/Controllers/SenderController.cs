@@ -11,11 +11,13 @@ public class SenderController : Controller
 {
     private readonly ModelContext _context;
     private readonly IWebHostEnvironment _webHostEnvironment;
+    private readonly IEmail _email;
 
-    public SenderController(ModelContext context, IWebHostEnvironment webHostEnvironment)
+    public SenderController(ModelContext context, IWebHostEnvironment webHostEnvironment,IEmail email)
     {
         _context = context;
         _webHostEnvironment = webHostEnvironment;
+        _email = email;
     }
 
     public IActionResult Index()
@@ -177,10 +179,11 @@ public class SenderController : Controller
     }
 
 
-    public IActionResult Payment(decimal? giftId, string? address)
+    public IActionResult Payment(decimal? giftId, string? address ,decimal userId)
     {
         HttpContext.Session.SetInt32("giftId", (int)giftId);
         HttpContext.Session.SetString("address", address);
+        HttpContext.Session.SetInt32("senderId",(int)userId);
         return View();
     }
     [HttpPost]
@@ -199,8 +202,8 @@ public class SenderController : Controller
         if (card is not null)
         {
 
-            int? userId = HttpContext.Session.GetInt32("UserId");
-            GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+            decimal? senderId = (decimal) HttpContext.Session.GetInt32("senderId");
+            GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == senderId).SingleOrDefault();
             GiftstoreGift? gift = _context.GiftstoreGifts.Where(obj => obj.Giftid == giftId).SingleOrDefault();
 
             if (card.Totalamount >= gift.Giftprice)
@@ -216,8 +219,12 @@ public class SenderController : Controller
                 };
                 card.Totalamount -= gift.Giftprice;
                 _context.Add(order);
-
                 _context.SaveChangesAsync();
+                
+                
+                //sendPaymentBill
+                _email.SendPaymentBill(user,gift);
+
             }
         }
         return View();

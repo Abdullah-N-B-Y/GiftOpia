@@ -164,7 +164,7 @@ public class MakerController : Controller
             _context.SaveChangesAsync();
             
             GiftstoreUser sender = _context.GiftstoreUsers.Where(x => x.Userid == Senderid).SingleOrDefault();
-            _email.SendPaymentEmailToSender(sender.Email,sender.Username, userGift.Giftid,request.Recipientaddress);
+            _email.SendPaymentEmailToSender(sender.Userid,sender.Email,sender.Username, userGift.Giftid,request.Recipientaddress);
         }
         else
         {
