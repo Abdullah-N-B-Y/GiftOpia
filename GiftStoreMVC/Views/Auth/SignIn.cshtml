@@ -64,12 +64,13 @@
                         <div style="text-align:center;padding:20px;">
                             <a asp-controller="Home" asp-action="Index">Home</a>
                         </div>
+                        <span class="text-danger" style="color:red;">@TempData["SignIn"]</span>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-
+ 
     <!-- Jquery JS-->
     <script src="~/LoginForm/vendor/jquery/jquery.min.js"></script>
     <!-- Vendor JS-->
