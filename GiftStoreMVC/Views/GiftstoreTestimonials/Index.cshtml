@@ -1,0 +1,71 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreTestimonial>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Testimonialcontent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Testimonialdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Testimonialstatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Testimonialcontent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Testimonialdate)
+            </td>
+                @if (item.Testimonialstatus == "true")
+                {
+                    <td>
+                        Accepted
+
+                    </td>
+                }
+                else if (item.Testimonialstatus == "false")
+                {
+                    <td>
+                        Rejected
+
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        Under process
+
+                    </td>
+                }
+            <td>
+                @Html.DisplayFor(modelItem => item.User.Name)
+            </td>
+            <td>
+                    <a style="padding:5px" class="btn-info" asp-action="Edit" asp-route-id="@item.Testimonialid">Accept or Reject</a> |
+               
+                    <a style="padding:5px" class="btn-danger" asp-action="Delete" asp-route-id="@item.Testimonialid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

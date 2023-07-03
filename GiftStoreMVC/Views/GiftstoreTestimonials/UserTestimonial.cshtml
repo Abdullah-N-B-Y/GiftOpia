@@ -1,0 +1,71 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreTestimonial>
+
+@{
+   
+    Layout = "";
+
+}
+
+<head>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="~/testimonial/testimonial.css" rel="stylesheet" />
+</head>
+
+
+<div class="container">
+    <section class="section-medium section-arrow--bottom-center section-arrow-primary-color bg-primary" >
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-white text-center">
+                    <h2 class="section-title "> What Others Say About Us</h2>
+                    <p class="section-sub-title">
+                        We are a passionate digital design agency that specializes in beautiful and easy-to-
+                        <br> use digital design &amp; web development services.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br />
+    <br />
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            if (item.Testimonialstatus == "true")
+            {
+                <div class="col-lg-4">
+                    <div class="card">
+                    <div class="face front-face">
+                            <img src="@Url.Content("~/UsersImages/"+item.User.Imagepath)"
+                             alt="" class="profile">
+                        <div class="pt-3 text-uppercase name">
+                                @Html.DisplayFor(modelItem => item.User.Name)
+                        </div>
+                       @* <div class="designation">Android Developer</div>*@
+                    </div>
+                    <div class="face back-face">
+                        <span class="fas fa-quote-left"></span>
+                       @* <div class="testimonial">
+                            I made bacck the purchase price in just 48 hours! Thank you for making it pain less,
+                            pleasant.
+                            The service was execellent. I will refer everyone I know.
+                        </div>*@
+                            <div class="testimonial">
+                                @Html.DisplayFor(modelItem => item.Testimonialcontent)
+                            </div>
+                        <span class="fas fa-quote-right"></span>
+                    </div>
+                </div>
+            </div>
+            }
+        }
+       
+       
+    </div>
+</div>
