@@ -219,5 +219,7 @@ public class UsersController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+
+
     private bool GiftstoreUserExists(decimal id) => (_context.GiftstoreUsers?.Any(e => e.Userid == id)).GetValueOrDefault();
 }
