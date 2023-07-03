@@ -26,6 +26,15 @@ public class SenderController : Controller
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             GiftstoreUser? user = _context.GiftstoreUsers.Where(obj=> obj.Userid == userId).SingleOrDefault();
+
+            ViewData["Username"] = user.Username;
+            ViewData["Name"] = user.Name;
+            ViewData["Password"] = user.Password;
+            ViewData["Email"] = user.Email;
+            ViewData["UserId"] = userId;
+            ViewData["RoleId"] = user.Roleid;
+            ViewData["ImagePath"] = user.Imagepath;
+
             if (userId != null)
             {
                 //ViewData["GiftObj"] = gift;
@@ -48,6 +57,15 @@ public class SenderController : Controller
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
             GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+
+            ViewData["Username"] = user.Username;
+            ViewData["Name"] = user.Name;
+            ViewData["Password"] = user.Password;
+            ViewData["Email"] = user.Email;
+            ViewData["UserId"] = userId;
+            ViewData["RoleId"] = user.Roleid;
+            ViewData["ImagePath"] = user.Imagepath;
+
             if (userId != null)
             {
                 //ViewData["GiftObj"] = gift;
@@ -70,6 +88,14 @@ public class SenderController : Controller
         try
         {
             int? userId = HttpContext.Session.GetInt32("UserId");
+            GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+            ViewData["Username"] = user.Username;
+            ViewData["Name"] = user.Name;
+            ViewData["Password"] = user.Password;
+            ViewData["Email"] = user.Email;
+            ViewData["UserId"] = userId;
+            ViewData["RoleId"] = user.Roleid;
+            ViewData["ImagePath"] = user.Imagepath;
 
             var categoris = _context.GiftstoreCategories.ToList();
             var gifts = _context.GiftstoreGifts.ToList();
@@ -92,6 +118,16 @@ public class SenderController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult Categories(string? GiftName)//Search
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+
         var model = new CategoryGift();
 
         var categories = _context.GiftstoreCategories.Where(obj => obj.Categoryname.ToLower().Equals(GiftName.ToLower())).ToList();
@@ -111,6 +147,16 @@ public class SenderController : Controller
 
     public IActionResult GetGiftsByCategoryId(decimal? categoryId)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+
         var gifts = _context.GiftstoreGifts.Where(obj => obj.Categoryid == categoryId).ToList();
         return View(gifts);
     }
@@ -118,6 +164,16 @@ public class SenderController : Controller
     [ValidateAntiForgeryToken]
     public IActionResult GetGiftsByCategoryId(string? GiftName)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+
         GiftstoreGift? gift = _context.GiftstoreGifts.Where(obj => obj.Giftname.Equals(GiftName)).SingleOrDefault();
 
         return RedirectToAction("GiftDetails", new { giftId = gift.Giftid });
@@ -126,6 +182,16 @@ public class SenderController : Controller
 
     public IActionResult GiftDetails(decimal? giftId)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+
         GiftstoreGift? gift = _context.GiftstoreGifts.Where(obj => obj.Giftid == giftId).SingleOrDefault();
         return View(gift);
     }
@@ -136,6 +202,15 @@ public class SenderController : Controller
     {
         GiftstoreGift? gift = _context.GiftstoreGifts.Where(obj => obj.Giftname.Equals(GiftName)).SingleOrDefault();
         int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+
         GiftstoreUser? makerUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == gift.Userid).FirstOrDefault();
         GiftstoreUser? senderUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == userId).FirstOrDefault();
         var categories = _context.GiftstoreCategories.ToList();
@@ -184,12 +259,31 @@ public class SenderController : Controller
         HttpContext.Session.SetInt32("giftId", (int)giftId);
         HttpContext.Session.SetString("address", address);
         HttpContext.Session.SetInt32("senderId",(int)userId);
+        int? userId2 = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId2).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
         return View();
     }
     [HttpPost]
     [ValidateAntiForgeryToken]
     public IActionResult Payment([Bind("Cardholdername,Cardnumber,Expirationdate,Cvv")] GiftstoreBankcard bankcard)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user2 = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user2.Username;
+        ViewData["Name"] = user2.Name;
+        ViewData["Password"] = user2.Password;
+        ViewData["Email"] = user2.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user2.Roleid;
+        ViewData["ImagePath"] = user2.Imagepath;
+
         decimal giftId = (decimal)HttpContext.Session.GetInt32("giftId");
         string? address = HttpContext.Session.GetString("address");
 

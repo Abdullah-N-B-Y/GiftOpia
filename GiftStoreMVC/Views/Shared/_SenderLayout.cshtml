@@ -84,13 +84,13 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" asp-controller="Sender"  asp-action="Categories">
+                            <a class="nav-link" asp-controller="Sender"  asp-action="Index">
                                 Home
                                 <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-action="Categories">Our Products</a>
+                            <a class="nav-link" asp-controller="Sender" asp-action="Categories">Our Products</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" asp-action="About">About Us</a>
@@ -105,7 +105,7 @@
                             <div class="account-wrap">
                                 <div class="account-item clearfix js-item-menu">
                                     <div class="image">
-                                        <img src="@Url.Content($"~/UsersImages/{Model.Imagepath}")" style="height:45px;border-radius:50%;"/>
+                                        <img src="@Url.Content($"~/UsersImages/{ViewData["ImagePath"]}")" style="height:45px;border-radius:50%;" />
                                     </div>
                                     <div class="content">
                                         <a class="js-acc-btn" href="~/AdminAssets/#"></a>
@@ -114,14 +114,14 @@
                                         <div class="info clearfix">
                                             <div class="image">
                                                 <a href="~/AdminAssets/#">
-                                                    <img src="@Url.Content($"~/UsersImages/{Model.Imagepath}")" style="height:60px;" />
+                                                    <img src="@Url.Content($"~/UsersImages/{ViewData["ImagePath"]}")" style="height:60px;" />
                                                 </a>
                                             </div>
                                             <div class="content">
                                                 <h5 class="name">
-                                                    <a href="~/AdminAssets/#">@Model.Name</a>
+                                                    <a href="~/AdminAssets/#">@ViewData["Name"]</a>
                                                 </h5>
-                                                <span class="email">@Model.Email</span>
+                                                <span class="email">@ViewData["Email"]</span>
                                             </div>
                                         </div>
                                         <div class="account-dropdown__body">

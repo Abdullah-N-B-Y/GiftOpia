@@ -45,8 +45,8 @@
             @foreach(var item in Model)
             {
                 <div class="col-md-4">
-                    <div class="product-item">
-                        <a asp-controller="Auth" asp-action="SignIn"><img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" alt=""></a>
+                    <div class="product-item" style="width:350px;">
+                        <a asp-controller="Auth" asp-action="SignIn"><img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" style="width:350px;height:200px;"></a>
                         <div class="down-content">
                             <a href="#"><h4>@item.Categoryname</h4></a>
                             <h6>@item.GiftstoreGifts.Count</h6>

@@ -12,6 +12,13 @@
     }
     int count = 1;
 }
+<style>
+    body{
+        overflow-x: hidden;
+    }
+
+</style>
+
 
 <div class="page-heading products-heading header-text">
     <div class="container">
@@ -54,11 +61,11 @@
                         @foreach(var item in l)
                         {
                             <div class="col-lg-4 col-md-4 all des">
-                                <div class="product-item">
+                                <div class="product-item" style="width:350px;">
                                     @if(b)
                                     {
                                         <a asp-action="GetGiftsByCategoryId" asp-route-Categoryid="@item.Categoryid">
-                                            <img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" style="max-width:350px;height:200px;">
+                                            <img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" style="width:350px;height:200px;">
                                         </a>
                                         <div class="down-content">
                                             <a href="#"><h4>@item.Categoryname</h4></a>

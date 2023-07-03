@@ -39,8 +39,7 @@ public class AuthController : Controller
                     case 3:
                         return RedirectToAction("Index", "Sender");
                     case 4:
-                        //Driver
-                        return RedirectToAction("Index", "");
+                        return RedirectToAction("Index", "Driver");
                 }
             }
             else if (currentUser.Approvalstatus.Equals("Pending"))
@@ -48,7 +47,7 @@ public class AuthController : Controller
                     
             }
         }
-        TempData["SignIn"] = "UserName or Password isVailed ";
+        TempData["SignIn"] = "UserName or Password Invalid ";
         return View();
     }
 

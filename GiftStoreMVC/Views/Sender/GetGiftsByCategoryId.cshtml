@@ -104,9 +104,9 @@
                             <form asp-action="GetGiftsByCategoryId">
                                     <input type="hidden" name="GiftName" value="@item.Giftname"/>
                                     <div class="col-lg-4 col-md-4 all des">
-                                        <div class="product-item">
+                                    <div class="product-item" style="width:350px;">
                                             <div class="">
-                                        <button type="submit" style="border:none;cursor:pointer;"><img src="@Url.Content("~/GiftsImages/"+item.Imagepath)" alt=""></button>
+                                            <button type="submit" style="border:none;cursor:pointer;"><img src="@Url.Content("~/GiftsImages/"+item.Imagepath)" style="width:350px;height:200px;"></button>
                                             </div>
                                             <div class="down-content">
                                                 <h4>@item.Giftname</h4>

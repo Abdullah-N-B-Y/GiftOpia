@@ -7,14 +7,23 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using GiftStoreMVC.Models;
 using Microsoft.EntityFrameworkCore.Query;
+using Microsoft.AspNetCore.Hosting;
+using MimeKit.Text;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace GiftStoreMVC.Controllers;
 
 public class UsersController : Controller
 {
     private readonly ModelContext _context;
+    private readonly IWebHostEnvironment _webHostEnvironment;
 
-    public UsersController(ModelContext context) => _context = context;
+    public UsersController(ModelContext context, IWebHostEnvironment webHostEnvironment)
+    {
+        _context = context;
+        _webHostEnvironment = webHostEnvironment;
+    }
 
     // GET: Users
     public async Task<IActionResult> Index()
@@ -22,9 +31,13 @@ public class UsersController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
+
 
         IIncludableQueryable<GiftstoreUser, GiftstoreRole>? modelContext = _context.GiftstoreUsers.Include(g => g.Category).Include(g => g.Role);
         return View(await modelContext.ToListAsync());
@@ -36,9 +49,13 @@ public class UsersController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
+
         if (id == null || _context.GiftstoreUsers == null)
         {
             return NotFound();
@@ -108,9 +125,13 @@ public class UsersController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
+
         if (id == null || _context.GiftstoreUsers == null)
         {
             return NotFound();
@@ -126,9 +147,6 @@ public class UsersController : Controller
         return View(giftstoreUser);
     }
 
-    // POST: Users/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(decimal id, [Bind("Userid,Username,Password,Email,Name,Approvalstatus,Phonenumber,Imagepath,Categoryid,Roleid,Profits")] GiftstoreUser giftstoreUser)
@@ -136,9 +154,12 @@ public class UsersController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         if (id != giftstoreUser.Userid)
         {
             return NotFound();
@@ -175,9 +196,12 @@ public class UsersController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         if (id == null || _context.GiftstoreUsers == null)
         {
             return NotFound();
@@ -201,9 +225,12 @@ public class UsersController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         if (_context.GiftstoreUsers == null)
         {
             return Problem("Entity set 'ModelContext.GiftstoreUsers'  is null.");
@@ -226,7 +253,152 @@ public class UsersController : Controller
 		return View(currentLoggedUser);
 	}
 
-	public IActionResult Logout()
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditUserImage(IFormFile userImage)
+    {
+        decimal? userId = HttpContext.Session.GetInt32("UserId");
+        var currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                if (userId != currentLoggedUser.Userid)
+                {
+                    return NotFound();
+                }
+                if (userImage != null)
+                {
+                    string wwwRootPath = _webHostEnvironment.WebRootPath;
+                    string fileName = Guid.NewGuid().ToString() + userImage.FileName;
+                    string path = Path.Combine(wwwRootPath, "UsersImages", fileName);
+                    using (var fileStream = new FileStream(path, FileMode.Create))
+                    {
+                        await userImage.CopyToAsync(fileStream);
+                    }
+                    currentLoggedUser.Imagepath = fileName;
+
+                    _context.Update(currentLoggedUser);
+                    await _context.SaveChangesAsync();
+
+                    var email = new MimeMessage();
+                    email.From.Add(MailboxAddress.Parse("abdullahnby@outlook.com"));
+                    email.To.Add(MailboxAddress.Parse(currentLoggedUser.Email));
+
+                    email.Subject = "Update Image Profile";
+                    email.Body = new TextPart(TextFormat.Html) { Text = "Hi" + " " + currentLoggedUser.Name + " your image updated successfully" };
+
+
+                    using var smtp = new SmtpClient();
+                    smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    smtp.Authenticate("abdullahnby@outlook.com", "Abdullah2000$");
+                    smtp.Send(email);
+                    smtp.Disconnect(true);
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+        }
+        return RedirectToAction("Profile","Users",currentLoggedUser);
+    }
+
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditPersonalData(string? userName, string? userPhoneNumber, string? password)
+    {
+        decimal? userId = HttpContext.Session.GetInt32("UserId");
+        var currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                if (password != null && password.Equals(currentLoggedUser?.Password))
+                {
+                    if (userId != currentLoggedUser.Userid)
+                    {
+                        return NotFound();
+                    }
+                    if (userName != null)
+                    {
+                        currentLoggedUser.Name = userName;
+                    }
+                    if (userPhoneNumber != null)
+                    {
+                        currentLoggedUser.Phonenumber = userPhoneNumber;
+                    }
+                    _context.Update(currentLoggedUser);
+                    await _context.SaveChangesAsync();
+
+                    var email = new MimeMessage();
+                    email.From.Add(MailboxAddress.Parse("abdullahnby@outlook.com"));
+                    email.To.Add(MailboxAddress.Parse(currentLoggedUser.Email));
+
+                    email.Subject = "Update User Personal Data Profile";
+                    email.Body = new TextPart(TextFormat.Html) { Text = "Hi" + " " + currentLoggedUser.Name + " your Personal Data updated successfully" };
+
+
+                    using var smtp = new SmtpClient();
+                    smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                    smtp.Authenticate("abdullahnby@outlook.com", "Abdullah2000$");
+                    smtp.Send(email);
+                    smtp.Disconnect(true);
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+        }
+        return RedirectToAction("Profile", "Users", currentLoggedUser);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditPassword(string? oldPassword, string? newPassword, string? confirmPassword)
+    {
+        decimal? userId = HttpContext.Session.GetInt32("UserId");
+        var currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
+        if (ModelState.IsValid)
+        {
+            try
+            {
+                if (oldPassword != null && oldPassword.Equals(currentLoggedUser?.Password))
+                {
+                    if (newPassword != null && confirmPassword != null && newPassword.Equals(confirmPassword))
+                    {
+                        currentLoggedUser.Password = newPassword;
+
+                        _context.Update(currentLoggedUser);
+                        await _context.SaveChangesAsync();
+
+                        var email = new MimeMessage();
+                        email.From.Add(MailboxAddress.Parse("abdullahnby@outlook.com"));
+                        email.To.Add(MailboxAddress.Parse(currentLoggedUser.Email));
+
+                        email.Subject = "Update Profile GifOpia Password";
+                        email.Body = new TextPart(TextFormat.Html) { Text = "Hi" + " " + currentLoggedUser.Name + " your password updated successfully" };
+
+
+                        using var smtp = new SmtpClient();
+                        smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                        smtp.Authenticate("abdullahnby@outlook.com", "Abdullah2000$");
+                        smtp.Send(email);
+                        smtp.Disconnect(true);
+                    }
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+        }
+        return RedirectToAction("Profile", "Users", currentLoggedUser);
+    }
+
+    public IActionResult Logout()
     {
         HttpContext.Session.Clear();
         return RedirectToAction("Index", "Home");

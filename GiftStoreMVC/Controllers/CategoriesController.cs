@@ -26,9 +26,12 @@ public class CategoriesController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id2;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
 
         return _context.GiftstoreCategories != null ? 
             View(await _context.GiftstoreCategories.ToListAsync()) :
@@ -41,9 +44,13 @@ public class CategoriesController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
+
         if (id == null || _context.GiftstoreCategories == null)
         {
             return NotFound();
@@ -65,15 +72,15 @@ public class CategoriesController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id2;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         return View();
     }
 
-    // POST: Categories/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Categoryid,Categoryname,CategoryImage,Categorydescription")] GiftstoreCategory giftstoreCategory)
@@ -81,9 +88,12 @@ public class CategoriesController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id2;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
 
         if (ModelState.IsValid)
         {
@@ -113,9 +123,12 @@ public class CategoriesController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         if (id == null || _context.GiftstoreCategories == null)
         {
             return NotFound();
@@ -129,9 +142,6 @@ public class CategoriesController : Controller
         return View(giftstoreCategory);
     }
 
-    // POST: Categories/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(decimal id, [Bind("Categoryid,Categoryname,CategoryImage,Categorydescription")] GiftstoreCategory giftstoreCategory)
@@ -139,9 +149,12 @@ public class CategoriesController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         if (id != giftstoreCategory.Categoryid)
         {
             return NotFound();
@@ -187,9 +200,12 @@ public class CategoriesController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         if (id == null || _context.GiftstoreCategories == null)
         {
             return NotFound();
@@ -213,9 +229,12 @@ public class CategoriesController : Controller
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
-        ViewData["UserId"] = id2;
+        ViewData["Email"] = currentUser.Email;
+        ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         if (_context.GiftstoreCategories == null)
         {
             return Problem("Entity set 'ModelContext.GiftstoreCategories'  is null.");

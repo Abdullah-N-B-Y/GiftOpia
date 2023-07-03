@@ -397,39 +397,29 @@
                         <div class="account-wrap">
                             <div class="account-item clearfix js-item-menu">
                                 <div class="image">
-                                    <img src="~/AdminAssets/images/icon/avatar-01.jpg" alt="John Doe" />
+                                    <img src="@Url.Content($"~/UsersImages/{ViewData["ImagePath"]}")" />
                                 </div>
                                 <div class="content">
-                                    <a class="js-acc-btn" href="~/AdminAssets/#">@username</a>
+                                    <a class="js-acc-btn" href="#">@ViewData["Username"]</a>
                                 </div>
                                 <div class="account-dropdown js-dropdown">
                                     <div class="info clearfix">
                                         <div class="image">
-                                            <a href="~/AdminAssets/#">
-                                                <img src="~/AdminAssets/images/icon/avatar-01.jpg" alt="John Doe" />
+                                            <a href="#">
+                                                <img src="@Url.Content($"~/UsersImages/{ViewData["ImagePath"]}")" />
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a href="~/AdminAssets/#">john doe</a>
+                                                <a href="#">@ViewData["Name"]</a>
                                             </h5>
-                                            <span class="email">johndoe@example.com</span>
+                                            <span class="email">@ViewData["Email"]</span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__body">
                                         <div class="account-dropdown__item">
-                                            <a href="~/AdminAssets/#">
-                                                <i class="zmdi zmdi-account"></i>Account
-                                            </a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="~/AdminAssets/#">
-                                                <i class="zmdi zmdi-settings"></i>Setting
-                                            </a>
-                                        </div>
-                                        <div class="account-dropdown__item">
-                                            <a href="~/AdminAssets/#">
-                                                <i class="zmdi zmdi-money-box"></i>Billing
+                                            <a asp-controller="Users" asp-action="Profile">
+                                                <i class="zmdi zmdi-account"></i>Profile
                                             </a>
                                         </div>
                                     </div>
@@ -454,7 +444,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="copyright">
-                    <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="~/AdminAssets/https://colorlib.com">Colorlib</a>.</p>
+                    <p>Copyright © 2023 GiftOpia. All rights reserved. Template by <a href="#">GiftOpia</a>.</p>
                 </div>
             </div>
         </div>

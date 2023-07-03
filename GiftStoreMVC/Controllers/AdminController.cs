@@ -24,15 +24,17 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
 
         ViewData["NumberOfUsers"] = _context.GiftstoreUsers.Count();
         ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();
         ViewData["NumberOfCategories"] = _context.GiftstoreCategories.Count();
 
-        // AHmad
         return View(currentUser);
     }
 
@@ -42,9 +44,12 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         var modelContext = _context.GiftstoreCategories.ToList();
 
         return View("~/Views/Admin/Categories/Category.cshtml", modelContext);
@@ -60,10 +65,12 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
-
+        ViewData["ImagePath"] = currentUser.Imagepath;
         var modelContext = _context.GiftstoreCategories.ToList();
 
         return View(modelContext);
@@ -74,9 +81,12 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         var modelContext = _context.GiftstoreGifts.Where(obj=> obj.Categoryid == Categoryid).ToList();
 
         return View(modelContext);
@@ -88,9 +98,13 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
+
         ViewData["RoleName"] = HttpContext.Session.GetString("RoleName"); ;
 
         var users = _context.GiftstoreUsers.Where(obj => obj.Roleid == 2).ToList();
@@ -126,9 +140,13 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
+
         ViewData["RoleName"] = HttpContext.Session.GetString("RoleName"); ;
 
         GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == Userid).SingleOrDefault();
@@ -161,9 +179,12 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
 
         ViewData["NumberOfUsers"] = _context.GiftstoreUsers.Count();
         ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();  //Anas Majdoub new work
@@ -181,9 +202,12 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
 
         ViewData["NumberOfUsers"] = _context.GiftstoreUsers.Count();
         ViewData["NumberOfGifts"] = _context.GiftstoreGifts.Count();
@@ -216,9 +240,12 @@ public class AdminController : Controller
         decimal? id = HttpContext.Session.GetInt32("UserId");
         GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
         ViewData["Username"] = currentUser.Username;
+        ViewData["Name"] = currentUser.Name;
         ViewData["Password"] = currentUser.Password;
+        ViewData["Email"] = currentUser.Email;
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
+        ViewData["ImagePath"] = currentUser.Imagepath;
         ViewData["RoleName"] = HttpContext.Session.GetString("RoleName"); ;
 
         var users = _context.GiftstoreUsers.ToList();
