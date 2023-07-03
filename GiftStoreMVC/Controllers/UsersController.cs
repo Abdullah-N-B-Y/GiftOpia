@@ -221,7 +221,9 @@ public class UsersController : Controller
 
 	public IActionResult Profile()
 	{
-		return View();
+        decimal? userId = HttpContext.Session.GetInt32("UserId");
+        var currentLoggedUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == userId).FirstOrDefault();
+		return View(currentLoggedUser);
 	}
 
 	public IActionResult Logout()
