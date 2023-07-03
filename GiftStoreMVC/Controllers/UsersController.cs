@@ -39,7 +39,7 @@ public class UsersController : Controller
         ViewData["ImagePath"] = currentUser.Imagepath;
 
 
-        IIncludableQueryable<GiftstoreUser, GiftstoreRole>? modelContext = _context.GiftstoreUsers.Include(g => g.Category).Include(g => g.Role);
+        IQueryable<GiftstoreUser> modelContext = _context.GiftstoreUsers.Where(obj=> obj.Approvalstatus.Equals("Accepted"));
         return View(await modelContext.ToListAsync());
     }
 
@@ -249,7 +249,7 @@ public class UsersController : Controller
 	public IActionResult Profile()
 	{
         decimal? userId = HttpContext.Session.GetInt32("UserId");
-        var currentLoggedUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == userId).FirstOrDefault();
+        GiftstoreUser? currentLoggedUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == userId).FirstOrDefault();
 		return View(currentLoggedUser);
 	}
 
@@ -258,7 +258,7 @@ public class UsersController : Controller
     public async Task<IActionResult> EditUserImage(IFormFile userImage)
     {
         decimal? userId = HttpContext.Session.GetInt32("UserId");
-        var currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
+        GiftstoreUser? currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
         if (ModelState.IsValid)
         {
             try
@@ -310,7 +310,7 @@ public class UsersController : Controller
     public async Task<IActionResult> EditPersonalData(string? userName, string? userPhoneNumber, string? password)
     {
         decimal? userId = HttpContext.Session.GetInt32("UserId");
-        var currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
+        GiftstoreUser? currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
         if (ModelState.IsValid)
         {
             try
@@ -360,7 +360,7 @@ public class UsersController : Controller
     public async Task<IActionResult> EditPassword(string? oldPassword, string? newPassword, string? confirmPassword)
     {
         decimal? userId = HttpContext.Session.GetInt32("UserId");
-        var currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
+        GiftstoreUser? currentLoggedUser = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).FirstOrDefault();
         if (ModelState.IsValid)
         {
             try
