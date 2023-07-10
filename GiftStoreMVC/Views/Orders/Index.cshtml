@@ -1,67 +1,65 @@
 ﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreOrder>
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-<body>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Orderdate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Orderstatus)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Recipientaddress)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Arrivaldate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Finalprice)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Orderdate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Orderstatus)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Recipientaddress)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Arrivaldate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Finalprice)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Orderid">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Orderid">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Orderid">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-</body>
-</html>
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+@*            <p>
+                <a asp-action="Create" class="btn btn-primary" >Create New</a>
+            </p>*@
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Order Date
+                            </th>
+                            <th>
+                                Order Status
+                            </th>
+                            <th>
+                                Recipient Address
+                            </th>
+                            <th>
+                                Arrival Date
+                            </th>
+                            <th>
+                                Final Price
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                @foreach (var item in Model) {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Orderdate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Orderstatus)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Recipientaddress)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Arrivaldate)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Finalprice)
+                            </td>
+                            <td>
+                                @*<a asp-action="Edit" asp-route-id="@item.Orderid" class="btn btn-primary">Edit</a>*@
+                                    <a asp-action="Details" asp-route-id="@item.Orderid" class="btn btn-primary">Details</a>
+                                    <a asp-action="Delete" asp-route-id="@item.Orderid" class="btn btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

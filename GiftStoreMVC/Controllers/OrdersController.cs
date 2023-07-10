@@ -16,14 +16,37 @@ public class OrdersController : Controller
     public OrdersController(ModelContext context) => _context = context;
 
     // GET: Orders
-    public async Task<IActionResult> Index() =>
-        _context.GiftstoreOrders != null ? 
-            View(await _context.GiftstoreOrders.ToListAsync()) :
-            Problem("Entity set 'ModelContext.GiftstoreOrders'  is null.");
+    public async Task<IActionResult> Index()
+    {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+        ViewData["PhoneNumber"] = user.Phonenumber;
 
+        return _context.GiftstoreOrders != null ?
+            View(await _context.GiftstoreOrders.Where(obj=>obj.Orderstatus.Equals("Arrived")).ToListAsync()) :
+            Problem("Entity set 'ModelContext.GiftstoreOrders'  is null.");
+    }
     // GET: Orders/Details/5
     public async Task<IActionResult> Details(decimal? id)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+        ViewData["PhoneNumber"] = user.Phonenumber;
+
         if (id == null || _context.GiftstoreOrders == null)
         {
             return NotFound();
@@ -40,7 +63,21 @@ public class OrdersController : Controller
     }
 
     // GET: Orders/Create
-    public IActionResult Create() => View();
+    public IActionResult Create() 
+    {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+        ViewData["PhoneNumber"] = user.Phonenumber;
+
+        return View();
+    }
 
     // POST: Orders/Create
     // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -49,8 +86,17 @@ public class OrdersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create([Bind("Orderid,Recipientaddress,Arrivaldate,Finalprice")] GiftstoreOrder giftstoreOrder)
     {
-        // Orderdate 
-          
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+        ViewData["PhoneNumber"] = user.Phonenumber;
+
 
         if (ModelState.IsValid)
         {
@@ -66,6 +112,16 @@ public class OrdersController : Controller
     // GET: Orders/Edit/5
     public async Task<IActionResult> Edit(decimal? id)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+        ViewData["PhoneNumber"] = user.Phonenumber;
         if (id == null || _context.GiftstoreOrders == null)
         {
             return NotFound();
@@ -86,6 +142,16 @@ public class OrdersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(decimal id, [Bind("Orderid,Orderdate,Orderstatus,Recipientaddress,Arrivaldate,Finalprice")] GiftstoreOrder giftstoreOrder)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+        ViewData["PhoneNumber"] = user.Phonenumber;
         if (id != giftstoreOrder.Orderid)
         {
             return NotFound();
@@ -117,6 +183,16 @@ public class OrdersController : Controller
     // GET: Orders/Delete/5
     public async Task<IActionResult> Delete(decimal? id)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+        ViewData["PhoneNumber"] = user.Phonenumber;
         if (id == null || _context.GiftstoreOrders == null)
         {
             return NotFound();
@@ -137,6 +213,16 @@ public class OrdersController : Controller
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> DeleteConfirmed(decimal id)
     {
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user.Username;
+        ViewData["Name"] = user.Name;
+        ViewData["Password"] = user.Password;
+        ViewData["Email"] = user.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user.Roleid;
+        ViewData["ImagePath"] = user.Imagepath;
+        ViewData["PhoneNumber"] = user.Phonenumber;
         if (_context.GiftstoreOrders == null)
         {
             return Problem("Entity set 'ModelContext.GiftstoreOrders'  is null.");

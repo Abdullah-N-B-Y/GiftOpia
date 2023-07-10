@@ -1,43 +1,70 @@
 ﻿@model IEnumerable<Reprotes>
 
 @{
-    ViewData["Title"] = "Reportes";
+    ViewData["Title"] = "Reports";
     Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
+
+
+<style>
+    /* Add your custom styles for the buttons */
+    .dt-buttons button {
+        /* Your custom styles here */
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 16px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+</style>
 
 <div class="page-wrapper">
     <div class="page-container">
         <div class="main-content">
             <div class="section__content section__content--p30">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <h2 class="title-1 m-b-25">Earnings By Items</h2>
-                        <div class="table-responsive table--no-card m-b-40">
-                            <table class="table table-borderless table-striped table-earning">
-                                <thead>
-                                    <tr>
-                                        <th>date</th>
-                                        <th class="text-right">price</th>
-                                        <th class="text-right">quantity</th>
-                                        <th class="text-right">total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var item in Model)
-                                    {
-                                        <tr>
-                                            <td class="text-right">@item.createDate</td>
-                                            <td class="text-right">@item.userName</td>
-                                            <td class="text-right">@item.totalPrice</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
+                <div class="container-fluid">
+                    <form asp-action="SearchInterval">
+                        <div class="row m-t-25" style="justify-content:center;">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group col-3">
+                                <input id="startDate" name="startDate" type="date" class="form-control" />
+                            </div>
+                            <div class="form-group col-3">
+                                <input id="endDate" name="endDate" type="date" class="form-control" />
+                            </div>
+
+                            <div class="form-group col-2">
+                                <input type="submit" value="Search" class="btn btn-primary" />
+                            </div>
                         </div>
+                    </form>
+                    <div id="tab">
+                        <table class="table table-borderless table-data3" id="ReportsTable">
+                            <thead>
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Create Date</th>
+                                    <th>Quentity</th>
+                                    <th>Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.userName</td>
+                                        <td>@item.createDate</td>
+                                        <td>1</td>
+                                        <td>@item.totalPrice</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-

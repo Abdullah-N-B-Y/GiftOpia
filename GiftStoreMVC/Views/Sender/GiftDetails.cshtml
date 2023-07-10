@@ -5,6 +5,11 @@
     Layout = "~/Views/Shared/_SenderLayout.cshtml";
 }
 
+<link href="~/SenderAssets/giftdetails.css" rel="stylesheet">
+<style>
+
+</style>
+
 <!-- Page Content -->
 <div class="page-heading products-heading header-text">
     <div class="container">
@@ -18,24 +23,32 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-lg-12 col-md-4 card">
-            <form asp-action="GiftDetails">
-                <span class="card__title">Gift details</span>
-                <div class="card__form">
 
-                <input value="@Model.Giftname" type="text" disabled>
-                <input type="hidden" name="GiftName" value="@Model.Giftname" />
-                
-                <input value="@Model.Giftprice" type="text" disabled />
-                <input value="@Model.Imagepath" type="text" disabled />
-                <input value="@Model.Giftavailability" type="text" disabled />
-                <input value="@Model.Giftdescription" type="text" disabled />
-                <input name="recipientName" placeholder="recipient name" type="text" required />
-                <input name="recipientAddress" placeholder="recipient address" type="text" required />
-
-                <button class="sign-up"> Sign up</button>
+<div class="container">
+    <div id="demo" class="carousel slide" data-ride="carousel">
+        <div class="container-1">
+            <div class="cta-form">
+                <h2>Fill out the form!</h2>
+                <p>Check out the comments for line by line explanations. Form-related code starts on line 145.</p>
             </div>
+            <form asp-action="GiftDetails">
+                <input type="text" value="@Model.Giftname" class="form__input" id="GiftName" disabled/>
+                <label for="GiftName" class="form__label">GiftName</label>
+                <input type="hidden" name="GiftName" value="@Model.Giftname" />
+
+                <input type="text" value="@Model.Giftprice" class="form__input" id="Price" disabled />
+                <label for="Price" class="form__label">Gift Price</label>
+
+                <input type="text" value="@Model.Giftdescription" class="form__input" id="Description" disabled />
+                <label for="Description" class="form__label">Gift Description</label>
+
+                <input type="text" placeholder="Recipient Name" class="form__input" name="recipientName" id="Name" required />
+                <label for="Name" class="form__label">Recipient Name</label>
+
+                <input type="text" placeholder="Recipient Address" class="form__input" name="recipientAddress" id="Address" required />
+                <label for="Address" class="form__label">Recipient Address</label>
+                <button class="sign-up"> Sign up</button>
             </form>
+        </div>
     </div>
 </div>

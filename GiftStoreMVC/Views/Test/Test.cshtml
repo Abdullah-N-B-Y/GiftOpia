@@ -1,0 +1,72 @@
+﻿@model IEnumerable<GiftstoreOrder>
+@{
+    ViewData["Title"] = "Reports";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css" />
+
+
+    <h1>Orders (By Include Operator)</h1>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <input id="startDate" name="startDate" type="date" class="form-control" />
+        </div>
+        <div class="form-group">
+            <input id="endDate" name="endDate" type="date" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Search" class="btn btn-primary" />
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-title mb-0">Top Products</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-borderless" id="SearchTable">
+                            <thead>
+                                <tr>
+                                    <th>Customer name</th>
+                                    <th>Product name</th>
+                                    <th>Quantity</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>123</td>
+                                        <td>123</td>
+                                        <td>123</td>
+                                        <td class="font-weight-bold">$123</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#SearchTable').DataTable({
+                buttons: ['copy', 'excel', 'pdf', 'print']
+            });
+        });
+    </script>
+

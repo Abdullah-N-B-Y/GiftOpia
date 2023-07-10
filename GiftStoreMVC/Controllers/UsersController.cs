@@ -38,6 +38,7 @@ public class UsersController : Controller
         ViewData["RoleId"] = currentUser.Roleid;
         ViewData["ImagePath"] = currentUser.Imagepath;
 
+        ViewData["NumberOfNotification"] = _context.GiftstoreNotifications.Count(obj => obj.Isread == false);
 
         IQueryable<GiftstoreUser> modelContext = _context.GiftstoreUsers.Where(obj=> obj.Approvalstatus.Equals("Accepted"));
         return View(await modelContext.ToListAsync());
@@ -56,6 +57,8 @@ public class UsersController : Controller
         ViewData["RoleId"] = currentUser.Roleid;
         ViewData["ImagePath"] = currentUser.Imagepath;
 
+        ViewData["NumberOfNotification"] = _context.GiftstoreNotifications.Count(obj => obj.Isread == false);
+
         if (id == null || _context.GiftstoreUsers == null)
         {
             return NotFound();
@@ -73,53 +76,6 @@ public class UsersController : Controller
         return View(giftstoreUser);
     }
 
-    // GET: Users/Create
-    //public IActionResult Create()
-    //{
-    //    //decimal? id2 = HttpContext.Session.GetInt32("UserId");
-    //    //GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id2).SingleOrDefault();
-    //    //ViewData["Username"] = currentUser.Username;
-    //    //ViewData["Password"] = currentUser.Password;
-    //    //ViewData["UserId"] = id2;
-    //    //ViewData["RoleId"] = currentUser.Roleid;
-    //    //ViewData["Categoryid"] = new SelectList(_context.GiftstoreCategories, "Categoryid", "Categoryid");
-    //    //ViewData["Roleid"] = new SelectList(_context.GiftstoreRoles, "Roleid", "Roleid");
-    //    decimal? id = HttpContext.Session.GetInt32("UserId");
-    //    GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-    //    ViewData["Username"] = currentUser.Username;
-    //    ViewData["Password"] = currentUser.Password;
-    //    ViewData["UserId"] = id;
-    //    ViewData["RoleId"] = currentUser.Roleid;
-    //    return View();
-    //}
-
-    //// POST: Users/Create
-    //// To protect from overposting attacks, enable the specific properties you want to bind to.
-    //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-    //[HttpPost]
-    //[ValidateAntiForgeryToken]
-    //public async Task<IActionResult> Create([Bind("Userid,Username,Password,Email,Name,Approvalstatus,Phonenumber,Imagepath,Categoryid,Roleid,Profits")] GiftstoreUser giftstoreUser)
-    //{
-    //    decimal? id = HttpContext.Session.GetInt32("UserId");
-    //    GiftstoreUser? currentUser = _context.GiftstoreUsers.Where(obj => obj.Userid == id).SingleOrDefault();
-    //    ViewData["Username"] = currentUser.Username;
-    //    ViewData["Password"] = currentUser.Password;
-    //    ViewData["UserId"] = id;
-    //    ViewData["RoleId"] = currentUser.Roleid;
-    //    if (ModelState.IsValid)
-    //    {
-    //        _context.Add(giftstoreUser);
-    //        await _context.SaveChangesAsync();
-    //        return RedirectToAction(nameof(Index));
-    //    }
-    //    ViewData["Categoryid"] = new SelectList(_context.GiftstoreCategories, "Categoryid", "Categoryid", giftstoreUser.Categoryid);
-    //    ViewData["Roleid"] = new SelectList(_context.GiftstoreRoles, "Roleid", "Roleid", giftstoreUser.Roleid);
-    //    return View(giftstoreUser);
-    //}
-
-    // GET: Users/Edit/5
-
-
     public async Task<IActionResult> Edit(decimal? id)
     {
         decimal? id2 = HttpContext.Session.GetInt32("UserId");
@@ -131,6 +87,8 @@ public class UsersController : Controller
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
         ViewData["ImagePath"] = currentUser.Imagepath;
+
+        ViewData["NumberOfNotification"] = _context.GiftstoreNotifications.Count(obj => obj.Isread == false);
 
         if (id == null || _context.GiftstoreUsers == null)
         {
@@ -160,6 +118,9 @@ public class UsersController : Controller
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
         ViewData["ImagePath"] = currentUser.Imagepath;
+
+        ViewData["NumberOfNotification"] = _context.GiftstoreNotifications.Count(obj => obj.Isread == false);
+
         if (id != giftstoreUser.Userid)
         {
             return NotFound();
@@ -231,6 +192,9 @@ public class UsersController : Controller
         ViewData["UserId"] = id;
         ViewData["RoleId"] = currentUser.Roleid;
         ViewData["ImagePath"] = currentUser.Imagepath;
+
+        ViewData["NumberOfNotification"] = _context.GiftstoreNotifications.Count(obj => obj.Isread == false);
+
         if (_context.GiftstoreUsers == null)
         {
             return Problem("Entity set 'ModelContext.GiftstoreUsers'  is null.");
@@ -248,7 +212,19 @@ public class UsersController : Controller
 
 	public IActionResult Profile()
 	{
-        decimal? userId = HttpContext.Session.GetInt32("UserId");
+        int? userId = HttpContext.Session.GetInt32("UserId");
+        GiftstoreUser? user2 = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+        ViewData["Username"] = user2.Username;
+        ViewData["Name"] = user2.Name;
+        ViewData["Password"] = user2.Password;
+        ViewData["Email"] = user2.Email;
+        ViewData["UserId"] = userId;
+        ViewData["RoleId"] = user2.Roleid;
+        ViewData["ImagePath"] = user2.Imagepath;
+        ViewData["PhoneNumber"] = user2.Phonenumber;
+
+        ViewData["NumberOfNotification"] = _context.GiftstoreNotifications.Count(obj => obj.Isread == false);
+
         GiftstoreUser? currentLoggedUser = _context.GiftstoreUsers.Where(obj=> obj.Userid == userId).FirstOrDefault();
 		return View(currentLoggedUser);
 	}
@@ -282,7 +258,7 @@ public class UsersController : Controller
                     await _context.SaveChangesAsync();
 
                     var email = new MimeMessage();
-                    email.From.Add(MailboxAddress.Parse("abdullahnby@outlook.com"));
+                    email.From.Add(MailboxAddress.Parse("GiftOpiaSite@outlook.com"));
                     email.To.Add(MailboxAddress.Parse(currentLoggedUser.Email));
 
                     email.Subject = "Update Image Profile";
@@ -291,7 +267,7 @@ public class UsersController : Controller
 
                     using var smtp = new SmtpClient();
                     smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                    smtp.Authenticate("abdullahnby@outlook.com", "Abdullah2000$");
+                    smtp.Authenticate("GiftOpiaSite@outlook.com", "Abdullah2000$!");
                     smtp.Send(email);
                     smtp.Disconnect(true);
                 }
@@ -333,7 +309,7 @@ public class UsersController : Controller
                     await _context.SaveChangesAsync();
 
                     var email = new MimeMessage();
-                    email.From.Add(MailboxAddress.Parse("abdullahnby@outlook.com"));
+                    email.From.Add(MailboxAddress.Parse("GiftOpiaSite@outlook.com"));
                     email.To.Add(MailboxAddress.Parse(currentLoggedUser.Email));
 
                     email.Subject = "Update User Personal Data Profile";
@@ -342,7 +318,7 @@ public class UsersController : Controller
 
                     using var smtp = new SmtpClient();
                     smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                    smtp.Authenticate("abdullahnby@outlook.com", "Abdullah2000$");
+                    smtp.Authenticate("GiftOpiaSite@outlook.com", "Abdullah2000$!");
                     smtp.Send(email);
                     smtp.Disconnect(true);
                 }
@@ -375,7 +351,7 @@ public class UsersController : Controller
                         await _context.SaveChangesAsync();
 
                         var email = new MimeMessage();
-                        email.From.Add(MailboxAddress.Parse("abdullahnby@outlook.com"));
+                        email.From.Add(MailboxAddress.Parse("GiftOpiaSite@outlook.com"));
                         email.To.Add(MailboxAddress.Parse(currentLoggedUser.Email));
 
                         email.Subject = "Update Profile GifOpia Password";
@@ -384,7 +360,7 @@ public class UsersController : Controller
 
                         using var smtp = new SmtpClient();
                         smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                        smtp.Authenticate("abdullahnby@outlook.com", "Abdullah2000$");
+                        smtp.Authenticate("GiftOpiaSite@outlook.com", "Abdullah2000$!");
                         smtp.Send(email);
                         smtp.Disconnect(true);
                     }
@@ -398,11 +374,102 @@ public class UsersController : Controller
         return RedirectToAction("Profile", "Users", currentLoggedUser);
     }
 
+
+
+    public IActionResult ContactUs()
+    {
+        return View();
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult ContactUs(string? fname, string? lname, string? email1, string? text)
+    {
+        try
+        {
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse(email1));
+            email.To.Add(MailboxAddress.Parse("GiftOpiaSite@outlook.com"));
+
+            email.Subject = "Contact us";
+            email.Body = new TextPart(TextFormat.Html) { Text = "Greetings, this is my contact for your site GiftOpia." };
+
+
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate("GiftOpiaSite@outlook.com", "Abdullah2000$!");
+            smtp.Send(email);
+            smtp.Disconnect(true);
+        }
+        catch
+        {
+            return View();
+        }
+        return View();
+    }
+
+
+    public IActionResult Feedback()
+    {
+        return View();
+    }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Feedback(string? fname, string? lname, string? email1, string? message)
+    {
+        try
+        {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
+
+            var email = new MimeMessage();
+            email.From.Add(MailboxAddress.Parse("GiftOpiaSite@outlook.com"));
+            email.To.Add(MailboxAddress.Parse(user.Email));
+
+            email.Subject = "Feedback";
+            email.Body = new TextPart(TextFormat.Html) { Text = "Hi" + " " + user.Name + " thanks for your feedback and be sure that we always want to read from you." };
+
+
+            using var smtp = new SmtpClient();
+            smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+            smtp.Authenticate("GiftOpiaSite@outlook.com", "Abdullah2000$!");
+            smtp.Send(email);
+            smtp.Disconnect(true);
+
+
+            GiftstoreTestimonial testimonial = new()
+            {
+                Testimonialcontent = message,
+                Testimonialdate = DateTime.UtcNow,
+                Testimonialstatus = "Not read"
+            };
+            _context.Add(testimonial);
+            _context.SaveChanges();
+        }
+        catch
+        {
+            return View();
+        }
+        return RedirectToAction("Index", "Sender");
+    }
+
+
+    public IActionResult Ban(decimal Userid)
+    {
+        var bannedUser = _context.GiftstoreUsers.Where(obj=>obj.Userid == Userid).SingleOrDefault();
+
+        bannedUser.Approvalstatus = "Banned";
+        _context.Update(bannedUser);
+        _context.SaveChanges();
+        return RedirectToAction("Index");
+    }
+
     public IActionResult Logout()
     {
         HttpContext.Session.Clear();
         return RedirectToAction("Index", "Home");
     }
+
+
 
     private bool GiftstoreUserExists(decimal id) => (_context.GiftstoreUsers?.Any(e => e.Userid == id)).GetValueOrDefault();
 }

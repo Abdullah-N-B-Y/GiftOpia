@@ -1,0 +1,91 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstoreSenderrequest>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Recipientname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Recipientaddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requeststatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Requestdate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sendername)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Giftname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Giftprice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Maker)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sender)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recipientname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Recipientaddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Requeststatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Requestdate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sendername)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giftname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Giftprice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Maker.Userid)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sender.Userid)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Requestid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Requestid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Requestid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

@@ -78,7 +78,7 @@
                                     @Html.DisplayFor(modelItem => item.Phonenumber)
                                 </td>
                                 <td>
-                                    <img src="@Url.Content($"~/UsersImages/{item.Imagepath}")" style="width:70px;height:70px;border-radius:15px;"></img>
+                                    <img src="@Url.Content($"~/UsersImages/{item.Imagepath}")" style="width:70px;height:70px;border-radius:15px;"/>
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Profits)
@@ -96,9 +96,15 @@
                                     <a asp-action="Details" asp-route-id="@item.Userid" class="btn btn-primary" style="width: 40px;">
                                         <div class="btn-container">Details</div>
                                     </a>
-                                    <a asp-action="Delete" asp-route-id="@item.Userid" class="btn btn-danger" style="width: 40px;">
-                                        <div class="btn-container">Delete</div>
-                                    </a>
+                                    @if (item.Roleid != 1)
+                                    {
+                                        <a asp-action="Delete" asp-route-id="@item.Userid" class="btn btn-danger" style="width: 40px;">
+                                            <div class="btn-container">Delete</div>
+                                        </a>
+                                        <a asp-action="Ban" asp-route-Userid="@item.Userid" class="btn btn-danger" style="width: 40px;">
+                                            <div class="btn-container">Ban</div>
+                                        </a>
+                                    }
                                 </td>
                             </tr>
                         }

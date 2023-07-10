@@ -1,17 +1,13 @@
 ﻿@model GiftStoreMVC.Models.GiftstoreOrder
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Details</title>
-</head>
-<body>
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
 
 <div>
     <h4>GiftstoreOrder</h4>
@@ -53,5 +49,8 @@
     <a asp-action="Edit" asp-route-id="@Model.Orderid">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
-</body>
-</html>
+</div>
+</div>
+</div>
+</div>
+

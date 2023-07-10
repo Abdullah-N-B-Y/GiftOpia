@@ -1,4 +1,6 @@
 ﻿
+
+
 @{
     Layout = null;
     decimal? id = (decimal) ViewData["RoleId"];
@@ -47,7 +49,6 @@
         <link href="~/LoginForm/vendor/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
         <link href="~/LoginForm/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" media="all">
         <!-- Font special for pages-->
-        <link href="~/LoginForm/https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
         <!-- Vendor CSS-->
         <link href="~/LoginForm/vendor/select2/select2.min.css" rel="stylesheet" media="all">
@@ -61,6 +62,11 @@
 
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.7.1/css/buttons.dataTables.min.css" />
+
 
     <style>
         body{
@@ -170,21 +176,13 @@
         <div class="menu-sidebar__content js-scrollbar1">
             <nav class="navbar-sidebar">
                 <ul class="list-unstyled navbar__list">
-                    <li class="has-sub">
-                        <a asp-controller="Admin" asp-action="Index">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard
-                        </a>
-                    </li>
-                    @if (id == 3)
-                    {
-                        <li>
-                            <a asp-controller="Admin" asp-action="Index">
-                                <i class="fa-solid fa-person-chalkboard"></i>Makers
-                            </a>
-                        </li>
-                    }
                     @if (id == 1)
                     {
+                        <li class="has-sub">
+                            <a asp-controller="Admin" asp-action="Index">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                            </a>
+                        </li>
                         <li>
                             <a asp-controller="Categories" asp-action="Index">
                                 <i class="fas fa-table"></i>Add categories
@@ -201,9 +199,44 @@
                                 <i class="fa-solid fa-bell"></i>Notification
                             </a>
                         </li>
+                        <li>
+                            <a asp-controller="Users" asp-action="Index">
+                                <i class="fa-solid fa-user"></i>Users
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Profits">
+                                <i class="fa-solid fa-money-bill-trend-up"></i>Profits
+                            </a>
+                        </li>
+                        <li class="has-sub">
+                            <a asp-controller="Admin" asp-action="Reportes">
+                                <i class="fa-solid fa-file"></i>Reports
+                            </a>
+                        </li>
+                        <li class="has-sub">
+                            <a asp-controller="Admin" asp-action="ManagePages">
+                                <i class="fas fa-desktop"></i>Manage pages
+                            </a>
+                        </li>
+                        <li class="has-sub">
+                            <a asp-controller="Admin" asp-action="BanUnbanUsers">
+                                <i class="fa-solid fa-ban"></i>Ban/Unban users
+                            </a>
+                        </li>
                     }
                     @if (id == 2)
                     {
+                        <li class="has-sub">
+                            <a asp-controller="Maker" asp-action="Index">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="Index">
+                                <i class="fa-solid fa-person-chalkboard"></i>Makers
+                            </a>
+                        </li>
                         <li>
                             <a asp-controller="Maker" asp-action="MyGifts">
                                 <i class="fa-solid fa-gift"></i>My gifts
@@ -225,43 +258,27 @@
                                 <i class="fa-solid fa-bell"></i>Sender Request
                             </a>
                         </li>
-                    }
-                    @if (id == 1)
-                    {
-                        <li>
-                            <a asp-controller="Users" asp-action="Index">
-                                <i class="fa-solid fa-user"></i>Users
-                            </a>
-                        </li>
-                        <li>
-                            <a asp-controller="Admin" asp-action="Profits">
-                                <i class="fa-solid fa-money-bill-trend-up"></i>Profits
-                            </a>
-                        </li>
-                    }
-                    @if (id == 2)
-                    {
                         <li>
                             <a asp-controller="Maker" asp-action="Profits">
                                 <i class="fa-solid fa-money-bill-trend-up"></i>Profits
                             </a>
                         </li>
                     }
-                    @if (id == 1)
+                    @if (id == 4)
                     {
                         <li class="has-sub">
-                            <a asp-controller="Admin" asp-action="Reportes">
-                                <i class="fa-solid fa-file"></i>Reports
+                            <a asp-controller="Driver" asp-action="Index">
+                                <i class="fas fa-tachometer-alt"></i>Dashboard
                             </a>
                         </li>
-                        <li class="has-sub">
-                            <a href="~/AdminAssets/#">
-                                <i class="fas fa-desktop"></i>Manage pages
+                        <li>
+                            <a asp-controller="Driver" asp-action="Orders">
+                                <i class="fa-solid fa-money-bill-trend-up"></i>Orders
                             </a>
                         </li>
-                        <li class="has-sub">
-                            <a href="~/AdminAssets/#">
-                                <i class="fa-solid fa-ban"></i>Ban/Unban users
+                        <li>
+                            <a asp-controller="Orders" asp-action="Index">
+                                <i class="fa-solid fa-money-bill-trend-up"></i>Bought gift
                             </a>
                         </li>
                     }
@@ -285,10 +302,10 @@
                         <div class="noti-wrap">
                             <div class="noti__item js-item-menu">
                                 <i class="zmdi zmdi-comment-more"></i>
-                                <span class="quantity">1</span>
+                                <span class="quantity">0</span>
                                 <div class="mess-dropdown js-dropdown">
                                     <div class="mess__title">
-                                        <p>You have 2 news message</p>
+                                        <p>You have 0 news message</p>
                                     </div>
                                     <div class="mess__item">
                                         <div class="image img-cir img-40">
@@ -317,10 +334,10 @@
                             </div>
                             <div class="noti__item js-item-menu">
                                 <i class="zmdi zmdi-email"></i>
-                                <span class="quantity">1</span>
+                                <span class="quantity">0</span>
                                 <div class="email-dropdown js-dropdown">
                                     <div class="email__title">
-                                        <p>You have 3 New Emails</p>
+                                        <p>You have 0 New Emails</p>
                                     </div>
                                     <div class="email__item">
                                         <div class="image img-cir img-40">
@@ -354,42 +371,25 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="noti__item js-item-menu">
                                 <i class="zmdi zmdi-notifications"></i>
-                                <span class="quantity">3</span>
+                                <span class="quantity">@ViewData["NumberOfNotification"]</span>
                                 <div class="notifi-dropdown js-dropdown">
                                     <div class="notifi__title">
-                                        <p>You have 3 Notifications</p>
+                                        <p>You have @ViewData["NumberOfNotification"] Notifications</p>
                                     </div>
-                                    <div class="notifi__item">
-                                        <div class="bg-c1 img-cir img-40">
-                                            <i class="zmdi zmdi-email-open"></i>
+                                        <div class="notifi__item">
+                                            <div class="bg-c1 img-cir img-40">
+                                                <i class="zmdi zmdi-email-open"></i>
+                                            </div>
+                                            <div class="content">
+                                                <p>You got a notification</p>
+                                                <span class="date">Click to see all notifications</span>
+                                            </div>
                                         </div>
-                                        <div class="content">
-                                            <p>You got a email notification</p>
-                                            <span class="date">April 12, 2018 06:50</span>
-                                        </div>
-                                    </div>
-                                    <div class="notifi__item">
-                                        <div class="bg-c2 img-cir img-40">
-                                            <i class="zmdi zmdi-account-box"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>Your account has been blocked</p>
-                                            <span class="date">April 12, 2018 06:50</span>
-                                        </div>
-                                    </div>
-                                    <div class="notifi__item">
-                                        <div class="bg-c3 img-cir img-40">
-                                            <i class="zmdi zmdi-file-text"></i>
-                                        </div>
-                                        <div class="content">
-                                            <p>You got a new file</p>
-                                            <span class="date">April 12, 2018 06:50</span>
-                                        </div>
-                                    </div>
                                     <div class="notifi__footer">
-                                        <a href="~/AdminAssets/#">All notifications</a>
+                                        <a asp-action="Notification">All notifications</a>
                                     </div>
                                 </div>
                             </div>
@@ -489,6 +489,49 @@
 
     <script src="~/LoginForm/js/profileimage.js"></script>
 
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.7.1/js/buttons.print.min.js"></script>
+
+
+@*    <script>
+    function createPDF() {
+        var sTable = document.getElementById('tab').innerHTML;
+
+        var style = "<style>";
+        style = style + "table {width: 100%;font: 17px Calibri;}";
+        style = style + "table, th, td {border: solid 1px #DDD; border-collapse: collapse;";
+        style = style + "padding: 2px 3px;text-align: center;}";
+        style = style + "</style>";
+
+        // CREATE A WINDOW OBJECT.
+        var win = window.open('', '', 'height=700,width=700');
+
+        win.document.write('<html><head>');
+        win.document.write('<title>Profile</title>');   // <title> FOR PDF HEADER.
+        win.document.write(style);          // ADD STYLE INSIDE THE HEAD TAG.
+        win.document.write('</head>');
+        win.document.write('<body>');
+        win.document.write(sTable);         // THE TABLE CONTENTS INSIDE THE BODY TAG.
+        win.document.write('</body></html>');
+
+        win.document.close(); 	// CLOSE THE CURRENT WINDOW.
+
+        win.print();    // PRINT THE CONTENTS.
+    }
+</script>*@
+
+    <script>
+        $(document).ready(function () {
+            $('#ReportsTable').DataTable({
+                dom: 'Bfrtip', // Show buttons at the top of the table
+                buttons: ['copy', 'excel', 'pdf', 'print']
+            });
+        });
+    </script>
     </body>
 
 </html>

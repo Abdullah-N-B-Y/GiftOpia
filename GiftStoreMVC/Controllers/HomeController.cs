@@ -17,30 +17,23 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var users = _context.GiftstoreUsers.ToList();
-        var categories = _context.GiftstoreCategories.ToList();
 
-        IEnumerable<UserCagtegory>? categoryUserNames = from user in users
-            join category in categories
-                on user.Categoryid equals category.Categoryid
-            select new UserCagtegory
-            {
-                UserId = user.Userid,
-                UserName = user.Name,
-                UserEmail = user.Email,
-                UserPhone = user.Phonenumber,
-                UserImagepath = user.Imagepath,
-                UserImage = user.UserImage,
-                CategoryId = category.Categoryid,
-                CategoryName = category.Categoryname,
-                Categorydescription = category.Categorydescription,
-                CategoryImagepath = category.Imagepath,
-                CategoryImage = category.CategoryImage
-            };
-        return View(categories);
+        var testimonials = _context.GiftstoreTestimonials.ToList();
+        var homePage = _context.GiftstorePages.Where(obj => obj.Pageid == 1).SingleOrDefault();
+
+        ViewData["HomePageContent"] = homePage.Pagecontent.ToString();
+
+        return View(testimonials);
     }
 
-    public IActionResult About() => View();
+    public IActionResult About() 
+    {
+        var categories = _context.GiftstoreCategories.ToList();
+        var aboutPage = _context.GiftstorePages.Where(obj=>obj.Pageid == 2).SingleOrDefault();
+
+        ViewData["AboutPageContent"] = aboutPage.Pagecontent.ToString();
+        return View(categories);
+    }
 
     public IActionResult Categories()
     {

@@ -1,0 +1,77 @@
+﻿@model GiftStoreMVC.Models.GiftstoreSenderrequest
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Create</title>
+</head>
+<body>
+
+<h4>GiftstoreSenderrequest</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Recipientname" class="control-label"></label>
+                <input asp-for="Recipientname" class="form-control" />
+                <span asp-validation-for="Recipientname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Recipientaddress" class="control-label"></label>
+                <input asp-for="Recipientaddress" class="form-control" />
+                <span asp-validation-for="Recipientaddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Requeststatus" class="control-label"></label>
+                <input asp-for="Requeststatus" class="form-control" />
+                <span asp-validation-for="Requeststatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Requestdate" class="control-label"></label>
+                <input asp-for="Requestdate" class="form-control" />
+                <span asp-validation-for="Requestdate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Senderid" class="control-label"></label>
+                <select asp-for="Senderid" class ="form-control" asp-items="ViewBag.Senderid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Makerid" class="control-label"></label>
+                <select asp-for="Makerid" class ="form-control" asp-items="ViewBag.Makerid"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Sendername" class="control-label"></label>
+                <input asp-for="Sendername" class="form-control" />
+                <span asp-validation-for="Sendername" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Giftname" class="control-label"></label>
+                <input asp-for="Giftname" class="form-control" />
+                <span asp-validation-for="Giftname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Giftprice" class="control-label"></label>
+                <input asp-for="Giftprice" class="form-control" />
+                <span asp-validation-for="Giftprice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>

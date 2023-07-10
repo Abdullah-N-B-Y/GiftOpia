@@ -35,15 +35,10 @@ public class SenderController : Controller
             ViewData["RoleId"] = user.Roleid;
             ViewData["ImagePath"] = user.Imagepath;
 
-            if (userId != null)
-            {
-                //ViewData["GiftObj"] = gift;
-                return View(user);
-            }
-            else
-            {
-                return View();
-            }
+
+                var testimonials = _context.GiftstoreTestimonials.ToList();
+                return View(testimonials);
+
         }
         catch (Exception ex)
         {
@@ -66,15 +61,10 @@ public class SenderController : Controller
             ViewData["RoleId"] = user.Roleid;
             ViewData["ImagePath"] = user.Imagepath;
 
-            if (userId != null)
-            {
-                //ViewData["GiftObj"] = gift;
-                return View(user);
-            }
-            else
-            {
-                return View();
-            }
+
+            var categories = _context.GiftstoreCategories.ToList();
+
+                return View(categories);
 
         }
         catch (Exception ex)
@@ -231,34 +221,30 @@ public class SenderController : Controller
         _context.Add(senderrequest);
         await _context.SaveChangesAsync();
 
-        //Email from sender to maker to tell him that I request a gift
+        var email = new MimeMessage();
+        email.From.Add(MailboxAddress.Parse("GiftOpiaSite@outlook.com"));
+        email.To.Add(MailboxAddress.Parse(user.Email));
 
-        //var email = new MimeMessage();
-        //email.From.Add(MailboxAddress.Parse(senderUser.Email.ToString()));
-        //email.To.Add(MailboxAddress.Parse(makerUser.Email));
-
-
-        //email.Subject = "Buy a gift";
-        //email.Body = new TextPart(TextFormat.Html) { Text = "Hi" + " " + makerUser.Name + " I wanna order a gift" };
+        email.Subject = "Selecting Gift";
+        email.Body = new TextPart(TextFormat.Html) { Text = "Hi" + " " + user.Name + " Your chosen gift has been added successfully, you have to wait for gift maker to accept this request." };
 
 
-        //using var smtp = new SmtpClient();
-        //smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-        //smtp.Authenticate("abdullahnby@outlook.com", "Abdullah2000$");
-        //smtp.Send(email);
-        //smtp.Disconnect(true); 
-        ////senderemailmessage@gmail.com
-        ////A1234!@#$
+        using var smtp = new SmtpClient();
+        smtp.Connect("smtp.outlook.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+        smtp.Authenticate("GiftOpiaSite@outlook.com", "Abdullah2000$!");
+        smtp.Send(email);
+        smtp.Disconnect(true);
 
         return RedirectToAction("Index");
     }
 
 
-    public IActionResult Payment(decimal? giftId, string? address ,decimal userId)
+    public IActionResult Payment(decimal? giftId, string? address ,decimal userId, decimal requestId)
     {
         HttpContext.Session.SetInt32("giftId", (int)giftId);
         HttpContext.Session.SetString("address", address);
         HttpContext.Session.SetInt32("senderId",(int)userId);
+        HttpContext.Session.SetInt32("requestId", (int)requestId);
         GiftstoreUser? user = _context.GiftstoreUsers.Where(obj => obj.Userid == userId).SingleOrDefault();
         ViewData["Username"] = user.Username;
         ViewData["Name"] = user.Name;
@@ -285,6 +271,7 @@ public class SenderController : Controller
 
         decimal giftId = (decimal)HttpContext.Session.GetInt32("giftId");
         string? address = HttpContext.Session.GetString("address");
+        decimal? requestId = (decimal)HttpContext.Session.GetInt32("requestId");
 
 
         GiftstoreBankcard? card = _context.GiftstoreBankcards.Where(obj => obj.Cardholdername.Equals(bankcard.Cardholdername) &&
@@ -302,13 +289,21 @@ public class SenderController : Controller
             if (card.Totalamount >= gift.Giftprice)
             {
 
+                GiftstoreSenderrequest? senderRequest = _context.GiftstoreSenderrequests
+                    .Where(obj => obj.Requestid == requestId)
+                    .SingleOrDefault();
+
+                senderRequest.Requeststatus = "Paid";
+                _context.Update(senderRequest);
+                _context.SaveChangesAsync();
                 // add to order
                 GiftstoreOrder order = new()
                 {
                     Orderdate = DateTime.UtcNow,
-                    Orderstatus = "Shippig",
+                    Orderstatus = "Shipping",
                     Recipientaddress = address,
-                    Finalprice = gift.Giftprice
+                    Finalprice = gift.Giftprice,
+                    Requestid = requestId
                 };
                 card.Totalamount -= gift.Giftprice;
                 _context.Add(order);

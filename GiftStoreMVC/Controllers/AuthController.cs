@@ -48,6 +48,11 @@ public class AuthController : Controller
                 TempData["SignIn"] = "You have to wait for admins to accept your registration";
                 pendingUserFortempData = true;
             }
+            else if (currentUser.Approvalstatus.Equals("Banned"))
+            {
+                TempData["SignIn"] = "You are banned from the system";
+                pendingUserFortempData = true;
+            }
         }
         if(!pendingUserFortempData)
         {

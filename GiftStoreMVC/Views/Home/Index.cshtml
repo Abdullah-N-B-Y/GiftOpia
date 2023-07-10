@@ -1,4 +1,4 @@
-﻿@model IEnumerable<GiftstoreCategory>
+﻿@model IEnumerable<GiftstoreTestimonial>
 
 
 @{
@@ -6,12 +6,16 @@
     Layout = "~/Views/Shared/_HomeLayout.cshtml";
 }
 
+
+<link href="~/TestimonialAssets/style.css" rel="stylesheet">
+
+
 <div class="banner header-text">
     <div class="owl-banner owl-carousel">
         <div class="banner-item-01">
             <div class="text-content">
                 <h4>Best Offer</h4>
-                <h2>New Arrivals On Sale</h2>
+                <h2>@ViewData["HomePageContent"]</h2>
                 <a asp-controller="Auth" asp-action="SignIn" class="btn btn-primary" style="color:#fff;">Get started</a>
             </div>
         </div>
@@ -32,40 +36,6 @@
     </div>
 </div>
 
-
-<div class="latest-products">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-heading">
-                    <h2>Our Categories</h2>
-                    <a asp-controller="Auth" asp-action="SignIn">view all products and gifts >>></a>
-                </div>
-            </div>
-            @foreach(var item in Model)
-            {
-                <div class="col-md-4">
-                    <div class="product-item" style="width:350px;">
-                        <a asp-controller="Auth" asp-action="SignIn"><img src="@Url.Content("~/CategoriesImages/"+item.Imagepath)" style="width:350px;height:200px;"></a>
-                        <div class="down-content">
-                            <a href="#"><h4>@item.Categoryname</h4></a>
-                            <h6>@item.GiftstoreGifts.Count</h6>
-                            <p>@item.Categorydescription</p>
-                            <ul class="stars">
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                                <li><i class="fa fa-star"></i></li>
-                            </ul>
-                            <span>Reviews (24)</span>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
-</div>
 
 <div class="best-features">
     <div class="container">
@@ -110,3 +80,31 @@
         </div>
     </div>
 </div>
+
+<div class="container">
+    <div id="demo" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            @foreach(var item in Model)
+            {
+                <div class="carousel-item active">
+                    <div class="carousel-caption">
+                        <p>
+                            @item.Testimonialcontent
+                        </p>
+                        <img src="https://i.imgur.com/lE89Aey.jpg">
+                        <div id="image-caption">@item.Userid</div>
+                    </div>
+                </div>
+            }
+            
+        </div>
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <i class='fas fa-arrow-left'></i>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <i class='fas fa-arrow-right'></i>
+        </a>
+    </div>
+</div>
+
+

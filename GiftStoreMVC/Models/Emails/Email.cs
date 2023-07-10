@@ -12,7 +12,7 @@ public class Email : IEmail
 
     public Email(IConfiguration configuration) => _configuration = configuration;
 
-    public  string SendPaymentEmailToSender(decimal userId, string  userEmailTo,string  userNameTo,decimal? giftId,string address)
+    public  string SendPaymentEmailToSender(decimal userId, string  userEmailTo,string  userNameTo,decimal? giftId,string address, decimal requestId)
     {
         var email = new MimeMessage();
         
@@ -21,11 +21,11 @@ public class Email : IEmail
         
         email.Subject = "Gift request from GiftOpia";
 
-        string paymentUrlLink =$"<a href='{_configuration.GetSection("EmailSettings")["PaymentURl"]}?giftId={giftId}&address={address}&userId={userId}'>Pay</a>";
+        string paymentUrlLink =$"<a href='{_configuration.GetSection("EmailSettings")["PaymentURl"]}?giftId={giftId}&address={address}&userId={userId}&requestId={requestId}'>Pay</a>";
         
         email.Body = new TextPart(TextFormat.Html)
         {
-            Text = $"Hi {userNameTo}, has been accepted with {giftId} ID,\nPlease pay using this link: {paymentUrlLink}"
+            Text = $"Hi {userNameTo}, your gift request has been accepted with {giftId} ID,\nPlease pay using this link: {paymentUrlLink}"
         };
 
 
@@ -123,7 +123,7 @@ private MimePart GeneratePdf(string userName, GiftstoreGift gift)
 
 public interface IEmail
 {
-    public string SendPaymentEmailToSender(decimal userId,string userEmailTo, string userNameTo, decimal? giftId, string address);
+    public string SendPaymentEmailToSender(decimal userId,string userEmailTo, string userNameTo, decimal? giftId, string address, decimal requestId);
     public string SendEmailToUser(string userEmailTo, string userNameTo, string massage);
     public string SendPaymentBill(GiftstoreUser user,GiftstoreGift gift);
 }

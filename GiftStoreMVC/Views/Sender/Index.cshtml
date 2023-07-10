@@ -1,4 +1,4 @@
-﻿@model GiftstoreUser
+﻿@model IEnumerable<GiftstoreTestimonial>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -25,5 +25,31 @@
                 <h2>Grab last minute deals</h2>
             </div>
         </div>
+    </div>
+</div>
+
+<div class="container">
+    <div id="demo" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            @foreach (var item in Model)
+            {
+                <div class="carousel-item active">
+                    <div class="carousel-caption">
+                        <p>
+                            @item.Testimonialcontent
+                        </p>
+                        <img src="https://i.imgur.com/lE89Aey.jpg">
+                        <div id="image-caption">@item.Userid</div>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <a class="carousel-control-prev" href="#demo" data-slide="prev">
+            <i class='fas fa-arrow-left'></i>
+        </a>
+        <a class="carousel-control-next" href="#demo" data-slide="next">
+            <i class='fas fa-arrow-right'></i>
+        </a>
     </div>
 </div>

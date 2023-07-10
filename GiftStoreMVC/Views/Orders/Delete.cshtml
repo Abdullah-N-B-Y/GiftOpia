@@ -1,17 +1,13 @@
 ﻿@model GiftStoreMVC.Models.GiftstoreOrder
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
 }
 
-<!DOCTYPE html>
-
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Delete</title>
-</head>
-<body>
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
@@ -52,9 +48,12 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Orderid" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Delete" class="btn btn-danger" />
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
-</body>
-</html>
+</div>
+</div>
+</div>
+</div>
+

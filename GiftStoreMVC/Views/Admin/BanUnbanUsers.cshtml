@@ -1,0 +1,66 @@
+﻿@model IEnumerable<GiftstoreUser>
+
+@{
+    ViewData["Title"] = "Notification";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+                <div class="row m-t-30">
+                    <div class="col-md-12">
+                        <!-- DATA TABLE-->
+                        <form asp-action="Notification">
+                            <div class="table-responsive m-b-40">
+                                <table class="table table-borderless table-data3">
+                                    <thead>
+                                        <tr>
+                                            <th>User Id</th>
+                                            <th>Username</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone Number</th>
+                                            <th>Role Id</th>
+                                            <th>Approval Status</th>
+                                            <th>Bannded</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Userid</td>
+                                                <td>@item.Username</td>
+                                                <td>@item.Name</td>
+                                                <td>@item.Email</td>
+                                                <td>@item.Phonenumber</td>
+                                                <td>@item.Roleid</td>
+                                                <td class="text-danger">@item.Approvalstatus</td>
+                                                <td>
+                                                    <div class="table-data-feature">
+                                                        <input type="hidden" name="Userid" value="@item.Userid" />
+                                                        <button type="submit" name="action" value="Accepted" class="item" style="background-color:limegreen;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Unban">
+                                                            <i class="fa-solid fa-check" style="color:#fff;"></i>
+                                                        </button>
+                                                        <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Remove">
+                                                            <i class="zmdi zmdi-delete"></i>
+                                                        </button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
+                        <!-- END DATA TABLE-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

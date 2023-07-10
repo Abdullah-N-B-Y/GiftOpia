@@ -1,0 +1,44 @@
+﻿@model GiftStoreMVC.Models.GiftstorePage
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+<h1>Edit</h1>
+
+<h4>GiftstorePage</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Pageid" />
+            <div class="form-group">
+                <label asp-for="Pagetitle" class="control-label"></label>
+                <input asp-for="Pagetitle" class="form-control" />
+                <span asp-validation-for="Pagetitle" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pagecontent" class="control-label"></label>
+                <input asp-for="Pagecontent" class="form-control" />
+                <span asp-validation-for="Pagecontent" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+

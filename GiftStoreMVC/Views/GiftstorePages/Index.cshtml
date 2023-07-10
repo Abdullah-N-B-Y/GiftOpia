@@ -1,0 +1,55 @@
+﻿@model IEnumerable<GiftStoreMVC.Models.GiftstorePage>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_MainDashboardLayout.cshtml";
+}
+<div class="page-wrapper">
+    <div class="page-container">
+        <div class="main-content">
+            <div class="section__content section__content--p30">
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pagetitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pagecontent)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Admin)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pagetitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pagecontent)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Admin.Userid)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Pageid">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Pageid">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Pageid">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
